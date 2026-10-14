@@ -5,32 +5,12 @@ import { Project } from "@/svgs/Project";
 import { X } from "@/svgs/X";
 
 export const navItems = [
-  {
-    id: 1,
-    icon: Home,
-    value: "/",
-  },
-  {
-    id: 2,
-    icon: Project,
-    value: "/projects",
-  },
-  {
-    id: 3,
-    icon: Blog,
-    value: "/blogs",
-  },
+  { id: 1, name: "Home", icon: Home, value: "/" },
+  { id: 2, name: "Projects", icon: Project, value: "/projects" },
+  { id: 3, name: "Blogs", icon: Blog, value: "/blogs" },
 ];
 
 export const navSocialLinks = [
-  {
-    id: 1,
-    icon: Github,
-    value: "https://github.com/igmoni",
-  },
-  {
-    id: 2,
-    icon: X,
-    value: "https://x.com/_igmoni",
-  },
+  { id: 1, name: "Github", icon: Github, value: "https://github.com/igmoni" },
+  { id: 2, name: "X", icon: X, value: "https://x.com/_igmoni" },
 ];
