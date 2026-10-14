@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils";
 
-const HomeSvg = ({ className }: { className?: string }) => {
+const Home = ({ className }: SvgType) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -9,9 +9,9 @@ const HomeSvg = ({ className }: { className?: string }) => {
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
-      stroke-width="2"
-      stroke-linecap="round"
-      stroke-linejoin="round"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
       className={cn(
         "lucide lucide-house size-full overflow-hidden rounded-sm object-contain",
         className
@@ -24,4 +24,4 @@ const HomeSvg = ({ className }: { className?: string }) => {
   );
 };
 
-export { HomeSvg };
+export { Home };

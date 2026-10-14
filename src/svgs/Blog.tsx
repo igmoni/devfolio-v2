@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils";
 
-const BlogSvg = ({ className }: { className?: string }) => {
+const Blog = ({ className }: SvgType) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -9,10 +9,13 @@ const BlogSvg = ({ className }: { className?: string }) => {
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
-      stroke-width="2"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-      className={cn("lucide lucide-book-open size-full overflow-hidden rounded-sm object-contain", className)}
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={cn(
+        "lucide lucide-book-open size-full overflow-hidden rounded-sm object-contain",
+        className
+      )}
       aria-hidden="true"
     >
       <path d="M12 7v14"></path>
@@ -21,4 +24,4 @@ const BlogSvg = ({ className }: { className?: string }) => {
   );
 };
 
-export { BlogSvg };
+export { Blog };
