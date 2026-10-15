@@ -67,6 +67,12 @@ export async function GET() {
         return Response.json(formatTrack(current.item, true));
       }
     } else if (currentResponse.status !== 204) {
+      const errorBody = await currentResponse.text();
+
+      console.error("Spotify current-track error:", {
+        status: currentResponse.status,
+        body: errorBody,
+      });
       throw new Error(
         `Currently playing request failed: ${currentResponse.status}`
       );

@@ -8,6 +8,8 @@ import { motion } from "motion/react";
 
 import { instrumentSerif } from "@/config/font";
 
+import { AvailableBadge } from "../common/AvailableBadge";
+
 export const HeroAvatar = () => {
   const [flipped, setFlipped] = useState(false);
   const audioRef = useRef<HTMLAudioElement>(null);
@@ -42,12 +44,6 @@ export const HeroAvatar = () => {
           tabIndex={0}
           aria-label="Flip avatar"
           onClick={handleClick}
-          onKeyDown={(event) => {
-            if (event.key === "Enter" || event.key === " ") {
-              event.preventDefault();
-              handleClick();
-            }
-          }}
           animate={{ rotateY: flipped ? 180 : 0 }}
           transition={{ duration: 0.6, ease: "easeInOut" }}
           style={{ transformStyle: "preserve-3d" }}
@@ -74,6 +70,11 @@ export const HeroAvatar = () => {
         </motion.div>
       </motion.div>
       <audio src="/assets/coinFlip.mp3" ref={audioRef} preload="auto" />
+
+      <div className="absolute right-0">
+        <AvailableBadge />
+      </div>
+
       <motion.div
         className="absolute -bottom-2 -left-34 z-20 flex items-center gap-2 text-neutral-300 dark:text-neutral-700"
         animate={{ y: [0, -3, 0] }}
@@ -89,7 +90,7 @@ export const HeroAvatar = () => {
         </svg>
 
         <span className="font-serif text-xl italic">
-          click on <br /> avatar
+          Click on <br /> Avatar
         </span>
 
         <svg
@@ -107,7 +108,6 @@ export const HeroAvatar = () => {
           />
         </svg>
       </motion.div>
-     
     </div>
   );
 };
