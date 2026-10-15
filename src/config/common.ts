@@ -1,3 +1,5 @@
+import { ScrollText } from "lucide-react";
+
 import { Blog } from "@/svgs/Blog";
 import { Github } from "@/svgs/Github";
 import { Home } from "@/svgs/Home";
@@ -8,6 +10,7 @@ export const navItems = [
   { id: 1, name: "Home", icon: Home, value: "/" },
   { id: 2, name: "Projects", icon: Project, value: "/projects" },
   { id: 3, name: "Blog", icon: Blog, value: "/blog" },
+  { id: 4, name: "Resume", icon: ScrollText, value: "/resume" },
 ];
 
 export const navSocialLinks = [

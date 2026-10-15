@@ -25,3 +25,4 @@ const Home = ({ className }: SvgType) => {
 };
 
 export { Home };
+
