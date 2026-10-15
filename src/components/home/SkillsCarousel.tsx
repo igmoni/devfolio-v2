@@ -13,11 +13,11 @@ const SkillsCarousel = () => {
       <Heading as="h2">Tech Stack</Heading>
 
       <div className="group relative w-full overflow-hidden py-4">
-        <div className="animate-marquee flex w-max items-center gap-3 group-hover:[animation-play-state:paused]">
+        <div className="animate-marquee flex w-max items-center gap-3 group-hover:paused">
           {skills.map(({ name, icon: Icon }, index) => (
             <div
               key={`${name}-${index}`}
-              className="flex h-10 w-fit shrink-0 items-center gap-2 rounded-full border border-neutral-800/40 bg-neutral-100 px-4 text-sm font-medium whitespace-nowrap text-neutral-500 transition-transform duration-200 hover:scale-105 dark:border-neutral-200/10 dark:bg-neutral-900"
+              className="flex h-10 w-fit shrink-0 items-center gap-2 rounded-full border border-neutral-300 bg-neutral-100 px-4 text-sm font-medium whitespace-nowrap text-neutral-500 transition-transform duration-200  dark:border-neutral-200/10 dark:bg-neutral-900"
             >
               <span className="flex size-5 shrink-0 items-center justify-center [&>svg]:size-full">
                 <Icon />

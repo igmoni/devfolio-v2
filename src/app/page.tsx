@@ -4,6 +4,7 @@ import { Container } from "@/components/common/Container";
 import { Experience } from "@/components/home/Experience";
 import { Github } from "@/components/home/Github";
 import { Hero } from "@/components/home/Hero";
+import { Projects } from "@/components/home/Projects";
 import { SkillsCarousel } from "@/components/home/SkillsCarousel";
 import { Spotify } from "@/components/home/Spotify";
 import { getSpotifyTrack } from "@/lib/spotify";
@@ -29,6 +30,7 @@ const Page = () => {
       <SkillsCarousel />
       <Github />
       <Experience />
+      <Projects />
     </Container>
   );
 };

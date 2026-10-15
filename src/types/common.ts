@@ -24,3 +24,10 @@ export type Skill = {
   name: string;
   icon: SkillIcon;
 };
+
+export type HeadingProps = {
+  children: React.ReactNode;
+  as: "h1" | "h2" | "h3";
+  className?: string;
+  Icon?: React.ComponentType<{ className?: string }> | null;
+};

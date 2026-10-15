@@ -2,22 +2,21 @@ import { NextResponse } from "next/server";
 
 export async function GET() {
   try {
-    const res = await fetch(
+    const response = await fetch(
       "https://github-contributions.vercel.app/api/v1/igmoni",
       {
-        next: {
-          revalidate: 3600,
-        },
+        next: { revalidate: 3600 },
       }
     );
 
-    if (!res.ok)
+    if (!response.ok) {
       return NextResponse.json(
         { error: "Failed to fetch GitHub contributions" },
-        { status: res.status }
+        { status: response.status }
       );
+    }
 
-    const data = await res.json();
+    const data = await response.json();
 
     return NextResponse.json(data);
   } catch (error) {

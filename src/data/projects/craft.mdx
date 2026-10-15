@@ -1,0 +1,73 @@
+---
+title: "Craft - Universal Project Scaffolder CLI"
+shortTitle: "Craft"
+desc: "A TypeScript CLI that automates web project setup, from framework scaffolding to database, authentication, and development tool configuration."
+image: "/projects/craft.png"
+technologies: ["TypeScript", "Node.js"]
+github: "https://github.com/igmoni/craft"
+live: "https://craftship-v1.vercel.app/"
+timeline: "2026"
+role: "Founder & Developer"
+team: "Solo"
+status: "Working"
+featured: true
+Operations", "npm Package Publishing"]
+isPublished: true
+tags: ["Open Source", "Developer Tools", "CLI"]
+date: "2026-10-12"
+---
+
+# Craft — Set Up Projects Without Repeating the Same Work
+
+## Overview
+Craft is a TypeScript-based CLI tool that automates repetitive project setup. It helps developers scaffold applications and configure development tools through a single interactive workflow, reducing boilerplate and speeding up development.
+
+Published on npm as `@igmoni/craft`, it supports project generation with Next.js, Vite, and Express.
+
+## Key Features
+- **Project Scaffolding:** Generate Next.js, Vite, and Express projects.
+- **Language Selection:** Choose TypeScript or JavaScript where supported.
+- **Database Configuration:** Set up PostgreSQL, MongoDB, or no database.
+- **Authentication:** Configure supported authentication providers.
+- **Development Tools:** Set up ESLint, Prettier, Husky, and Commitlint.
+- **Tailwind CSS:** Include Tailwind CSS in supported configurations.
+- **Environment Setup:** Generate `.env` files from `.env.example` when available.
+- **Conflict Protection:** Detect existing files and avoid blindly overwriting them.
+
+## Tech Stack
+- **TypeScript & Node.js**
+- Commander.js
+- @inquirer/prompts
+- Execa
+
+## Engineering Highlights
+- Designed a modular generator architecture for frameworks, databases, authentication, and development tools.
+- Implemented staging directories to generate projects safely before merging files into the target directory.
+- Added file conflict detection and cleanup of temporary files.
+- Coordinated external scaffolding commands, dependency installation, and error handling.
+
+## Validation & Results
+- Published `@igmoni/craft` v1.0.0 on npm.
+- Verified global installation and execution through the `craft` command.
+- Tested project generation from a clean clone.
+- Successfully generated a Vite React project and verified its production build and ESLint checks.
+
+## Key Learnings
+- Interactive CLI development and process management.
+- Safe filesystem operations and conflict handling.
+- Modular architecture and reusable generators.
+- Packaging, publishing, and testing an npm package.
+
+## Installation & Usage
+
+```bash
+npm install -g @igmoni/craft
+
+craft init my-app
+
+craft init my-app --framework vite --database none --js --tools eslint,prettier
+```
+
+## Links
+- **npm:** https://www.npmjs.com/package/@igmoni/craft
+- **GitHub:** https://github.com/igmoni/craft

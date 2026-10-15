@@ -5,9 +5,11 @@ import { useState } from "react";
 import { ChevronDown } from "lucide-react";
 
 import { experience } from "@/config/experience";
+import { Experience as Exp } from "@/svgs/essentials/Experience";
 
 import { Container } from "../common/Container";
 import { Heading } from "../common/Heading";
+import { Button } from "../ui/button";
 
 const Experience = () => {
   const [expanded, setExpanded] = useState<number[]>([]);
@@ -22,7 +24,13 @@ const Experience = () => {
 
   return (
     <Container>
-      <Heading as="h2">Experience</Heading>
+      <Heading
+        as="h2"
+        className="-ml-1.5 flex items-center gap-2"
+        Icon={<Exp className={"size-6"} />}
+      >
+        Experience
+      </Heading>
 
       <div className="relative mt-8">
         {/* One continuous timeline line */}
@@ -41,7 +49,7 @@ const Experience = () => {
                   <div className="flex flex-col justify-between gap-2 sm:flex-row">
                     <div>
                       <div className="flex items-center gap-2">
-                        <h3 className="font-semibold text-neutral-200">
+                        <h3 className="font-bold text-neutral-800 dark:text-neutral-200">
                           {item.post}
                         </h3>
 
@@ -63,7 +71,7 @@ const Experience = () => {
                         </button>
                       </div>
 
-                      <p className="mt-1 text-sm text-neutral-400">
+                      <p className="mt-1 text-sm font-medium text-neutral-600 dark:text-neutral-400">
                         {item.company}
                       </p>
                     </div>
@@ -128,6 +136,13 @@ const Experience = () => {
           })}
         </div>
       </div>
+      {experience.length > 3 && (
+        <div className="flex justify-center">
+          <Button variant={"outline"} className={"my-3 w-fit"}>
+            Show all work experiences
+          </Button>
+        </div>
+      )}
     </Container>
   );
 };
