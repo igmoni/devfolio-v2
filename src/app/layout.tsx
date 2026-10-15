@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 
+import { CustomCursor } from "@/components/common/CustomCursor";
 import { Footer } from "@/components/common/Footer";
 import { Navbar } from "@/components/common/Navbar";
 import { poppins } from "@/config/font";
@@ -22,6 +23,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     >
       <body className="flex min-h-full flex-col">
         <ThemeProvider>
+          <CustomCursor />
           <Navbar />
           {children}
           <Footer />
