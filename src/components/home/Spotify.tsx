@@ -7,11 +7,11 @@ import Image from "next/image";
 import type { SpotifyTrack } from "@/lib/spotify";
 
 type SpotifyProps = {
-  initialData: SpotifyTrack | null;
+  track: SpotifyTrack | null;
 };
 
-const Spotify = ({ initialData }: SpotifyProps) => {
-  const [song, setSong] = useState(initialData);
+const Spotify = ({ track }: SpotifyProps) => {
+  const [song, setSong] = useState(track);
 
   useEffect(() => {
     let isMounted = true;
@@ -54,7 +54,7 @@ const Spotify = ({ initialData }: SpotifyProps) => {
           width={24}
           height={24}
           alt="Spotify"
-          className="shrink-0 "
+          className="shrink-0"
         />
         <p className="truncate text-sm text-neutral-500">
           No recent track available
@@ -94,7 +94,7 @@ const Spotify = ({ initialData }: SpotifyProps) => {
             target="_blank"
             rel="noopener noreferrer"
             title={song.title}
-            className="block truncate text-sm font-medium underline"
+            className="block w-fit truncate text-sm font-medium hover:underline"
           >
             {song.title}
           </a>

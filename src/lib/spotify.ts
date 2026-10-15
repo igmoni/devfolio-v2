@@ -24,7 +24,10 @@ type SpotifyApiTrack = {
 type SpotifyApiResponse = {
   is_playing?: boolean;
   item?: SpotifyApiTrack | null;
-  track?: SpotifyApiTrack;
+};
+
+type SpotifyTokenResponse = {
+  access_token: string;
 };
 
 const EMPTY_TRACK: SpotifyTrack = {
@@ -63,10 +66,18 @@ async function getAccessToken(): Promise<string> {
   });
 
   if (!response.ok) {
-    throw new Error(`Spotify token refresh failed: ${response.status}`);
+    const details = await response.text();
+
+    throw new Error(
+      `Spotify token refresh failed (${response.status}): ${details}`
+    );
   }
 
-  const data: { access_token: string } = await response.json();
+  const data: SpotifyTokenResponse = await response.json();
+
+  if (!data.access_token) {
+    throw new Error("Spotify returned no access token");
+  }
 
   return data.access_token;
 }
@@ -89,7 +100,6 @@ export async function getSpotifyTrack(): Promise<SpotifyTrack> {
     Authorization: `Bearer ${accessToken}`,
   };
 
-  // 1. Get the currently playing track.
   const currentResponse = await fetch(
     "https://api.spotify.com/v1/me/player/currently-playing",
     {
@@ -102,19 +112,18 @@ export async function getSpotifyTrack(): Promise<SpotifyTrack> {
     throw new Error("Spotify access token is unauthorized");
   }
 
-  if (currentResponse.ok && currentResponse.status !== 204) {
+  if (currentResponse.status === 200) {
     const data: SpotifyApiResponse = await currentResponse.json();
 
     if (data.is_playing && data.item) {
       return formatTrack(data.item, true);
     }
-  } else if (![200, 204].includes(currentResponse.status)) {
+  } else if (currentResponse.status !== 204) {
     throw new Error(
       `Spotify currently-playing request failed: ${currentResponse.status}`
     );
   }
 
-  // 2. Nothing is playing. Get the most recently played track.
   const recentResponse = await fetch(
     "https://api.spotify.com/v1/me/player/recently-played?limit=1",
     {
@@ -135,9 +144,5 @@ export async function getSpotifyTrack(): Promise<SpotifyTrack> {
 
   const lastTrack = recentData.items?.[0]?.track;
 
-  if (lastTrack) {
-    return formatTrack(lastTrack, false);
-  }
-
-  return EMPTY_TRACK;
+  return lastTrack ? formatTrack(lastTrack, false) : EMPTY_TRACK;
 }

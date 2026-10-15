@@ -1,11 +1,11 @@
-import { Github } from "@/svgs/Github";
-import Instagram from "@/svgs/Instagram";
-import LinkedIn from "@/svgs/LinkedIn";
-import Mail from "@/svgs/Mail";
-import Medium from "@/svgs/Medium";
-import Pinterest from "@/svgs/Pinterest";
-import { X } from "@/svgs/X";
-import YouTubeIcon from "@/svgs/YouTube";
+import { Github } from "@/svgs/socials/Github";
+import Instagram from "@/svgs/socials/Instagram";
+import LinkedIn from "@/svgs/socials/LinkedIn";
+import Mail from "@/svgs/socials/Mail";
+import Medium from "@/svgs/socials/Medium";
+import Pinterest from "@/svgs/socials/Pinterest";
+import { X } from "@/svgs/socials/X";
+import YouTubeIcon from "@/svgs/socials/YouTube";
 
 export const heroConfig = {
   name: "Mohan S P",

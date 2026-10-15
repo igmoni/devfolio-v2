@@ -1,10 +1,10 @@
 import { ScrollText } from "lucide-react";
 
-import { Blog } from "@/svgs/Blog";
-import { Github } from "@/svgs/Github";
-import { Home } from "@/svgs/Home";
-import { Project } from "@/svgs/Project";
-import { X } from "@/svgs/X";
+import { Blog } from "@/svgs/essentials/Blog";
+import { Home } from "@/svgs/essentials/Home";
+import { Project } from "@/svgs/essentials/Project";
+import { Github } from "@/svgs/socials/Github";
+import { X } from "@/svgs/socials/X";
 
 export const navItems = [
   { id: 1, name: "Home", icon: Home, value: "/" },

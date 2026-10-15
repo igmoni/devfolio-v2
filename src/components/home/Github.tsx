@@ -8,9 +8,10 @@ import Link from "next/link";
 import { githubConfig } from "@/config/github";
 import { ActivityCalendar, filterLastYear } from "@/lib/github";
 import { ArrowUpRight } from "@/svgs/essentials/ArrowUpRight";
-import { Github as GithubSvg } from "@/svgs/Github";
+import { Github as GithubSvg } from "@/svgs/socials/Github";
 
 import { Container } from "../common/Container";
+import { Heading } from "../common/Heading";
 import { Button } from "../ui/button";
 
 const Github = () => {
@@ -114,10 +115,10 @@ const Github = () => {
   return (
     <Container className="space-y-6">
       <div className="mt-5 mb-1 flex items-center justify-between">
-        <h2 className="flex items-center gap-2">
+        <Heading as="h2" className="flex items-center gap-2">
           <GithubSvg className="size-7" />
-          <p className="text-2xl font-semibold">GitHub Activity</p>
-        </h2>
+          Github Activity
+        </Heading>
 
         <Link
           href={gitSrc}
@@ -186,7 +187,7 @@ const Github = () => {
         </div>
       )}
 
-      <div className="min-h-[180px]">
+      <div>
         {!isLoading && !hasError && contributions.length > 0 && (
           <div className="relative z-0 overflow-hidden">
             <div className="bg-background/50 rounded-lg border-2 border-dashed border-neutral-200 p-6 backdrop-blur-sm dark:border-neutral-800">

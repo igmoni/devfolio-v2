@@ -56,7 +56,7 @@ const CustomCursor = () => {
   return (
     <motion.div
       aria-hidden="true"
-      className="pointer-events-none fixed top-0 left-0 z-[9999] hidden rounded-full bg-white mix-blend-difference md:block"
+      className="pointer-events-none fixed top-0 left-0 z-9999 hidden rounded-full bg-white mix-blend-difference md:block"
       animate={{
         width: isInteractive ? 56 : 12,
         height: isInteractive ? 56 : 12,
