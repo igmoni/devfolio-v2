@@ -1,4 +1,4 @@
-export  function CSS() {
+export function CSS() {
   return (
     <svg viewBox="0 0 128 128">
       <path

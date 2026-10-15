@@ -1,6 +1,7 @@
 import { Suspense } from "react";
 
 import { Container } from "@/components/common/Container";
+import { Experience } from "@/components/home/Experience";
 import { Github } from "@/components/home/Github";
 import { Hero } from "@/components/home/Hero";
 import { SkillsCarousel } from "@/components/home/SkillsCarousel";
@@ -27,6 +28,7 @@ const Page = () => {
 
       <SkillsCarousel />
       <Github />
+      <Experience />
     </Container>
   );
 };
