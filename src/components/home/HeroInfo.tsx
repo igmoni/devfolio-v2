@@ -74,7 +74,7 @@ export const HeroInfo = () => {
 
             return (
               <Tooltip key={item.id}>
-                <TooltipTrigger asChild>
+                <TooltipTrigger>
                   <Link
                     href={item.value}
                     target="_blank"
@@ -94,7 +94,7 @@ export const HeroInfo = () => {
           })}
         </div>
       </TooltipProvider>
-      <Spotify />
+      {/* <Spotify /> */}
     </div>
   );
 };

@@ -84,7 +84,7 @@ const DockItem = ({ mouseX, children, href, label }: DockItemProps) => {
           initial={{ opacity: 0, y: 5, scale: 0.95 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
           transition={{ duration: 0.18 }}
-          className="pointer-events-none absolute bottom-full left-1/2 z-[100] mb-7 -translate-x-1/2 rounded-lg bg-neutral-900 px-3 py-1.5 text-xs font-medium whitespace-nowrap text-white shadow-lg after:absolute after:top-full after:left-1/2 after:-translate-x-1/2 after:border-[5px] after:border-transparent after:border-t-neutral-900 dark:bg-white dark:text-neutral-900 dark:after:border-t-white"
+          className="pointer-events-none absolute bottom-full left-1/2 z-100 mb-7 -translate-x-1/2 rounded-lg bg-neutral-900 px-3 py-1.5 text-xs font-medium whitespace-nowrap text-white shadow-lg after:absolute after:top-full after:left-1/2 after:-translate-x-1/2 after:border-[5px] after:border-transparent after:border-t-neutral-900 dark:bg-white dark:text-neutral-900 dark:after:border-t-white"
         >
           {label}
         </motion.span>
@@ -103,7 +103,7 @@ const Navbar = () => {
       layout
       transition={{ layout: springConfig }}
       aria-label="Main navigation"
-      className="absolute bottom-5 left-1/2 flex h-14 w-max -translate-x-1/2 items-center gap-3 rounded-3xl bg-white p-2 text-neutral-900 shadow-sm ring ring-neutral-200 dark:bg-neutral-800 dark:text-neutral-100 dark:ring-neutral-700"
+      className="fixed bottom-8 left-1/2 z-999 flex h-14 w-max -translate-x-1/2 items-center gap-3 rounded-3xl bg-white p-2 text-neutral-900 shadow-sm ring ring-neutral-200 dark:bg-neutral-800 dark:text-neutral-100 dark:ring-neutral-700"
     >
       <div className="flex items-center gap-3">
         {navItems.map((item) => {

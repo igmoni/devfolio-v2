@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 
+import { Footer } from "@/components/common/Footer";
 import { Navbar } from "@/components/common/Navbar";
-import { instrumentSerif, poppins } from "@/config/font";
+import { poppins } from "@/config/font";
 import { ThemeProvider } from "@/providers/ThemeProvider";
 
 import "./globals.css";
@@ -24,6 +24,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <ThemeProvider>
           <Navbar />
           {children}
+          <Footer />
         </ThemeProvider>
       </body>
     </html>

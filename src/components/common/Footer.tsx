@@ -1,7 +1,7 @@
 import { Container } from "./Container";
 
 const Footer = () => {
-  return <Container>Footer</Container>;
+  return <Container className="h-[200px]">Footer</Container>;
 };
 
 export { Footer };
