@@ -1,9 +1,10 @@
 import { Container } from "@/components/common/Container";
+import { Hero } from "@/components/home/Hero";
 
 const page = () => {
   return (
     <div>
-      <Container>Mohan</Container>
+      <Hero />
     </div>
   );
 };

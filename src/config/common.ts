@@ -7,7 +7,7 @@ import { X } from "@/svgs/X";
 export const navItems = [
   { id: 1, name: "Home", icon: Home, value: "/" },
   { id: 2, name: "Projects", icon: Project, value: "/projects" },
-  { id: 3, name: "Blogs", icon: Blog, value: "/blogs" },
+  { id: 3, name: "Blog", icon: Blog, value: "/blog" },
 ];
 
 export const navSocialLinks = [
