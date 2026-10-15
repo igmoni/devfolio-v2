@@ -70,7 +70,7 @@ const Github = () => {
               "count" in item &&
               "intensity" in item
           )
-          .map((item) => ({
+          .map((item: any) => ({
             date: String(item.date),
             count: Number(item.count || 0),
             level: Number(item.intensity || 0),
@@ -89,8 +89,6 @@ const Github = () => {
         );
 
         setContributions(sortedContributions);
-
-        // const currentYear = new Date().getFullYear();
 
         const years = Array.isArray(data?.years) ? data.years : [];
 
@@ -188,32 +186,34 @@ const Github = () => {
         </div>
       )}
 
-      {!isLoading && !hasError && contributions.length > 0 && (
-        <div className="relative z-0 overflow-hidden">
-          <div className="bg-background/50 rounded-lg border-2 border-dashed border-neutral-200 p-6 backdrop-blur-sm dark:border-neutral-800">
-            <div className="w-full overflow-x-auto">
-              <ActivityCalendar
-                data={contributions}
-                // blockSize={getBlockSize()}
-                // blockMargin={3}
-                // fontSize={githubConfig.fontSize}
-                colorScheme={theme === "dark" ? "dark" : "light"}
-                maxLevel={githubConfig.maxLevel}
-                theme={githubConfig.theme}
-                labels={{
-                  months: githubConfig.months,
-                  weekdays: githubConfig.weekDays,
-                  totalCount: githubConfig.totalCountLabel,
-                }}
-                style={{
-                  color: "rgb(139,148,158)",
-                  margin: "0 auto",
-                }}
-              />
+      <div className="min-h-[180px]">
+        {!isLoading && !hasError && contributions.length > 0 && (
+          <div className="relative z-0 overflow-hidden">
+            <div className="bg-background/50 rounded-lg border-2 border-dashed border-neutral-200 p-6 backdrop-blur-sm dark:border-neutral-800">
+              <div className="w-full overflow-x-auto">
+                <ActivityCalendar
+                  data={contributions}
+                  // blockSize={getBlockSize()}
+                  // blockMargin={3}
+                  // fontSize={githubConfig.fontSize}
+                  colorScheme={theme === "dark" ? "dark" : "light"}
+                  maxLevel={githubConfig.maxLevel}
+                  theme={githubConfig.theme}
+                  labels={{
+                    months: githubConfig.months,
+                    weekdays: githubConfig.weekDays,
+                    totalCount: githubConfig.totalCountLabel,
+                  }}
+                  style={{
+                    color: "rgb(139,148,158)",
+                    margin: "0 auto",
+                  }}
+                />
+              </div>
             </div>
           </div>
-        </div>
-      )}
+        )}
+      </div>
     </Container>
   );
 };

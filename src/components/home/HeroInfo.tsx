@@ -94,7 +94,6 @@ export const HeroInfo = () => {
           })}
         </div>
       </TooltipProvider>
-      {/* <Spotify /> */}
     </div>
   );
 };

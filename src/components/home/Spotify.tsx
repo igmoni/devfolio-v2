@@ -4,18 +4,14 @@ import { useEffect, useState } from "react";
 
 import Image from "next/image";
 
-type SpotifyTrack = {
-  isPlaying: boolean;
-  title: string | null;
-  artist: string | null;
-  album: string | null;
-  albumImageUrl: string | null;
-  spotifyUrl: string | null;
+import type { SpotifyTrack } from "@/lib/spotify";
+
+type SpotifyProps = {
+  initialData: SpotifyTrack | null;
 };
 
-const Spotify = () => {
-  const [song, setSong] = useState<SpotifyTrack | null>(null);
-  const [loading, setLoading] = useState(true);
+const Spotify = ({ initialData }: SpotifyProps) => {
+  const [song, setSong] = useState(initialData);
 
   useEffect(() => {
     let isMounted = true;
@@ -32,61 +28,64 @@ const Spotify = () => {
 
         const data: SpotifyTrack = await response.json();
 
-        if (isMounted) setSong(data);
+        if (isMounted) {
+          setSong(data);
+        }
       } catch (error) {
         console.error("Spotify fetch error:", error);
-      } finally {
-        if (isMounted) setLoading(false);
       }
     };
 
-    void fetchNowPlaying();
-
     const interval = setInterval(() => {
       void fetchNowPlaying();
-    }, 5000);
-    // 300000 : 5 mins
+    }, 30_000);
+
     return () => {
       isMounted = false;
       clearInterval(interval);
     };
   }, []);
 
-  if (loading) {
-    return <p className="text-sm text-neutral-500"> — Loading Spotify</p>;
-  }
-
   if (!song?.title) {
     return (
-      <div className="flex items-center gap-2">
+      <div className="flex min-w-0 items-center gap-2">
         <Image
           src="/assets/spotify1.svg"
           width={24}
           height={24}
           alt="Spotify"
+          className="shrink-0 "
         />
-        <p className="text-sm text-neutral-500"> — No recent track available</p>
+        <p className="truncate text-sm text-neutral-500">
+          No recent track available
+        </p>
       </div>
     );
   }
 
   return (
-    <div className="flex items-center gap-3">
-      <Image src="/assets/spotify1.svg" width={24} height={24} alt="Spotify" />
-
-      {song.albumImageUrl && (
+    <div className="flex min-w-0 items-center gap-3">
+      {song.isPlaying && song.albumImageUrl ? (
         <Image
           src={song.albumImageUrl}
           width={44}
           height={44}
           alt={song.album ?? "Album artwork"}
-          className="rounded-md"
+          className="size-11 shrink-0 rounded-full object-cover"
+        />
+      ) : (
+        <Image
+          src="/assets/spotify1.svg"
+          width={24}
+          height={24}
+          alt="Spotify"
+          className="shrink-0"
         />
       )}
 
-      <div className="min-w-0">
-        <p className="text-xs text-neutral-500">
-          {song.isPlaying ? "Listening to" : "Last played"}
+      <div className="min-w-0 flex-1">
+        <p className="truncate text-xs text-neutral-500">
+          {song.isPlaying ? "Listening on Spotify" : "Last played"}
         </p>
 
         {song.spotifyUrl ? (
@@ -94,15 +93,23 @@ const Spotify = () => {
             href={song.spotifyUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="block truncate text-sm font-medium hover:underline"
+            title={song.title}
+            className="block truncate text-sm font-medium underline"
           >
             {song.title}
           </a>
         ) : (
-          <p className="truncate text-sm font-medium">{song.title}</p>
+          <p title={song.title} className="truncate text-sm font-medium">
+            {song.title}
+          </p>
         )}
 
-        <p className="truncate text-xs text-neutral-500">{song.artist}</p>
+        <p
+          title={song.artist ?? ""}
+          className="truncate text-xs text-neutral-500"
+        >
+          {song.artist}
+        </p>
       </div>
     </div>
   );
