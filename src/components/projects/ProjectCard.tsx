@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 
+import { ArrowRight } from "lucide-react";
 import { motion } from "motion/react";
 
 import { ArrowUpRight } from "@/svgs/essentials/ArrowUpRight";
@@ -26,10 +27,7 @@ const ProjectCard = ({ project }: { project: Project }) => {
   const { name, description, live, githubLink, stacks } = project;
 
   return (
-    <Link
-      href={`/projects/${name.toLowerCase()}`}
-      className="group flex flex-col gap-3 rounded-2xl bg-neutral-100 p-3 px-5 ring ring-neutral-300 dark:bg-neutral-900 dark:ring-neutral-700"
-    >
+    <div className="group flex flex-col gap-3 rounded-2xl bg-neutral-100 p-3 px-5 ring ring-neutral-300 dark:bg-neutral-900 dark:ring-neutral-700">
       <div className="flex items-center justify-between">
         <CardHeading>{name}</CardHeading>
 
@@ -38,8 +36,8 @@ const ProjectCard = ({ project }: { project: Project }) => {
 
       <CardDescription>{description}</CardDescription>
 
-      <CardStacks stacks={stacks} />
-    </Link>
+      <CardStacks stacks={stacks} projectName="Craft" />
+    </div>
   );
 };
 
@@ -55,9 +53,15 @@ const CardDescription = ({ children }: ProjectProps) => (
   <p className="text-sm text-neutral-500">{children}</p>
 );
 
-const CardStacks = ({ stacks }: { stacks: StacksProps[] }) => {
+const CardStacks = ({
+  stacks,
+  projectName,
+}: {
+  stacks: StacksProps[];
+  projectName: string;
+}) => {
   return (
-    <div className="mt-3">
+    <div className="mt-3 flex items-center justify-between">
       <div className="flex items-center pl-3">
         {stacks.map(({ name, Icon }, index) => (
           <motion.div
@@ -130,6 +134,12 @@ const CardStacks = ({ stacks }: { stacks: StacksProps[] }) => {
           </motion.div>
         ))}
       </div>
+      <Link
+        className="flex items-center gap-2 text-sm hover:underline"
+        href={`/projects/${projectName.toLowerCase()}`}
+      >
+        Read more <ArrowRight className="size-4" />{" "}
+      </Link>
     </div>
   );
 };
@@ -159,7 +169,7 @@ const Links = ({ live, githubLink }: LinksProps) => {
           rel="noopener noreferrer"
           aria-label="View GitHub repository"
         >
-          <Github className="text-neutral-500" />
+          <Github className="size-6 text-neutral-500 hover:text-black dark:hover:text-white" />
         </a>
       )}
     </div>

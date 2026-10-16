@@ -18,8 +18,15 @@ export const navSocialLinks = [
   { id: 2, name: "X", icon: X, value: "https://x.com/_igmoni" },
 ];
 
-
 export const setupConfig = [
-  { name: "Gears", href: "/gears", description: ""},
-  { name: "Setup", href: "/gears", description: ""},
-]
+  {
+    title: "Gears",
+    href: "/gears",
+    description: "Tools, devices, and software I use to get work done.",
+  },
+  {
+    title: "Setup",
+    href: "/gears",
+    description: "VS Code / Cursor configuration and extensions guide.",
+  },
+];

@@ -32,6 +32,7 @@ export const HeroAvatar = () => {
           src="/assets/sukuna.gif"
           className="object-cover"
           priority
+          sizes="(max-width: 768px) 100vw, 50vw"
         />
       </div>
       <motion.div

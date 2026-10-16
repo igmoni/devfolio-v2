@@ -27,6 +27,7 @@ const BlogCard = ({ blog }: { blog: Blog }) => {
             alt={"Github"}
             fill
             className="rounded-xl"
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 320px"
           />
         </div>
         <div className="flex flex-col justify-center gap-1 pb-8">

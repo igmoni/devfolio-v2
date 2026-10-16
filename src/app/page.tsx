@@ -6,6 +6,7 @@ import { Experience } from "@/components/home/Experience";
 import { Github } from "@/components/home/Github";
 import { Hero } from "@/components/home/Hero";
 import { Projects } from "@/components/home/Projects";
+import { Setup } from "@/components/home/Setup";
 import { SkillsCarousel } from "@/components/home/SkillsCarousel";
 import { Spotify } from "@/components/home/Spotify";
 import { getSpotifyTrack } from "@/lib/spotify";
@@ -33,6 +34,7 @@ const Page = () => {
       <Experience />
       <Projects />
       <Blog />
+      <Setup />
     </Container>
   );
 };
