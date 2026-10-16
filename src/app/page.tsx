@@ -1,13 +1,13 @@
 import { Suspense } from "react";
 
 import { Container } from "@/components/common/Container";
+import { Blog } from "@/components/home/Blog";
 import { Experience } from "@/components/home/Experience";
 import { Github } from "@/components/home/Github";
 import { Hero } from "@/components/home/Hero";
 import { Projects } from "@/components/home/Projects";
 import { SkillsCarousel } from "@/components/home/SkillsCarousel";
 import { Spotify } from "@/components/home/Spotify";
-import { WakaTimeData } from "@/components/home/WakatimeData";
 import { getSpotifyTrack } from "@/lib/spotify";
 
 const SpotifyData = async () => {
@@ -32,7 +32,7 @@ const Page = () => {
       <Github />
       <Experience />
       <Projects />
-      <WakaTimeData />
+      <Blog />
     </Container>
   );
 };
