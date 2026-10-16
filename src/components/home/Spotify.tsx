@@ -106,7 +106,7 @@ const Spotify = ({ track }: SpotifyProps) => {
         <p
           className="truncate text-xs text-neutral-500"
         >
-          {song.artist}
+          by {song.artist}
         </p>
       </div>
     </div>

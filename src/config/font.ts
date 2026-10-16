@@ -1,4 +1,9 @@
-import { Geist_Mono, Instrument_Serif, Poppins } from "next/font/google";
+import {
+  Caveat,
+  Geist_Mono,
+  Instrument_Serif,
+  Poppins,
+} from "next/font/google";
 
 export const instrumentSerif = Instrument_Serif({
   subsets: ["latin"],
@@ -16,4 +21,9 @@ export const poppins = Poppins({
 export const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+});
+
+export const caveat = Caveat({
+  subsets: ["latin"],
+  weight: ["400"],
 });

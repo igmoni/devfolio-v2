@@ -145,3 +145,20 @@
 .react-activity-calendar {
   overflow: visible;
 }
+
+@keyframes hire-me-shake {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(-5deg);
+  }
+  75% {
+    transform: rotate(5deg);
+  }
+}
+
+.hire-me-shake:hover {
+  animation: hire-me-shake 0.3s ease-in-out;
+}
