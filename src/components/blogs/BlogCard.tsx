@@ -30,14 +30,16 @@ const BlogCard = ({ blog }: { blog: Blog }) => {
           />
         </div>
         <div className="flex flex-col justify-center gap-1 pb-8">
-          <Heading as="h3">{name}</Heading>
+          <Heading as="h3" className="group-hover:text-neutral-500">
+            {name}
+          </Heading>
           <SubHeading className={"max-w-xl text-sm"}>{description}</SubHeading>
           <p className="flex items-center gap-2 text-sm text-neutral-500">
             <CalendarDays className="size-4" /> <span> {date}</span>
           </p>
         </div>
       </div>
-      <p className="flex gap-1 text-neutral-500 transition-all duration-200 group-hover:text-neutral-800 dark:group-hover:text-neutral-200">
+      <p className="flex gap-1 text-neutral-500 transition-all duration-200">
         Read More <ArrowRight />
       </p>
     </Link>

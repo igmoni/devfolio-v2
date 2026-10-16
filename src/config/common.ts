@@ -17,3 +17,9 @@ export const navSocialLinks = [
   { id: 1, name: "Github", icon: Github, value: "https://github.com/igmoni" },
   { id: 2, name: "X", icon: X, value: "https://x.com/_igmoni" },
 ];
+
+
+export const setupConfig = [
+  { name: "Gears", href: "/gears", description: ""},
+  { name: "Setup", href: "/gears", description: ""},
+]

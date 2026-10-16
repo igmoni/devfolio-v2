@@ -20,7 +20,7 @@ const Blog = () => {
           href: "/blog/",
         }}
       />
-
+      <div className="h-px w-full bg-neutral-300 dark:bg-neutral-800" />
       {blogs.length > 3 && (
         <div className="flex justify-center">
           <Button variant={"outline"} className={"my-5 w-fit"}>

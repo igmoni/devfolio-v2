@@ -93,19 +93,17 @@ const Spotify = ({ track }: SpotifyProps) => {
             href={song.spotifyUrl}
             target="_blank"
             rel="noopener noreferrer"
-            title={song.title}
             className="block w-fit truncate text-sm font-medium hover:underline"
           >
             {song.title}
           </a>
         ) : (
-          <p title={song.title} className="truncate text-sm font-medium">
+          <p  className="truncate text-sm font-medium">
             {song.title}
           </p>
         )}
 
         <p
-          title={song.artist ?? ""}
           className="truncate text-xs text-neutral-500"
         >
           {song.artist}
