@@ -19,7 +19,7 @@ const Footer = () => {
     setYear(new Date().getFullYear());
   }, []);
   return (
-    <footer className="mt-24 border-t border-neutral-200 dark:border-neutral-800 bg-neutral-50 pb-24 dark:bg-neutral-900">
+    <footer className="border-t border-neutral-200 bg-neutral-50 pb-24 dark:border-neutral-800 dark:bg-neutral-900">
       <Container className="px-5 pt-16 pb-8 sm:pt-24">
         <div className="flex flex-col justify-between gap-10 md:flex-row md:items-end">
           <div>
