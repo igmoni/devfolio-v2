@@ -30,3 +30,16 @@ export const setupConfig = [
     description: "VS Code / Cursor configuration and extensions guide.",
   },
 ];
+
+export const personalConfig = [
+  {
+    title: "Books",
+    href: "/books",
+    description: "Books that shaped my mindset and challenged my perspective.",
+  },
+  {
+    title: "Movies",
+    href: "/movies",
+    description: "Movies and shows that have inspired and entertained me.",
+  },
+];

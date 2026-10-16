@@ -5,6 +5,7 @@ import { Blog } from "@/components/home/Blog";
 import { Experience } from "@/components/home/Experience";
 import { Github } from "@/components/home/Github";
 import { Hero } from "@/components/home/Hero";
+import { Personal } from "@/components/home/Personal";
 import { Projects } from "@/components/home/Projects";
 import { Setup } from "@/components/home/Setup";
 import { SkillsCarousel } from "@/components/home/SkillsCarousel";
@@ -35,6 +36,7 @@ const Page = () => {
       <Projects />
       <Blog />
       <Setup />
+      <Personal />
     </Container>
   );
 };

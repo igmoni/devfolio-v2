@@ -4,6 +4,7 @@ import { CustomCursor } from "@/components/common/CustomCursor";
 import { Footer } from "@/components/common/Footer";
 import { Navbar } from "@/components/common/Navbar";
 import { OnekoCat } from "@/components/common/OnekoCat";
+import { Quote } from "@/components/common/Quote";
 import { poppins } from "@/config/font";
 import { ThemeProvider } from "@/providers/ThemeProvider";
 
@@ -28,6 +29,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           <Navbar />
           <OnekoCat />
           {children}
+          <Quote />
           <Footer />
         </ThemeProvider>
       </body>
