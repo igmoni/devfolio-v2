@@ -31,3 +31,7 @@ export type HeadingProps = {
   className?: string;
   Icon?: React.ComponentType<{ className?: string }> | null;
 };
+
+export interface Window {
+  __ONEKO_LOADED__?: boolean;
+}

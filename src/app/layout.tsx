@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { CustomCursor } from "@/components/common/CustomCursor";
 import { Footer } from "@/components/common/Footer";
 import { Navbar } from "@/components/common/Navbar";
+import { OnekoCat } from "@/components/common/OnekoCat";
 import { poppins } from "@/config/font";
 import { ThemeProvider } from "@/providers/ThemeProvider";
 
@@ -25,6 +26,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <ThemeProvider>
           <CustomCursor />
           <Navbar />
+          <OnekoCat />
           {children}
           <Footer />
         </ThemeProvider>
