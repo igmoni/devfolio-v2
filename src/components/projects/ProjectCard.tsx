@@ -1,177 +1,200 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 
-import { ArrowRight } from "lucide-react";
 import { motion } from "motion/react";
 
 import { ArrowUpRight } from "@/svgs/essentials/ArrowUpRight";
 import { Github } from "@/svgs/socials/Github";
-import { NextJs } from "@/svgs/technologies/NextJs";
-import { ReactIcon } from "@/svgs/technologies/ReactIcon";
-import { TypeScript } from "@/svgs/technologies/TypeScript";
-import type {
-  LinksProps,
-  Project,
-  ProjectProps,
-  StacksProps,
-} from "@/types/projects";
+import type { Project, StacksProps } from "@/types/projects";
 
-export const techs: StacksProps[] = [
-  { name: "TypeScript", Icon: <TypeScript /> },
-  { name: "React", Icon: <ReactIcon /> },
-  { name: "Next.Js", Icon: <NextJs /> },
-];
+import { Heading } from "../common/Heading";
 
+// Main component
 const ProjectCard = ({ project }: { project: Project }) => {
-  const { name, description, live, githubLink, stacks } = project;
-
   return (
-    <div className="group flex flex-col gap-3 rounded-2xl bg-neutral-100 p-3 px-5 ring ring-neutral-300 dark:bg-neutral-900 dark:ring-neutral-700">
-      <div className="flex items-center justify-between">
-        <CardHeading>{name}</CardHeading>
+    <motion.article
+      initial="rest"
+      whileHover="hover"
+      animate="rest"
+      className="group w-full max-w-[420px]"
+    >
+      <ProjectPreview
+        name={project.name}
+        imgUrl={project.imgUrl}
+        live={project.live}
+        githubLink={project.githubLink}
+        tool={project.tool}
+      />
 
-        <Links live={live} githubLink={githubLink} />
+      <div className="">
+        <ProjectInfo
+          name={project.name}
+          description={project.description}
+          stacks={project.stacks ?? []}
+        />
       </div>
-
-      <CardDescription>{description}</CardDescription>
-
-      <CardStacks stacks={stacks} projectName="Craft" />
-    </div>
+    </motion.article>
   );
 };
 
 export { ProjectCard };
 
-const CardHeading = ({ children }: ProjectProps) => (
-  <h3 className="text-xl font-semibold group-hover:text-blue-800 dark:group-hover:text-blue-500">
-    {children}
-  </h3>
-);
-
-const CardDescription = ({ children }: ProjectProps) => (
-  <p className="text-sm text-neutral-500">{children}</p>
-);
-
-const CardStacks = ({
-  stacks,
-  projectName,
-}: {
-  stacks: StacksProps[];
-  projectName: string;
-}) => {
+// Technology stack
+const ProjectTechStack = ({ stacks = [] }: { stacks?: StacksProps[] }) => {
   return (
-    <div className="mt-3 flex items-center justify-between">
-      <div className="flex items-center pl-3">
-        {stacks.map(({ name, Icon }, index) => (
+    <div className="mt-5 flex items-center pl-2">
+      {stacks.map(({ name, Icon }, index) => (
+        <motion.div
+          key={name}
+          layout
+          variants={{
+            initial: { marginLeft: -12 },
+            animate: { marginLeft: -25 },
+          }}
+          initial="initial"
+          whileHover="animate"
+          whileTap="animate"
+          transition={{ type: "spring", stiffness: 300, damping: 25 }}
+          className="relative"
+          style={{ zIndex: index }}
+        >
           <motion.div
-            key={`${name}-${index}`}
-            layout
             variants={{
-              initial: { marginLeft: -12 }, // -ml-5
-              animate: { marginLeft: -25 }, // -ml-3
+              initial: { paddingLeft: 0, paddingRight: 0 },
+              animate: { paddingLeft: 5, paddingRight: 10 },
             }}
             initial="initial"
             whileHover="animate"
             whileTap="animate"
-            transition={{
-              type: "spring",
-              stiffness: 300,
-              damping: 25,
-            }}
-            className="relative"
+            transition={{ duration: 0.2, ease: "easeOut" }}
+            className="bg-muted dark:bg-accent flex h-10 items-center overflow-hidden rounded-full border"
           >
-            {/* SINGLE PILL */}
-            <motion.div
-              variants={{
-                initial: {
-                  paddingLeft: 0,
-                  paddingRight: 0,
-                },
-                animate: {
-                  paddingLeft: 5,
-                  paddingRight: 10,
-                },
-              }}
-              initial="initial"
-              whileHover="animate"
-              whileTap="animate"
-              transition={{
-                duration: 0.2,
-                ease: "easeOut",
-              }}
-              className="bg-muted dark:bg-accent flex h-10 items-center overflow-hidden rounded-full border"
+            <motion.span
+              variants={{ animate: { paddingRight: 8 } }}
+              transition={{ type: "spring" }}
+              className="flex h-10 w-10 shrink-0 items-center justify-center"
             >
-              {/* ICON */}
-              <motion.span
-                variants={{ animate: { paddingRight: 8 } }}
-                transition={{ type: "spring" }}
-                className="flex h-10 w-10 shrink-0 items-center justify-center"
-              >
-                <span className="flex h-7 w-7 items-center justify-center">
-                  {Icon && Icon}
-                </span>
-              </motion.span>
+              <span className="flex size-7 items-center justify-center">
+                {Icon}
+              </span>
+            </motion.span>
 
-              {/* TEXT */}
-              <motion.span
-                variants={{
-                  initial: { width: 0 },
-                  animate: { width: "auto" },
-                  exit: { width: 0 },
-                }}
-                transition={{
-                  type: "spring",
-                  stiffness: 200,
-                  damping: 25,
-                  mass: 0.5,
-                }}
-                className="text-primary overflow-hidden text-xs whitespace-nowrap opacity-100 dark:text-white"
-              >
-                {name}
-              </motion.span>
-            </motion.div>
+            <motion.span
+              variants={{
+                initial: { width: 0 },
+                animate: { width: "auto" },
+              }}
+              transition={{
+                type: "spring",
+                stiffness: 200,
+                damping: 25,
+                mass: 0.5,
+              }}
+              className="text-primary overflow-hidden text-xs whitespace-nowrap dark:text-white"
+            >
+              {name}
+            </motion.span>
           </motion.div>
-        ))}
-      </div>
-      <Link
-        className="flex items-center gap-2 text-sm hover:underline"
-        href={`/projects/${projectName.toLowerCase()}`}
-      >
-        Read more <ArrowRight className="size-4" />{" "}
-      </Link>
+        </motion.div>
+      ))}
     </div>
   );
 };
 
-const Links = ({ live, githubLink }: LinksProps) => {
+// Image preview and external links
+const ProjectPreview = ({
+  name,
+  imgUrl,
+  live,
+  githubLink,
+  tool,
+}: Pick<Project, "name" | "imgUrl" | "live" | "githubLink" | "tool">) => {
   return (
-    <div className="flex items-center gap-3">
-      {live && (
-        <a
-          href={`https://${live}`}
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="View live project"
-          onClick={(e) => e.stopPropagation()}
+    <div className="relative aspect-[16/10] overflow-hidden rounded-2xl border border-neutral-200 bg-neutral-100 dark:border-neutral-800 dark:bg-neutral-900">
+      <Image
+        src={imgUrl}
+        alt={`${name} project preview`}
+        fill
+        sizes="(max-width: 640px) 100vw, 420px"
+        className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+      />
+
+      <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-70" />
+
+      <span className="absolute top-3 left-3 rounded-full border border-white/20 bg-black/50 px-3 py-1 font-mono text-[11px] text-white backdrop-blur-md">
+        {tool}
+      </span>
+
+      <motion.div
+        variants={{
+          rest: { opacity: 0, y: 6 },
+          hover: { opacity: 1, y: 0 },
+        }}
+        transition={{ duration: 0.2 }}
+        className="absolute right-3 bottom-3 flex gap-2"
+      >
+        {live && (
+          <a
+            href={live}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`View ${name} live`}
+            className="flex size-10 items-center justify-center rounded-full bg-white text-black transition-transform hover:scale-105"
+          >
+            <ArrowUpRight className="size-5" />
+          </a>
+        )}
+
+        {githubLink && (
+          <a
+            href={githubLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`View ${name} GitHub repository`}
+            className="flex size-10 items-center justify-center rounded-full border border-white/20 bg-black/60 text-white backdrop-blur-md transition-colors hover:bg-black"
+          >
+            <Github className="size-5" />
+          </a>
+        )}
+      </motion.div>
+    </div>
+  );
+};
+
+// Project details
+const ProjectInfo = ({
+  name,
+  description,
+  stacks,
+}: Pick<Project, "name" | "description" | "stacks">) => {
+  return (
+    <div>
+      <div className="flex items-start justify-between gap-4">
+        <div>
+          <Heading as="h3" className="text-2xl font-medium tracking-tight">
+            {name}
+          </Heading>
+
+          <p className="mt-1 text-xs font-medium tracking-wide text-neutral-500">
+            Developer tooling
+          </p>
+        </div>
+
+        <Link
+          href={`/projects/${name.toLowerCase().replace(/\s+/g, "-")}`}
+          aria-label={`Read more about ${name}`}
         >
-          <ArrowUpRight
-            className={
-              "size-6 text-neutral-500 group-hover:text-black dark:group-hover:text-white"
-            }
-          />
-        </a>
-      )}
-      {githubLink && (
-        <a
-          href={githubLink}
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="View GitHub repository"
-        >
-          <Github className="size-6 text-neutral-500 hover:text-black dark:hover:text-white" />
-        </a>
-      )}
+          <ArrowUpRight className="mt-7 size-7 shrink-0 text-neutral-400 transition-transform duration-200 group-hover:translate-x-1 group-hover:-translate-y-1 group-hover:text-neutral-900 dark:group-hover:text-white" />
+        </Link>
+      </div>
+
+      <p className="mt-3 max-w-sm text-sm leading-6 text-neutral-500">
+        {description}
+      </p>
+
+      <ProjectTechStack stacks={stacks} />
     </div>
   );
 };

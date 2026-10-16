@@ -1,14 +1,12 @@
-import React from "react";
-
+import { projects } from "@/config/project";
 import { Project } from "@/svgs/essentials/Project";
 
 import { Container } from "../common/Container";
 import { Heading } from "../common/Heading";
-import { ProjectCard, techs } from "../projects/ProjectCard";
+import { ProjectCard } from "../projects/ProjectCard";
 import { Button } from "../ui/button";
 
 const Projects = () => {
-  const projects = [1, 2, 3, 4, 5];
   return (
     <Container>
       <Heading as="h2" Icon={<Project className={"size-6"} />}>
@@ -17,19 +15,13 @@ const Projects = () => {
       </Heading>
 
       <div className="mt-5 grid grid-cols-2 gap-5">
-        <ProjectCard
-          project={{
-            name: "Craft",
-            description: "A TypeScript CLI tool for scaffolding projects.",
-            live: "craftship-v1.vercel.app",
-            githubLink: "https://github.com/igmoni/craft",
-            stacks: techs,
-          }}
-        />
+        {projects.slice(0, 4).map((project) => (
+          <ProjectCard key={project.name} project={project} />
+        ))}
       </div>
 
       {projects.length > 4 && (
-        <div className="flex justify-center">
+        <div className="mt-7 flex justify-center">
           <Button variant={"outline"} className={"my-5 w-fit"}>
             Show all projects
           </Button>

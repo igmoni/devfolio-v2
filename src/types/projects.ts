@@ -14,6 +14,7 @@ export type LinksProps = {
 
 export type Project = {
   name: string;
+  tool: string
   description: string;
   live?: string;
   githubLink?: string;
