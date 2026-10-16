@@ -3,7 +3,7 @@ import { ContainerProps } from "@/types/common";
 
 const Container = ({ children, className }: ContainerProps) => {
   return (
-    <section className={cn("mx-auto mt-5 mb-10 w-full max-w-3xl", className)}>
+    <section className={cn("mx-auto w-full max-w-3xl", className)}>
       {children}
     </section>
   );

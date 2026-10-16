@@ -20,36 +20,4 @@ export const projects: Project[] = [
     imgUrl: "/blog/github.png",
     stacks: techs,
   },
-  {
-    name: "Craft",tool: "CLI Tool",
-    description:
-      "Scaffold projects faster with a CLI that brings frameworks and development tooling into one workflow.",
-    githubLink: "https://github.com/igmoni",
-    imgUrl: "/blog/github.png",
-    stacks: techs,
-  },
-  {
-    name: "Craft",tool: "CLI Tool",
-    description:
-      "Scaffold projects faster with a CLI that brings frameworks and development tooling into one workflow.",
-    githubLink: "https://github.com/igmoni",
-    imgUrl: "/blog/github.png",
-    stacks: techs,
-  },
-  {
-    name: "Craft",tool: "CLI Tool",
-    description:
-      "Scaffold projects faster with a CLI that brings frameworks and development tooling into one workflow.",
-    githubLink: "https://github.com/igmoni",
-    imgUrl: "/blog/github.png",
-    stacks: techs,
-  },
-  {
-    name: "Craft",tool: "CLI Tool",
-    description:
-      "Scaffold projects faster with a CLI that brings frameworks and development tooling into one workflow.",
-    githubLink: "https://github.com/igmoni",
-    imgUrl: "/blog/github.png",
-    stacks: techs,
-  },
 ];

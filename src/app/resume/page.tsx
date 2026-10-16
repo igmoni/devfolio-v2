@@ -4,7 +4,7 @@ import { SubHeading } from "@/components/common/SubHeading";
 
 export default function ResumePage() {
   return (
-    <Container className={"pt-5Z"}>
+    <Container>
       <Heading as="h1">Resume</Heading>
       <SubHeading>View and download my professional resume.</SubHeading>
 

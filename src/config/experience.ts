@@ -11,6 +11,7 @@ export const experience = [
     description:
       "Taught programming fundamentals and guided students through practical coding projects.",
     duration: "Aug 2023 - Aug 2026",
+    place: "Bengaluru, India",
     points: [
       "Conducted computer fundamentals and programming sessions.",
       "Helped students debug code and build practical projects.",
