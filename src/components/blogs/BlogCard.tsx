@@ -1,20 +1,13 @@
 import Image from "next/image";
 import Link from "next/link";
 
-import {
-  ArrowRight,
-  Calendar,
-  Calendar1,
-  Calendar1Icon,
-  CalendarDays,
-} from "lucide-react";
+import { ArrowRight, CalendarDays } from "lucide-react";
 
 import { Blog } from "@/types/blog";
 
 import { Heading } from "../common/Heading";
 import { SubHeading } from "../common/SubHeading";
 
-//
 const BlogCard = ({ blog }: { blog: Blog }) => {
   const { name, description, href, date } = blog;
 
