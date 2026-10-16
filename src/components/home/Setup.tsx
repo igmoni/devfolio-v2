@@ -15,6 +15,7 @@ const Setup = () => {
       <div className="my-5 flex flex-col gap-3">
         {setupConfig.map((item) => (
           <NavigationCard
+            key={item.title}
             title={item.title}
             description={item.description}
             href={item.href}

@@ -43,3 +43,15 @@ export const personalConfig = [
     description: "Movies and shows that have inspired and entertained me.",
   },
 ];
+
+export const footerLinks = [
+  { name: "Home", href: "/" },
+  { name: "Work", href: "/work" },
+  { name: "Blog", href: "/blog" },
+  { name: "Projects", href: "/projects" },
+  { name: "Gears", href: "/gears" },
+  { name: "Setup", href: "/setup" },
+  { name: "Books", href: "/books" },
+  { name: "Movies", href: "/movies" },
+  { name: "RSS Feed", href: "/blog/feed.xml" },
+];

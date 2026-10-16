@@ -147,12 +147,6 @@ const WakaTimeData = () => {
             <span className="text-accent font-medium">Coding</span>
           </div>
         )}
-
-        {hasError && (
-          <p className="text-xs text-neutral-500">
-            Using last successful update; reconnecting...
-          </p>
-        )}
       </div>
     );
   }

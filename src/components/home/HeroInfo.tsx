@@ -15,7 +15,6 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "../ui/tooltip";
-import { Spotify } from "./Spotify";
 
 export const HeroInfo = () => {
   const { name, about, description, socialLinks, professions } = heroConfig;
@@ -76,10 +75,11 @@ export const HeroInfo = () => {
               <Tooltip key={item.id}>
                 <TooltipTrigger>
                   <Link
+                    key={item.id}
                     href={item.value}
                     target="_blank"
                     rel="noopener noreferrer"
-                    aria-label={item.id}
+                    aria-label={item.name}
                     className="flex size-8 items-center justify-center"
                   >
                     <Icon className="size-7 text-[#909092]" />

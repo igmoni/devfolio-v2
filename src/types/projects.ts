@@ -17,5 +17,6 @@ export type Project = {
   description: string;
   live?: string;
   githubLink?: string;
+  imgUrl: string;
   stacks: StacksProps[];
 };

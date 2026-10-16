@@ -62,6 +62,7 @@ export const HeroAvatar = () => {
             src="/assets/mohan.jpeg"
             alt="My avatar"
             fill
+            sizes="(max-width: 768px) 100vw, 320px"
             className="scale-150 rounded-full object-cover"
             style={{
               transform: "rotateY(180deg)",
