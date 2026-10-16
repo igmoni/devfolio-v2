@@ -17,6 +17,7 @@ import { Github as GithubSvg } from "@/svgs/socials/Github";
 import { Container } from "../common/Container";
 import { Heading } from "../common/Heading";
 import { Button } from "../ui/button";
+import { WakaTimeData } from "./WakatimeData";
 
 type GithubApiContribution = {
   date: string;
@@ -135,11 +136,12 @@ const Github = () => {
           <ArrowUpRight className="size-3 transition-all duration-300 ease-out group-hover:translate-x-1 group-hover:scale-150 md:size-4" />
         </Link>
       </div>
-
-      <p className="mb-1">
-        <b>{username}</b>&apos;s {subtitle}
-      </p>
-
+      <div className="flex justify-between">
+        <p className="mb-1">
+          <b>{username}</b>&apos;s {subtitle}
+        </p>
+        <WakaTimeData />
+      </div>
       {isLoading && (
         <div className="flex items-center justify-center py-16">
           <div className="text-center">

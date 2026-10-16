@@ -7,6 +7,7 @@ import { Hero } from "@/components/home/Hero";
 import { Projects } from "@/components/home/Projects";
 import { SkillsCarousel } from "@/components/home/SkillsCarousel";
 import { Spotify } from "@/components/home/Spotify";
+import { WakaTimeData } from "@/components/home/WakatimeData";
 import { getSpotifyTrack } from "@/lib/spotify";
 
 const SpotifyData = async () => {
@@ -31,6 +32,7 @@ const Page = () => {
       <Github />
       <Experience />
       <Projects />
+      <WakaTimeData />
     </Container>
   );
 };

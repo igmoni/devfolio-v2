@@ -1,76 +1,115 @@
-export function normalizeEditor(name: string) {
+import type {
+  WakaTimeApiResponse,
+  WakaTimeData,
+  WakaTimeHeartbeat,
+  WakaTimeStatus,
+} from "@/types/wakatime";
+
+// Normalize editor names for consistent display.
+export function normalizeEditor(name?: string): string {
   if (!name) return "Cursor";
-  const n = name.toLowerCase();
-  if (n.includes("cursor")) return "Cursor";
-  if (n.includes("visual studio") || n.includes("vs code")) return "VS Code";
+
+  const value = name.toLowerCase();
+
+  if (value.includes("cursor")) return "Cursor";
+
+  if (
+    value.includes("visual studio") ||
+    value.includes("vs code") ||
+    value.includes("vscode")
+  ) {
+    return "VS Code";
+  }
+
   return name;
 }
 
-export function formatDuration(totalSeconds = 0) {
-  const secs = Math.max(0, Math.floor(totalSeconds));
+// Convert seconds into a readable duration.
+export function formatDuration(totalSeconds = 0): string {
+  const seconds = Math.max(0, Math.floor(totalSeconds));
 
-  const h = Math.floor(secs / 3600);
-  const m = Math.floor((secs % 3600) / 60);
-  const s = secs % 60;
+  const hours = Math.floor(seconds / 3600);
+  const minutes = Math.floor((seconds % 3600) / 60);
+  const remainingSeconds = seconds % 60;
 
-  if (h > 0) {
-    return `${h} hr ${m} min ${s} sec`;
+  if (hours > 0) {
+    return `${hours} hr ${minutes} min ${remainingSeconds} sec`;
   }
 
-  return `${m} min ${s} sec`;
+  return `${minutes} min ${remainingSeconds} sec`;
 }
 
-export function parseWakaTime(apiData: any) {
-  const heartbeats = apiData?.heartbeats?.data ?? [];
-  const today = apiData?.todaySummary?.data?.[0];
-  const yesterday = apiData?.yesterdaySummary?.data?.[0];
+// Safely read a heartbeat timestamp, in milliseconds.
+function getHeartbeatTime(heartbeat: WakaTimeHeartbeat): number {
+  if (typeof heartbeat.time === "number") {
+    return heartbeat.time * 1000;
+  }
 
-  // No heartbeats at all
+  if (heartbeat.created_at) {
+    return new Date(heartbeat.created_at).getTime();
+  }
+
+  return 0;
+}
+
+// Convert the WakaTime API response into the shape our UI needs.
+export function parseWakaTime(
+  apiData: WakaTimeApiResponse,
+  options: {
+    now?: number;
+    onlineThresholdSeconds?: number;
+  } = {}
+): WakaTimeData {
+  const now = options.now ?? Date.now();
+  const thresholdMs = (options.onlineThresholdSeconds ?? 180) * 1000;
+
+  const heartbeats = apiData.heartbeats?.data ?? [];
+  const today = apiData.todaySummary?.data?.[0];
+  const yesterday = apiData.yesterdaySummary?.data?.[0];
+
+  const yesterdayTime =
+    yesterday?.grand_total?.text ?? "No coding time recorded";
+
+  // No heartbeat means we cannot confirm current activity.
   if (heartbeats.length === 0) {
     return {
       status: "offline",
-      yesterdayTime: yesterday?.grand_total?.text ?? null,
+      yesterdayTime,
     };
   }
 
-  // Find latest heartbeat safely
-  const latestHeartbeat = heartbeats.reduce((latest: any, hb: any) => {
-    const latestTime = latest.time
-      ? latest.time * 1000
-      : new Date(latest.created_at).getTime();
-
-    const hbTime = hb.time ? hb.time * 1000 : new Date(hb.created_at).getTime();
-
-    return hbTime > latestTime ? hb : latest;
+  // Find the most recent valid heartbeat.
+  const latestHeartbeat = heartbeats.reduce((latest, current) => {
+    return getHeartbeatTime(current) > getHeartbeatTime(latest)
+      ? current
+      : latest;
   });
 
-  const lastBeatTime = latestHeartbeat.time
-    ? latestHeartbeat.time * 1000
-    : new Date(latestHeartbeat.created_at).getTime();
+  const lastHeartbeatTime = getHeartbeatTime(latestHeartbeat);
 
-  const now = Date.now();
-
-  // 🔥 GRACE WINDOW (KEY FIX)
-  const ONLINE_THRESHOLD = 3 * 60 * 1000; // 5 minutes
-
-  const isOnline = now - lastBeatTime < ONLINE_THRESHOLD;
+  // Invalid or stale timestamps must not count as active.
+  const isOnline =
+    lastHeartbeatTime > 0 &&
+    lastHeartbeatTime <= now + 30_000 &&
+    now - lastHeartbeatTime < thresholdMs;
 
   if (!isOnline) {
     return {
       status: "offline",
-      yesterdayTime: yesterday?.grand_total?.text ?? null,
+      yesterdayTime,
     };
   }
 
-  // Extract filename only
-  const fullPath = latestHeartbeat.entity ?? "";
-  const fileName = fullPath.split("/").pop() || "Coding";
+  // Heartbeats can contain either Unix-style or Windows-style paths.
+  const entity = latestHeartbeat.entity ?? "";
+  const file = entity.split(/[\\/]/).pop() || null;
 
   return {
     status: "online",
-    editor: latestHeartbeat.editor ?? "Cursor",
+    editor: normalizeEditor(latestHeartbeat.editor) || "Cursor",
     project: latestHeartbeat.project ?? null,
-    file: fileName,
+    file,
     totalSeconds: today?.grand_total?.total_seconds ?? 0,
+    yesterdayTime,
   };
 }
