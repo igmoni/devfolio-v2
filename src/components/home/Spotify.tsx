@@ -71,7 +71,7 @@ const Spotify = ({ track }: SpotifyProps) => {
           width={44}
           height={44}
           alt={song.album ?? "Album artwork"}
-          className="size-11 shrink-0 rounded-full object-cover"
+          className="size-11 shrink-0 rounded-xl object-cover"
         />
       ) : (
         <Image
