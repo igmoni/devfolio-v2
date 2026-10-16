@@ -37,7 +37,7 @@ const Experience = () => {
         <div className="absolute -top-5 bottom-0 left-1.25 w-px bg-neutral-800" />
 
         <div className="flex flex-col gap-8">
-          {experience.map((item) => {
+          {experience.slice(0, 3).map((item) => {
             const isExpanded = expanded.includes(item.id);
 
             return (
@@ -138,7 +138,7 @@ const Experience = () => {
       </div>
       {experience.length > 3 && (
         <div className="flex justify-center">
-          <Button variant={"outline"} className={"my-3 w-fit"}>
+          <Button variant={"outline"} className={"my-5 w-fit"}>
             Show all work experiences
           </Button>
         </div>

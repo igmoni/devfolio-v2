@@ -1,5 +1,6 @@
 import { SvgType } from "@/types/common";
-export  function Github({ className }: SvgType) {
+
+export function Github({ className }: SvgType) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
