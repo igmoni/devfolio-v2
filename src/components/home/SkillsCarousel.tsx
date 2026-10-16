@@ -13,7 +13,7 @@ const SkillsCarousel = () => {
       <Heading as="h2">Tech Stack</Heading>
 
       <div className="group relative w-full overflow-hidden py-4">
-        <div className="animate-marquee flex w-max items-center gap-3 group-hover:paused">
+        <div className="animate-marquee flex w-max items-center gap-3 ">
           {skills.map(({ name, icon: Icon }, index) => (
             <div
               key={`${name}-${index}`}

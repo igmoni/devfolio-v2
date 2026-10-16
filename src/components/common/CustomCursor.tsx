@@ -1,8 +1,10 @@
+
 "use client";
 
-import { useEffect, useState } from "react";
-
+import { useEffect, useState, useRef } from "react";
 import { motion, useMotionValue, useSpring } from "motion/react";
+
+import { useSound } from "@/context/SoundContext";
 
 const springData = {
   stiffness: 350,
@@ -11,6 +13,8 @@ const springData = {
 };
 
 const CustomCursor = () => {
+  const { soundEnabled } = useSound();
+
   const mouseX = useMotionValue(-100);
   const mouseY = useMotionValue(-100);
 
@@ -18,6 +22,7 @@ const CustomCursor = () => {
   const y = useSpring(mouseY, springData);
 
   const [isInteractive, setIsInteractive] = useState(false);
+  const clickAudioRef = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
     const interactiveSelector = [
@@ -44,14 +49,37 @@ const CustomCursor = () => {
       setIsInteractive(Boolean(target.closest(interactiveSelector)));
     };
 
+    const handleClick = () => {
+      if (!soundEnabled) return;
+
+      // Stop any previous click sound before playing another.
+      clickAudioRef.current?.pause();
+
+      const audio = new Audio("/assets/click.wav");
+      audio.volume = 0.3;
+      clickAudioRef.current = audio;
+
+      void audio.play().catch(() => {});
+    };
+
     window.addEventListener("pointermove", handlePointerMove, {
       passive: true,
     });
 
+    window.addEventListener("click", handleClick);
+
+    // Stop the current click sound immediately when sound is disabled.
+    if (!soundEnabled && clickAudioRef.current) {
+      clickAudioRef.current.pause();
+      clickAudioRef.current.currentTime = 0;
+      clickAudioRef.current = null;
+    }
+
     return () => {
       window.removeEventListener("pointermove", handlePointerMove);
+      window.removeEventListener("click", handleClick);
     };
-  }, [mouseX, mouseY]);
+  }, [mouseX, mouseY, soundEnabled]);
 
   return (
     <motion.div
@@ -83,5 +111,6 @@ const CustomCursor = () => {
     />
   );
 };
+
 
 export { CustomCursor };

@@ -8,6 +8,7 @@ import { Volume2, VolumeX, Zap } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
 
 import { caveat } from "@/config/font";
+import { useSound } from "@/context/SoundContext";
 import { CircleZap } from "@/svgs/essentials/CircleZap";
 
 import { AvailableBadge } from "../common/AvailableBadge";
@@ -19,7 +20,7 @@ export const HeroAvatar = () => {
   const [image, setImage] = useState(LOGO);
   const [glitch, setGlitch] = useState(false);
 
-  const [soundEnabled, setSoundEnabled] = useState(true);
+  const { soundEnabled, setSoundEnabled } = useSound();
 
   const audioRef = useRef<HTMLAudioElement>(null);
   const timersRef = useRef<ReturnType<typeof setTimeout>[]>([]);
@@ -49,20 +50,17 @@ export const HeroAvatar = () => {
   };
 
   const handleSoundControl = () => {
-    setSoundEnabled((prev) => {
-      const next = !prev;
+    const next = !soundEnabled;
 
-      if (!next) {
-        document.querySelectorAll("audio").forEach((audio) => {
-          audio.pause();
-          audio.currentTime = 0;
-        });
-      }
+    setSoundEnabled(next);
 
-      return next;
-    });
+    if (!next) {
+      document.querySelectorAll("audio").forEach((audio) => {
+        audio.pause();
+        audio.currentTime = 0;
+      });
+    }
   };
-
   return (
     <div className="relative">
       {/* Hero image */}

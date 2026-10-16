@@ -6,6 +6,7 @@ import { Navbar } from "@/components/common/Navbar";
 import { OnekoCat } from "@/components/common/OnekoCat";
 import { Quote } from "@/components/common/Quote";
 import { poppins } from "@/config/font";
+import { SoundProvider } from "@/context/SoundContext";
 import { ThemeProvider } from "@/providers/ThemeProvider";
 
 import "./globals.css";
@@ -25,12 +26,14 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     >
       <body className="flex min-h-full flex-col">
         <ThemeProvider>
-          <CustomCursor />
-          <Navbar />
-          <OnekoCat />
-          {children}
-          <Quote />
-          <Footer />
+          <SoundProvider>
+            <CustomCursor />
+            <Navbar />
+            <OnekoCat />
+            {children}
+            <Quote />
+            <Footer />
+          </SoundProvider>
         </ThemeProvider>
       </body>
     </html>
