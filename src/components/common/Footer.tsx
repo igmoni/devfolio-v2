@@ -90,7 +90,7 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className="mt-12 flex flex-col gap-3 border-t border-neutral-800 pt-6 text-xs text-neutral-600 sm:flex-row sm:items-center sm:justify-between">
+        <div className="mt-12 flex flex-col gap-3 border-t border-neutral-800 pt-6 text-sm text-neutral-600 sm:flex-row sm:items-center sm:justify-between">
           <span>
             © {year ?? "abc"} {name}. All rights reserved.
           </span>
