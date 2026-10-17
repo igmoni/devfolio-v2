@@ -10,7 +10,7 @@ import type { EditorSettings } from "@/types/setup";
 import { Container } from "../common/Container";
 
 export function SettingsJson({ settings }: { settings: EditorSettings }) {
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
   const [copied, setCopied] = useState(false);
   const json = JSON.stringify(settings, null, 2);
 

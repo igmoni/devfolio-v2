@@ -6,12 +6,12 @@ import { usePathname } from "next/navigation";
 
 export function PageViews() {
   const pathname = usePathname();
-  const [views, setViews] = useState<number | null>(null);
+  const [views, setViews] = useState<number | 0>(0);
 
   useEffect(() => {
     const controller = new AbortController();
 
-    setViews(null);
+    setViews(0);
 
     fetch(`/api/analytics?path=${encodeURIComponent(pathname)}`, {
       signal: controller.signal,
@@ -29,8 +29,6 @@ export function PageViews() {
 
     return () => controller.abort();
   }, [pathname]);
-
-  if (views === null) return null;
 
   return (
     <div className="mx-auto mt-10 mb-5 flex w-fit items-center justify-center rounded-xl border border-neutral-200 px-5 py-2 dark:border-neutral-700">
