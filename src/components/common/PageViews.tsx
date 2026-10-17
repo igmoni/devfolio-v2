@@ -38,7 +38,7 @@ export function PageViews() {
           notation: "compact",
           maximumFractionDigits: 1,
         }).format(views)}{" "}
-        views
+        visitors
       </p>
     </div>
   );

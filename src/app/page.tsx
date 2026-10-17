@@ -1,6 +1,7 @@
 import { Suspense } from "react";
 
 import { Container } from "@/components/common/Container";
+import { Reveal } from "@/components/common/Reveal";
 import { Blog } from "@/components/home/Blog";
 import { Experience } from "@/components/home/Experience";
 import { Github } from "@/components/home/Github";
@@ -25,16 +26,21 @@ const SpotifyData = async () => {
 const Page = async () => {
   const stats = await getAnalytics("/");
   return (
-    <Container className="mt-5">
+    <Container className="mt-5 px-4 md:px-6 lg:px-0">
       <Hero />
-
-      <Suspense fallback={<div>Loading Spotify...</div>}>
+      <Reveal delay={0.5}>
         <SpotifyData />
-      </Suspense>
+      </Reveal>
 
-      <SkillsCarousel />
-      <Github />
-      <Experience />
+      <Reveal delay={0.6}>
+        <SkillsCarousel />
+      </Reveal>
+      <Reveal delay={0.2}>
+        <Github />
+      </Reveal>
+      <Reveal delay={0.2}>
+        <Experience />
+      </Reveal>
       <Projects />
       <Blog />
       <Setup />

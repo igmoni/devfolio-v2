@@ -153,7 +153,7 @@ const WakaTimeData = () => {
 
   return (
     <div className="text-sm text-neutral-500 dark:text-neutral-400">
-      <span className="text-primary flex items-center gap-1 font-semibold dark:text-white">
+      <span className="text-primary flex items-center justify-end gap-1 font-semibold dark:text-white">
         Offline in
         <Image
           src="/assets/cursor.png"

@@ -103,7 +103,7 @@ const Navbar = () => {
       layout
       transition={{ layout: springConfig }}
       aria-label="Main navigation"
-      className="fixed bottom-8 left-1/2 z-999 flex h-14 w-max -translate-x-1/2 items-center gap-3 rounded-3xl bg-white p-2 text-neutral-900 shadow-sm ring ring-neutral-200 dark:bg-neutral-800 dark:text-neutral-100 dark:ring-neutral-700"
+      className="fixed bottom-4 md:bottom-8 left-1/2 z-999 flex h-14 w-max -translate-x-1/2 scale-75 items-center gap-3 rounded-3xl bg-white p-2 text-neutral-900 shadow-sm ring ring-neutral-200 md:scale-100 dark:bg-neutral-800 dark:text-neutral-100 dark:ring-neutral-700"
     >
       <div className="flex items-center gap-3">
         {navItems.map((item) => {

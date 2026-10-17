@@ -48,7 +48,7 @@ const Spotify = ({ track }: SpotifyProps) => {
 
   if (!song?.title) {
     return (
-      <div className="flex min-w-0 items-center gap-2">
+      <div className=" flex min-w-0 items-center gap-2">
         <Image
           src="/assets/spotify1.svg"
           width={24}
@@ -64,7 +64,7 @@ const Spotify = ({ track }: SpotifyProps) => {
   }
 
   return (
-    <div className="flex min-w-0 items-center gap-3">
+    <div className=" flex min-w-0 items-center gap-3">
       {song.isPlaying && song.albumImageUrl ? (
         <Image
           src={song.albumImageUrl}
@@ -98,16 +98,10 @@ const Spotify = ({ track }: SpotifyProps) => {
             {song.title}
           </a>
         ) : (
-          <p  className="truncate text-sm font-medium">
-            {song.title}
-          </p>
+          <p className="truncate text-sm font-medium">{song.title}</p>
         )}
 
-        <p
-          className="truncate text-xs text-neutral-500"
-        >
-          by {song.artist}
-        </p>
+        <p className="truncate text-xs text-neutral-500">by {song.artist}</p>
       </div>
     </div>
   );

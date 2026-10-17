@@ -3,4 +3,5 @@ export type Blog = {
   description: string;
   href: string;
   date: string;
+  img: string;
 };

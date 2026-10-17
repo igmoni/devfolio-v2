@@ -8,6 +8,7 @@ import { Navbar } from "@/components/common/Navbar";
 import { OnekoCat } from "@/components/common/OnekoCat";
 import { PageViews } from "@/components/common/PageViews";
 import { Quote } from "@/components/common/Quote";
+import { Reveal } from "@/components/common/Reveal";
 import { poppins } from "@/config/font";
 import { SoundProvider } from "@/context/SoundContext";
 import { ThemeProvider } from "@/providers/ThemeProvider";
@@ -31,11 +32,13 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <ThemeProvider>
           <SoundProvider>
             <CustomCursor />
-            <Navbar />
+              <Navbar />
             <OnekoCat />
             {children}
-            <PageViews />
-            <Quote />
+            <Reveal delay={0.2}>
+              <PageViews />
+              <Quote />
+            </Reveal>
             <Footer />
             <Analytics />
           </SoundProvider>

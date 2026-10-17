@@ -116,8 +116,8 @@ const Github = () => {
 
   return (
     <Container className="space-y-6">
-      <div className="mt-5 mb-1 flex items-center justify-between">
-        <Heading as="h2" className="flex items-center gap-2">
+      <div className="mt-5 mb-1 flex items-end justify-between md:items-center">
+        <Heading as="h2" className="flex items-center gap-2 ">
           <GithubSvg className="size-7" />
           Github Activity
         </Heading>
@@ -130,17 +130,19 @@ const Github = () => {
         >
           <span className="relative">
             View Profile
-            <span className="absolute -bottom-1 left-0 h-0.5 w-full origin-right scale-x-0 bg-current transition-all duration-200 ease-out group-hover:origin-left group-hover:scale-x-100" />
+            <span className="absolute bottom-0 left-0 h-0.5 w-full origin-right scale-x-0 bg-current transition-all duration-200 ease-out group-hover:origin-left group-hover:scale-x-100" />
           </span>
 
           <ArrowUpRight className="size-3 transition-all duration-300 ease-out group-hover:translate-x-1 group-hover:scale-150 md:size-4" />
         </Link>
       </div>
-      <div className="flex justify-between">
+      <div className="flex flex-col justify-between md:flex-row">
         <p className="mb-1">
           <b>{username}</b>&apos;s {subtitle}
         </p>
-        <WakaTimeData />
+        <div className="text-right">
+          <WakaTimeData />
+        </div>
       </div>
       {isLoading && (
         <div className="flex items-center justify-center py-16">

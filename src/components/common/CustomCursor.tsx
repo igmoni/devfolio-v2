@@ -1,7 +1,7 @@
-
 "use client";
 
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+
 import { motion, useMotionValue, useSpring } from "motion/react";
 
 import { useSound } from "@/context/SoundContext";
@@ -22,6 +22,8 @@ const CustomCursor = () => {
   const y = useSpring(mouseY, springData);
 
   const [isInteractive, setIsInteractive] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
+
   const clickAudioRef = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
@@ -42,11 +44,26 @@ const CustomCursor = () => {
       mouseX.set(event.clientX);
       mouseY.set(event.clientY);
 
+      setIsVisible(true);
+
       const target = event.target;
 
       if (!(target instanceof Element)) return;
 
       setIsInteractive(Boolean(target.closest(interactiveSelector)));
+    };
+
+    const handlePointerLeave = (event: PointerEvent) => {
+      if (event.pointerType !== "mouse") return;
+
+      setIsVisible(false);
+      setIsInteractive(false);
+    };
+
+    const handlePointerEnter = (event: PointerEvent) => {
+      if (event.pointerType !== "mouse") return;
+
+      setIsVisible(true);
     };
 
     const handleClick = () => {
@@ -66,6 +83,16 @@ const CustomCursor = () => {
       passive: true,
     });
 
+    document.documentElement.addEventListener(
+      "pointerleave",
+      handlePointerLeave
+    );
+
+    document.documentElement.addEventListener(
+      "pointerenter",
+      handlePointerEnter
+    );
+
     window.addEventListener("click", handleClick);
 
     // Stop the current click sound immediately when sound is disabled.
@@ -77,6 +104,17 @@ const CustomCursor = () => {
 
     return () => {
       window.removeEventListener("pointermove", handlePointerMove);
+
+      document.documentElement.removeEventListener(
+        "pointerleave",
+        handlePointerLeave
+      );
+
+      document.documentElement.removeEventListener(
+        "pointerenter",
+        handlePointerEnter
+      );
+
       window.removeEventListener("click", handleClick);
     };
   }, [mouseX, mouseY, soundEnabled]);
@@ -88,7 +126,7 @@ const CustomCursor = () => {
       animate={{
         width: isInteractive ? 56 : 12,
         height: isInteractive ? 56 : 12,
-        opacity: 1,
+        opacity: isVisible ? 1 : 0,
       }}
       transition={{
         width: {
@@ -101,6 +139,9 @@ const CustomCursor = () => {
           stiffness: 300,
           damping: 24,
         },
+        opacity: {
+          duration: 0.15,
+        },
       }}
       style={{
         x,
@@ -111,6 +152,5 @@ const CustomCursor = () => {
     />
   );
 };
-
 
 export { CustomCursor };
