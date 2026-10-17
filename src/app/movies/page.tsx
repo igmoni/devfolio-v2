@@ -1,6 +1,7 @@
 import { Container } from "@/components/common/Container";
 import { Heading } from "@/components/common/Heading";
 import { SubHeading } from "@/components/common/SubHeading";
+import { Separator } from "@/components/ui/separator";
 import { movies } from "@/lib/personal";
 
 const page = () => {
@@ -11,7 +12,7 @@ const page = () => {
         Movies and shows that have inspired and entertained me.
       </SubHeading>
 
-      <div className="mt-10 h-px w-full bg-neutral-200 dark:bg-neutral-700" />
+      <Separator className="my-5 mt-10" />
       <div className="my-5 grid grid-cols-1 gap-5 sm:grid-cols-2">
         {movies.map((item) => (
           <div className="rounded-xl bg-neutral-100 p-3 px-5 ring ring-neutral-300 dark:bg-neutral-900 dark:ring-neutral-700">

@@ -1,16 +1,17 @@
 import { Container } from "@/components/common/Container";
 import { Heading } from "@/components/common/Heading";
 import { SubHeading } from "@/components/common/SubHeading";
+import { Separator } from "@/components/ui/separator";
 import { experience } from "@/config/experience";
 
 const page = () => {
   return (
-    <Container>
+    <Container className="mt-5">
       <Heading as="h1">Work Experience</Heading>
       <SubHeading>
         My work experiences across different companies and roles.
       </SubHeading>
-
+      <Separator className="my-5 mt-10" />
       <div className="mt-10 flex flex-col gap-8">
         {experience.map((item) => {
           return (

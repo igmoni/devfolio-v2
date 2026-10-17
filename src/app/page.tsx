@@ -10,6 +10,7 @@ import { Projects } from "@/components/home/Projects";
 import { Setup } from "@/components/home/Setup";
 import { SkillsCarousel } from "@/components/home/SkillsCarousel";
 import { Spotify } from "@/components/home/Spotify";
+import { getAnalytics } from "@/lib/analytics";
 import { getSpotifyTrack } from "@/lib/spotify";
 
 const SpotifyData = async () => {
@@ -21,9 +22,10 @@ const SpotifyData = async () => {
   return <Spotify track={track} />;
 };
 
-const Page = () => {
+const Page = async () => {
+  const stats = await getAnalytics("/");
   return (
-    <Container>
+    <Container className="mt-5">
       <Hero />
 
       <Suspense fallback={<div>Loading Spotify...</div>}>

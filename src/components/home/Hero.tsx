@@ -1,3 +1,4 @@
+import { Analytics } from "../common/Analytics";
 import { Container } from "../common/Container";
 import { HeroAvatar } from "./HeroAvatar";
 import { HeroInfo } from "./HeroInfo";
@@ -5,7 +6,7 @@ import { HeroInfo } from "./HeroInfo";
 const Hero = () => {
   return (
     <Container>
-      <HeroAvatar />
+      <HeroAvatar  />
       <HeroInfo />
     </Container>
   );

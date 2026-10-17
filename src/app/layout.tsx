@@ -1,9 +1,12 @@
 import type { Metadata } from "next";
 
+import { Analytics } from "@vercel/analytics/next";
+
 import { CustomCursor } from "@/components/common/CustomCursor";
 import { Footer } from "@/components/common/Footer";
 import { Navbar } from "@/components/common/Navbar";
 import { OnekoCat } from "@/components/common/OnekoCat";
+import { PageViews } from "@/components/common/PageViews";
 import { Quote } from "@/components/common/Quote";
 import { poppins } from "@/config/font";
 import { SoundProvider } from "@/context/SoundContext";
@@ -31,8 +34,10 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
             <Navbar />
             <OnekoCat />
             {children}
+            <PageViews />
             <Quote />
             <Footer />
+            <Analytics />
           </SoundProvider>
         </ThemeProvider>
       </body>
