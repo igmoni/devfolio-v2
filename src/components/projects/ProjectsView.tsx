@@ -28,7 +28,7 @@ const ProjectsView = ({ projects }: ProjectsViewProps) => {
   return (
     <Reveal delay={0.3}>
       <Container className="mt-10">
-        <div className="flex items-center justify-between border border-red-500">
+        <div className="flex items-center justify-between ">
           <Heading as="h2" Icon={<ProjectIcon className="size-6" />}>
             Projects
           </Heading>

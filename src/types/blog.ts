@@ -1,7 +1,9 @@
 export type Blog = {
-  name: string;
-  description: string;
-  href: string;
+  slug: string;
+  title: string;
+  desc: string;
+  image: string;
+  tags: string[];
   date: string;
-  img: string;
+  isPublished: boolean;
 };
