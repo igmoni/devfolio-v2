@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 import { blogs } from "@/config/blogs";
 import { Blog as BlogSvg } from "@/svgs/essentials/Blog";
 
@@ -23,9 +25,11 @@ const Blog = () => {
         </div>
         {blogs.length > 3 && (
           <div className="flex justify-center">
-            <Button variant={"outline"} className={"my-5 w-fit"}>
-              Show all blogs
-            </Button>
+            <Link href={"/blog"}>
+              <Button variant={"outline"} className={"my-5 w-fit"}>
+                Show all blogs
+              </Button>
+            </Link>
           </div>
         )}
       </Container>

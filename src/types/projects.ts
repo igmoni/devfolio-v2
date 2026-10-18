@@ -13,11 +13,14 @@ export type LinksProps = {
 };
 
 export type Project = {
-  name: string;
-  tool: string
+  slug: string;
+  shortTitle: string;
+  tool: string;
   description: string;
   live?: string;
   githubLink?: string;
   imgUrl: string;
   stacks: StacksProps[];
+  status: "Working" | "Building";
+  about: string;
 };

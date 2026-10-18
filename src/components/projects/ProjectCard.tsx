@@ -21,7 +21,7 @@ const ProjectCard = ({ project }: { project: Project }) => {
       className="group w-full max-w-[420px]"
     >
       <ProjectPreview
-        name={project.name}
+        shortTitle={project.shortTitle}
         imgUrl={project.imgUrl}
         live={project.live}
         githubLink={project.githubLink}
@@ -30,9 +30,12 @@ const ProjectCard = ({ project }: { project: Project }) => {
 
       <div className="">
         <ProjectInfo
-          name={project.name}
+          shortTitle={project.shortTitle}
           description={project.description}
           stacks={project.stacks ?? []}
+          status={project.status}
+          slug={project.slug}
+          about={project.about}
         />
       </div>
     </motion.article>
@@ -105,27 +108,23 @@ const ProjectTechStack = ({ stacks = [] }: { stacks?: StacksProps[] }) => {
 
 // Image preview and external links
 const ProjectPreview = ({
-  name,
+  shortTitle,
   imgUrl,
   live,
   githubLink,
   tool,
-}: Pick<Project, "name" | "imgUrl" | "live" | "githubLink" | "tool">) => {
+}: Pick<Project, "shortTitle" | "imgUrl" | "live" | "githubLink" | "tool">) => {
   return (
     <div className="relative aspect-[16/10] overflow-hidden rounded-2xl border border-neutral-200 bg-neutral-100 dark:border-neutral-800 dark:bg-neutral-900">
       <Image
         src={imgUrl}
-        alt={`${name} project preview`}
+        alt={`${shortTitle} project preview`}
         fill
         sizes="(max-width: 640px) 100vw, 420px"
         className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
       />
 
       <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-70" />
-
-      <span className="absolute top-3 left-3 rounded-full border border-white/20 bg-black/50 px-3 py-1 font-mono text-[11px] text-white backdrop-blur-md">
-        {tool}
-      </span>
 
       <motion.div
         variants={{
@@ -165,36 +164,53 @@ const ProjectPreview = ({
 
 // Project details
 const ProjectInfo = ({
-  name,
+  shortTitle,
   description,
   stacks,
-}: Pick<Project, "name" | "description" | "stacks">) => {
+  status,
+  slug,
+  about,
+}: Pick<
+  Project,
+  "shortTitle" | "description" | "stacks" | "status" | "slug" | "about"
+>) => {
   return (
     <div>
       <div className="flex items-start justify-between gap-4">
         <div>
           <Heading as="h3" className="text-2xl font-medium tracking-tight">
-            {name}
+            {shortTitle}
           </Heading>
 
           <p className="mt-1 text-xs font-medium tracking-wide text-neutral-500">
-            Developer tooling
+            {about}
           </p>
         </div>
 
         <Link
-          href={`/projects/${name.toLowerCase().replace(/\s+/g, "-")}`}
-          aria-label={`Read more about ${name}`}
+          href={`/projects/${slug.toLowerCase().replace(/\s+/g, "-")}`}
+          aria-label={`Read more about ${shortTitle}`}
         >
           <ArrowUpRight className="mt-7 size-7 shrink-0 text-neutral-400 transition-transform duration-200 group-hover:translate-x-1 group-hover:-translate-y-1 group-hover:text-neutral-900 dark:group-hover:text-white" />
         </Link>
       </div>
 
-      <p className="mt-3 max-w-sm text-sm leading-6 text-neutral-500">
+      <p className="mt-3 line-clamp-2 max-w-sm text-sm leading-6 text-neutral-500">
         {description}
       </p>
 
-      <ProjectTechStack stacks={stacks} />
+      <div className="flex items-center justify-between">
+        <ProjectTechStack stacks={stacks} />
+
+        <div
+          className={`mt-5 flex items-center gap-2 rounded-md border px-1 py-0.5 ${status === "Working" ? "border-green-500 bg-green-300/20" : "border-red-500 bg-red-300/20"} `}
+        >
+          <span
+            className={`${status === "Working" ? "bg-green-500" : "bg-red-500"} size-2 rounded-full`}
+          />
+          <p>{status}</p>
+        </div>
+      </div>
     </div>
   );
 };
