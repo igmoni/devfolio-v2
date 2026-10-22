@@ -137,7 +137,7 @@ export function BlogTableOfContents() {
             </div>
 
             <ul className="max-h-[min(65vh,600px)] [scrollbar-width:none] space-y-0.5 overflow-y-auto px-3 pb-3 [&::-webkit-scrollbar]:hidden">
-              {items.map((item, index) => {
+              {items.map((item) => {
                 const active = activeId === item.id;
 
                 return (

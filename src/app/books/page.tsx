@@ -30,7 +30,7 @@ const page = () => {
             );
 
             return (
-              <Reveal delay={id * 0.08}>
+              <Reveal delay={id * 0.08} key={id}>
                 <section key={category}>
                   <Heading as="h2">{category}</Heading>
 

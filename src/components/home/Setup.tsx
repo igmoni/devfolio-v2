@@ -16,7 +16,7 @@ const Setup = () => {
         </Heading>
         <div className="my-5 flex flex-col gap-3">
           {setupConfig.map((item, id) => (
-            <Reveal delay={id * 0.2}>
+            <Reveal delay={id * 0.2} key={id}>
               <NavigationCard
                 key={item.title}
                 title={item.title}

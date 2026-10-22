@@ -16,7 +16,7 @@ const Personal = () => {
         </Heading>
         <div className="my-5 flex flex-col gap-3">
           {personalConfig.map((item, id) => (
-            <Reveal delay={id * 0.1}>
+            <Reveal delay={id * 0.1} key={id}>
               <NavigationCard
                 key={item.title}
                 title={item.title}
