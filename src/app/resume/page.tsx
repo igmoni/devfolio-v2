@@ -22,7 +22,7 @@ export default function ResumePage() {
           <iframe
             src="https://drive.google.com/file/d/1JqOOx2syhfXUrfrmYrfOu1rQacNxZRtP/preview"
             title="Resume"
-            className="h-[80vh] min-h-125 w-full"
+            className="h-screen min-h-125 w-full"
             allow="autoplay"
           />
         </div>

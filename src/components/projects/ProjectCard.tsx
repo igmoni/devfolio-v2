@@ -139,7 +139,7 @@ const ProjectPreview = ({
             href={live}
             target="_blank"
             rel="noopener noreferrer"
-            aria-label={`View ${name} live`}
+            aria-label={`View ${shortTitle} live`}
             className="flex size-10 items-center justify-center rounded-full bg-white text-black transition-transform hover:scale-105"
           >
             <ArrowUpRight className="size-5" />
@@ -151,7 +151,7 @@ const ProjectPreview = ({
             href={githubLink}
             target="_blank"
             rel="noopener noreferrer"
-            aria-label={`View ${name} GitHub repository`}
+            aria-label={`View ${shortTitle} GitHub repository`}
             className="flex size-10 items-center justify-center rounded-full border border-white/20 bg-black/60 text-white backdrop-blur-md transition-colors hover:bg-black"
           >
             <Github className="size-5" />

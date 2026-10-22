@@ -28,9 +28,11 @@ const Page = async () => {
   return (
     <Container className="mt-5 px-4 md:px-6 lg:px-0">
       <Hero />
-      <Reveal delay={0.5}>
-        <SpotifyData />
-      </Reveal>
+      <Suspense>
+        <Reveal delay={0.5}>
+          <SpotifyData />
+        </Reveal>
+      </Suspense>
 
       <Reveal delay={0.6}>
         <SkillsCarousel />
@@ -41,8 +43,14 @@ const Page = async () => {
       <Reveal delay={0.2}>
         <Experience />
       </Reveal>
-      <Projects />
-      <Blog />
+
+      <Suspense fallback={<div>Loading projects...</div>}>
+        <Projects />
+      </Suspense>
+
+      <Suspense fallback={<div>Loading projects...</div>}>
+        <Blog />
+      </Suspense>
       <Setup />
       <Personal />
     </Container>
