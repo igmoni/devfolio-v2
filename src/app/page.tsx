@@ -12,34 +12,26 @@ import { Setup } from "@/components/home/Setup";
 import { SkillsCarousel } from "@/components/home/SkillsCarousel";
 import { Spotify } from "@/components/home/Spotify";
 import { getAnalytics } from "@/lib/analytics";
-import { getSpotifyTrack } from "@/lib/spotify";
-
-const SpotifyData = async () => {
-  const track = await getSpotifyTrack().catch((error: unknown) => {
-    console.error("Spotify fetch error:", error);
-    return null;
-  });
-
-  return <Spotify track={track} />;
-};
 
 const Page = async () => {
   const stats = await getAnalytics("/");
+
   return (
     <Container className="mt-5 px-4 md:px-6 lg:px-0">
       <Hero />
-      <Suspense>
-        <Reveal delay={0.5}>
-          <SpotifyData />
-        </Reveal>
-      </Suspense>
+
+      <Reveal delay={0.5}>
+        <Spotify track={null} />
+      </Reveal>
 
       <Reveal delay={0.6}>
         <SkillsCarousel />
       </Reveal>
+
       <Reveal delay={0.2}>
         <Github />
       </Reveal>
+
       <Reveal delay={0.2}>
         <Experience />
       </Reveal>
@@ -48,9 +40,10 @@ const Page = async () => {
         <Projects />
       </Suspense>
 
-      <Suspense fallback={<div>Loading projects...</div>}>
+      <Suspense fallback={<div>Loading blog...</div>}>
         <Blog />
       </Suspense>
+
       <Setup />
       <Personal />
     </Container>

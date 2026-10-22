@@ -11,7 +11,7 @@ type SpotifyProps = {
 };
 
 const Spotify = ({ track }: SpotifyProps) => {
-  const [song, setSong] = useState(track);
+  const [song, setSong] = useState<SpotifyTrack | null>(track);
 
   useEffect(() => {
     let isMounted = true;
@@ -26,16 +26,22 @@ const Spotify = ({ track }: SpotifyProps) => {
           throw new Error("Failed to fetch Spotify data");
         }
 
-        const data: SpotifyTrack = await response.json();
+        const data: SpotifyTrack | null = await response.json();
 
         if (isMounted) {
           setSong(data);
         }
       } catch (error) {
-        console.error("Spotify fetch error:", error);
+        if (isMounted) {
+          console.error("Spotify fetch error:", error);
+        }
       }
     };
 
+    // Fetch immediately on mount.
+    void fetchNowPlaying();
+
+    // Refresh Spotify data every 30 seconds.
     const interval = setInterval(() => {
       void fetchNowPlaying();
     }, 30_000);
@@ -46,26 +52,9 @@ const Spotify = ({ track }: SpotifyProps) => {
     };
   }, []);
 
-  if (!song?.title) {
-    return (
-      <div className=" flex min-w-0 items-center gap-2">
-        <Image
-          src="/assets/spotify1.svg"
-          width={24}
-          height={24}
-          alt="Spotify"
-          className="shrink-0"
-        />
-        <p className="truncate text-sm text-neutral-500">
-          No recent track available
-        </p>
-      </div>
-    );
-  }
-
   return (
-    <div className=" flex min-w-0 items-center gap-3">
-      {song.isPlaying && song.albumImageUrl ? (
+    <div className="flex min-h-11 min-w-0 items-center gap-3">
+      {song?.isPlaying && song.albumImageUrl ? (
         <Image
           src={song.albumImageUrl}
           width={44}
@@ -76,32 +65,44 @@ const Spotify = ({ track }: SpotifyProps) => {
       ) : (
         <Image
           src="/assets/spotify1.svg"
-          width={24}
-          height={24}
+          width={44}
+          height={44}
           alt="Spotify"
-          className="shrink-0"
+          className="size-11 shrink-0"
         />
       )}
 
       <div className="min-w-0 flex-1">
         <p className="truncate text-xs text-neutral-500">
-          {song.isPlaying ? "Listening on Spotify" : "Last played"}
+          {!song
+            ? "Offline"
+            : song.isPlaying
+              ? "Listening on Spotify"
+              : "Last played"}
         </p>
 
-        {song.spotifyUrl ? (
-          <a
-            href={song.spotifyUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="block w-fit truncate text-sm font-medium hover:underline"
-          >
-            {song.title}
-          </a>
+        {song?.title ? (
+          song.spotifyUrl ? (
+            <a
+              href={song.spotifyUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block w-fit max-w-full truncate text-sm font-medium hover:underline"
+            >
+              {song.title}
+            </a>
+          ) : (
+            <p className="truncate text-sm font-medium">{song.title}</p>
+          )
         ) : (
-          <p className="truncate text-sm font-medium">{song.title}</p>
+          <p className="truncate text-sm font-medium">
+            Not currently listening
+          </p>
         )}
 
-        <p className="truncate text-xs text-neutral-500">by {song.artist}</p>
+        <p className="truncate text-xs text-neutral-500">
+          {song?.artist ?? "Music Activity unavailable"}
+        </p>
       </div>
     </div>
   );
