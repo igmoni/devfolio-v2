@@ -171,6 +171,7 @@ export const HeroAvatar = () => {
             src="/assets/sukuna.gif"
             alt="Sukuna GIF"
             priority
+            unoptimized
             sizes="(max-width: 768px) 100vw, 768px"
             className="object-cover"
           />
@@ -179,15 +180,17 @@ export const HeroAvatar = () => {
 
       {/* Mobile: avatar overlaps GIF, buttons on either side */}
       <div className="relative z-20 -mt-18 flex flex-col items-center md:hidden">
-        <Reveal delay={0.2}>
-          <div className="flex items-center justify-center gap-3">
-            {AvatarButton}
+        <div className="flex items-center justify-center gap-3">
+          {AvatarButton}
 
-            <div className="size-32 shrink-0 sm:size-35">{AvatarImage}</div>
-
-            {SoundButton}
+          <div className="size-32 shrink-0 sm:size-35">
+            <Reveal delay={0.2} className="size-full">
+              {AvatarImage}
+            </Reveal>
           </div>
-        </Reveal>
+
+          {SoundButton}
+        </div>
 
         {/* Availability below avatar */}
         <Reveal delay={0.3}>
@@ -231,20 +234,24 @@ export const HeroAvatar = () => {
         </div>
       </Reveal>
 
-      {/* Tablet and desktop: original avatar positioning */}
-      <Reveal delay={0.2}>
-        <div className="absolute -bottom-15 left-10 z-10 hidden size-35 md:block">
+      {/* Tablet and desktop: avatar positioning remains fixed */}
+      <div className="absolute -bottom-15 left-10 z-10 hidden size-35 md:block">
+        <Reveal delay={0.2} className="size-full">
           {AvatarImage}
+        </Reveal>
 
+        <Reveal delay={0.23}>
           <div className="absolute -right-13 bottom-0 z-20 -translate-y-1/2">
             {AvatarButton}
           </div>
+        </Reveal>
 
+        <Reveal delay={0.26}>
           <div className="absolute -right-25 bottom-0 z-20 -translate-y-1/2">
             {SoundButton}
           </div>
-        </div>
-      </Reveal>
+        </Reveal>
+      </div>
 
       {/* Desktop availability badge */}
       <Reveal delay={0.1}>

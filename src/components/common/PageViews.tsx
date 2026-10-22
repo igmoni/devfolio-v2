@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 
 import { usePathname } from "next/navigation";
 
+import { EyeIcon } from "lucide-react";
+
 export function PageViews() {
   const pathname = usePathname();
   const [views, setViews] = useState<number | 0>(0);
@@ -32,8 +34,8 @@ export function PageViews() {
 
   return (
     <div className="mx-auto mt-10 mb-5 flex w-fit items-center justify-center rounded-xl border border-neutral-200 px-5 py-2 dark:border-neutral-700">
-      <p className="flex items-center gap-2">
-        <span className="size-2 rounded-full bg-green-500" />
+      <p className="flex items-center gap-3">
+        <EyeIcon />
         {new Intl.NumberFormat("en", {
           notation: "compact",
           maximumFractionDigits: 1,
