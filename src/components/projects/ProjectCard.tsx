@@ -203,12 +203,12 @@ const ProjectInfo = ({
         <ProjectTechStack stacks={stacks} />
 
         <div
-          className={`mt-5 flex items-center gap-2 rounded-md border px-1 py-0.5 ${status === "Working" ? "border-green-500 bg-green-300/20" : "border-red-500 bg-red-300/20"} `}
+          className={`mt-5 flex items-center gap-2 rounded-md border px-2 py-0.5 ${status === "Working" ? "border-green-500 bg-green-300/20" : "border-red-500 bg-red-300/20"} `}
         >
           <span
             className={`${status === "Working" ? "bg-green-500" : "bg-red-500"} size-2 rounded-full`}
           />
-          <p>{status}</p>
+          <p className="text-sm">{status}</p>
         </div>
       </div>
     </div>

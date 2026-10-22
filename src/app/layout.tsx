@@ -5,6 +5,7 @@ import { Analytics } from "@vercel/analytics/next";
 import { CustomCursor } from "@/components/common/CustomCursor";
 import { Footer } from "@/components/common/Footer";
 import { Navbar } from "@/components/common/Navbar";
+import { NavigationProgress } from "@/components/common/NavigationProgress";
 import { OnekoCat } from "@/components/common/OnekoCat";
 import { PageViews } from "@/components/common/PageViews";
 import { Quote } from "@/components/common/Quote";
@@ -31,8 +32,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <body className="flex min-h-full flex-col">
         <ThemeProvider>
           <SoundProvider>
+            <NavigationProgress />
             <CustomCursor />
-              <Navbar />
+            <Navbar />
             <OnekoCat />
             {children}
             <Reveal delay={0.2}>

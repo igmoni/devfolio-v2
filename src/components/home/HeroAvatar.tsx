@@ -194,7 +194,7 @@ export const HeroAvatar = () => {
 
         {/* Availability below avatar */}
         <Reveal delay={0.3}>
-          <div className="mt-5">
+          <div className="mt-5 w-fit mx-auto">
             <AvailableBadge />
           </div>
         </Reveal>
@@ -255,7 +255,7 @@ export const HeroAvatar = () => {
 
       {/* Desktop availability badge */}
       <Reveal delay={0.1}>
-        <div className="absolute right-0 hidden lg:block">
+        <div className="absolute right-0 hidden md:block">
           <AvailableBadge />
         </div>
       </Reveal>

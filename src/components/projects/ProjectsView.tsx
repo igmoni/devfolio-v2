@@ -28,7 +28,7 @@ const ProjectsView = ({ projects }: ProjectsViewProps) => {
   return (
     <Reveal delay={0.3}>
       <Container className="mt-10">
-        <div className="flex items-center justify-between ">
+        <div className="flex items-center justify-between">
           <Heading as="h2" Icon={<ProjectIcon className="size-6" />}>
             Projects
           </Heading>
@@ -53,68 +53,70 @@ const ProjectsView = ({ projects }: ProjectsViewProps) => {
             ))}
           </div>
         ) : (
-          <div className="mt-5 flex flex-col gap-3">
-            {projects.slice(0, 4).map((project, index) => (
-              <Reveal delay={index * 0.1} key={project.slug}>
-                <div className="group hover:bg-muted/30 flex flex-col gap-4 rounded-xl p-3 transition-colors sm:flex-row sm:items-center sm:p-4">
-                  {/* Project image */}
-                  <Link
-                    href={`/projects/${project.slug}`}
-                    className="bg-muted relative block aspect-video w-full shrink-0 overflow-hidden rounded-lg sm:w-40"
-                  >
-                    <Image
-                      src={project.imgUrl}
-                      alt={project.shortTitle}
-                      fill
-                      sizes="(max-width: 640px) 100vw, 160px"
-                      className="object-cover transition-transform duration-300 group-hover:scale-105"
-                    />
-                  </Link>
-
-                  {/* Project details */}
-                  <div className="min-w-0 flex-1">
-                    <Link href={`/projects/${project.slug}`}>
-                      <Heading
-                        as="h3"
-                        className="group-hover:text-muted-foreground font-medium transition-colors"
-                      >
-                        {project.shortTitle}
-                      </Heading>
-                    </Link>
-
-                    <p className="text-muted-foreground mt-1 line-clamp-2 max-w-sm text-sm leading-6">
-                      {project.description}
-                    </p>
-
-                    <p className="text-muted-foreground mt-2 text-xs">
-                      {project.tool}
-                    </p>
-                  </div>
-
-                  {/* Project links */}
-                  <div className="flex shrink-0 items-center gap-2 sm:ml-auto">
-                    {project.githubLink && (
-                      <Link
-                        href={project.githubLink}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        aria-label={`View ${project.shortTitle} source code`}
-                      >
-                        <Github className="size-4" />
-                      </Link>
-                    )}
-
+          <Reveal delay={0.1}>
+            <div className="mt-5 flex flex-col gap-3">
+              {projects.slice(0, 4).map((project, index) => (
+                <Reveal delay={index * 0.1} key={project.slug}>
+                  <div className="group hover:bg-muted/30 flex flex-col gap-4 rounded-xl p-3 transition-colors sm:flex-row sm:items-center sm:p-4">
+                    {/* Project image */}
                     <Link
                       href={`/projects/${project.slug}`}
-                      className="flex items-center gap-2 opacity-0 transition duration-200 group-hover:opacity-100"
+                      className="bg-muted relative block aspect-video w-full shrink-0 overflow-hidden rounded-lg sm:w-40"
                     >
-                      <ArrowUpRight className={"size-5"} />
+                      <Image
+                        src={project.imgUrl}
+                        alt={project.shortTitle}
+                        fill
+                        sizes="(max-width: 640px) 100vw, 160px"
+                        className="object-cover transition-transform duration-300 group-hover:scale-105"
+                      />
                     </Link>
+
+                    {/* Project details */}
+                    <div className="min-w-0 flex-1">
+                      <Link href={`/projects/${project.slug}`}>
+                        <Heading
+                          as="h3"
+                          className="group-hover:text-muted-foreground font-medium transition-colors"
+                        >
+                          {project.shortTitle}
+                        </Heading>
+                      </Link>
+
+                      <p className="text-muted-foreground mt-1 line-clamp-2 max-w-sm text-sm leading-6">
+                        {project.description}
+                      </p>
+
+                      <p className="text-muted-foreground mt-2 text-xs">
+                        {project.tool}
+                      </p>
+                    </div>
+
+                    {/* Project links */}
+                    <div className="flex shrink-0 items-center gap-2 sm:ml-auto">
+                      {project.githubLink && (
+                        <Link
+                          href={project.githubLink}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          aria-label={`View ${project.shortTitle} source code`}
+                        >
+                          <Github className="size-4" />
+                        </Link>
+                      )}
+
+                      <Link
+                        href={`/projects/${project.slug}`}
+                        className="flex items-center gap-2 opacity-0 transition duration-200 group-hover:opacity-100"
+                      >
+                        <ArrowUpRight className={"size-5"} />
+                      </Link>
+                    </div>
                   </div>
-                </div>
-              </Reveal>
-            ))}
-          </div>
+                </Reveal>
+              ))}
+            </div>
+          </Reveal>
         )}
 
         {projects.length > 4 && (
