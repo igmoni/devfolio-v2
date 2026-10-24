@@ -26,7 +26,7 @@ export const setupConfig = [
   },
   {
     title: "Setup",
-    href: "/gears",
+    href: "/setup",
     description: "VS Code / Cursor configuration and extensions guide.",
   },
 ];

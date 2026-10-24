@@ -10,7 +10,7 @@ import { motion, useMotionValue, useSpring, useTransform } from "motion/react";
 
 import { navItems, navSocialLinks } from "@/config/common";
 
-import { ToggleTheme } from "./ToggleTheme";
+import { ThemeToggleButton } from "./ThemeToggle";
 
 const springConfig = {
   mass: 0.2,
@@ -73,9 +73,7 @@ const DockItem = ({ mouseX, children, href, label }: DockItemProps) => {
             {children}
           </Link>
         ) : (
-          <div className={itemClassName}>
-            <ToggleTheme />
-          </div>
+          <div className={itemClassName}>{children}</div>
         )}
       </motion.div>
 
@@ -103,7 +101,7 @@ const Navbar = () => {
       layout
       transition={{ layout: springConfig }}
       aria-label="Main navigation"
-      className="fixed bottom-4 md:bottom-8 left-1/2 z-999 flex h-14 w-max -translate-x-1/2 scale-75 items-center gap-3 rounded-3xl bg-white p-2 text-neutral-900 shadow-sm ring ring-neutral-200 md:scale-100 dark:bg-neutral-800 dark:text-neutral-100 dark:ring-neutral-700"
+      className="fixed bottom-4 left-1/2 z-999 flex h-14 w-max -translate-x-1/2 scale-75 items-center gap-3 rounded-3xl bg-white p-2 text-neutral-900 shadow-sm ring ring-neutral-200 md:bottom-8 md:scale-100 dark:bg-neutral-800 dark:text-neutral-100 dark:ring-neutral-700"
     >
       <div className="flex items-center gap-3">
         {navItems.map((item) => {
@@ -144,7 +142,7 @@ const Navbar = () => {
       <div className="h-full w-[1.5px] shrink-0 bg-linear-to-b from-transparent via-neutral-300 to-transparent dark:via-neutral-600" />
 
       <DockItem mouseX={mouseX} label="Toggle theme">
-        <ToggleTheme />
+        <ThemeToggleButton variant="circle" start="bottom-center" />
       </DockItem>
     </motion.nav>
   );
