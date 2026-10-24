@@ -3,6 +3,7 @@ import { Suspense } from "react";
 import type { Metadata } from "next";
 
 import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Toaster } from "sonner";
 
 import { UmamiAnalytics } from "@/components/analytics/UmamiAnalytics";
@@ -86,6 +87,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
             <Footer />
             <Analytics />
             <UmamiAnalytics />
+            <SpeedInsights />
           </AppProviders>
         </Suspense>
       </body>
