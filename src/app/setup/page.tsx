@@ -21,7 +21,7 @@ export function generateMetadata(): Metadata {
 
 export default function Page() {
   return (
-    <Container className="mt-5">
+    <Container className="mt-5 px-4 md:px-6 lg:px-0">
       <Reveal>
         <EditorHero />
         <Separator className="my-5 mt-10" />

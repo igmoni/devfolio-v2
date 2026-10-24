@@ -1,12 +1,13 @@
 import Link from "next/link";
 
+import { Container } from "@/components/common/Container";
 import { Footer } from "@/components/common/Footer";
 import { Quote } from "@/components/common/Quote";
 import { Button } from "@/components/ui/button";
 
 export default function NotFound() {
   return (
-    <main className="flex min-h-[calc(100vh-5rem)] flex-col">
+    <Container className="mt-5 px-4 md:px-6 lg:px-0">
       <section className="flex flex-1 flex-col items-center justify-center px-5 py-30 text-center">
         <p className="text-foreground text-7xl font-bold tracking-tight sm:text-8xl">
           404
@@ -33,6 +34,6 @@ export default function NotFound() {
 
       <Quote />
       <Footer />
-    </main>
+    </Container>
   );
 }

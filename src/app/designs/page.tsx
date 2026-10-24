@@ -21,7 +21,7 @@ export function generateMetadata(): Metadata {
 
 export default function Page() {
   return (
-    <Container className="mt-5">
+    <Container className="mt-5 px-4 md:px-6 lg:px-0">
       <Reveal>
         <Heading as="h1">Designs</Heading>
 
@@ -35,7 +35,7 @@ export default function Page() {
       <Reveal delay={0.15}>
         <div className="relative flex min-h-[30vh] items-center justify-center overflow-hidden rounded-2xl">
           <p
-            className={`${instrumentSerif.className} h-36 animate-coming-soon-color relative z-10 text-center text-6xl italic sm:text-8xl`}
+            className={`${instrumentSerif.className} animate-coming-soon-color relative z-10 h-36 text-center text-6xl italic sm:text-8xl`}
           >
             Coming soon...
           </p>

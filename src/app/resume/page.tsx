@@ -20,7 +20,7 @@ export function generateMetadata(): Metadata {
 
 export default function ResumePage() {
   return (
-    <Container className="mt-5">
+    <Container className="mt-5 px-4 md:px-6 lg:px-0">
       <Reveal>
         <Heading as="h1">Resume</Heading>
         <SubHeading>View and download my professional resume.</SubHeading>
@@ -36,7 +36,7 @@ export default function ResumePage() {
           <iframe
             src="https://drive.google.com/file/d/1JqOOx2syhfXUrfrmYrfOu1rQacNxZRtP/preview"
             title="Resume"
-            className="h-screen min-h-125 w-full"
+            className="h-100 w-full md:min-h-125"
             allow="autoplay"
           />
         </div>

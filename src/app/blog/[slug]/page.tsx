@@ -82,7 +82,7 @@ export default async function BlogPage({ params }: Props) {
 
   return (
     <>
-      <Container className="mt-5">
+      <Container className="mt-5 px-4 md:px-6 lg:px-0">
         <div className="mx-auto max-w-4xl">
           <Link
             href="/blog"
