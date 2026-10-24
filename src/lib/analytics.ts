@@ -8,7 +8,7 @@ export type AnalyticsData = {
 export async function getAnalytics(
   path?: string
 ): Promise<AnalyticsData | null> {
-  const token = process.env.VERCEL_TOKEN;
+  const token = process.env.VERCEL_TOKEN_ID;
   const projectId = process.env.VERCEL_PROJECT_ID;
   const teamId = process.env.VERCEL_TEAM_ID;
 

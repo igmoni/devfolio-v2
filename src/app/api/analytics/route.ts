@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 
 export async function GET(request: Request) {
-  const token = process.env.VERCEL_TOKEN;
+  const token = process.env.VERCEL_TOKEN_ID;
   const projectId = process.env.VERCEL_PROJECT_ID;
 
   if (!token || !projectId) {
