@@ -1,12 +1,11 @@
 "use client";
 
-import { useCallback } from "react";
-
+import { useCallback, useSyncExternalStore } from "react";
 import { flushSync } from "react-dom";
+
 import { useTheme } from "next-themes";
 
 import { Moon, Sun } from "lucide-react";
-
 import { AnimatePresence, motion } from "motion/react";
 
 import { cn } from "@/lib/utils";
@@ -80,7 +79,7 @@ export const useThemeToggle = ({
 
       document.startViewTransition(applyTheme);
     },
-    [setTheme, variant, start, blur, updateStyles],
+    [setTheme, variant, start, blur, updateStyles]
   );
 
   const toggleTheme = useCallback(() => {
@@ -118,79 +117,81 @@ export const ThemeToggleButton = ({
     start,
     blur,
   });
+  const mounted = useSyncExternalStore(
+    () => () => {},
+    () => true,
+    () => false
+  );
 
   return (
     <button
       type="button"
       onClick={toggleTheme}
       aria-label="Toggle theme"
-      aria-pressed={isDark}
+      aria-pressed={mounted ? isDark : false}
       className={cn(
         "group flex size-full cursor-pointer items-center justify-center",
-        className,
+        className
       )}
     >
       <AnimatePresence mode="wait" initial={false}>
-        {isDark ? (
-          <motion.span
-            key="sun"
-            initial={{ opacity: 0, rotate: -45, scale: 0.7 }}
-            animate={{ opacity: 1, rotate: 0, scale: 1 }}
-            exit={{ opacity: 0, rotate: 45, scale: 0.7 }}
-            transition={{ duration: 0.2, ease: "easeOut" }}
-            className="flex items-center justify-center"
-          >
-            <Sun
-              className="text-neutral-300 transition-colors group-hover:text-indigo-400"
-              strokeWidth={1.5}
-            />
-          </motion.span>
-        ) : (
-          <motion.span
-            key="moon"
-            initial={{ opacity: 0, rotate: 45, scale: 0.7 }}
-            animate={{ opacity: 1, rotate: 0, scale: 1 }}
-            exit={{ opacity: 0, rotate: -45, scale: 0.7 }}
-            transition={{ duration: 0.2, ease: "easeOut" }}
-            className="flex items-center justify-center"
-          >
-            <Moon
-              className="text-neutral-500 transition-colors group-hover:text-orange-400"
-              strokeWidth={1.5}
-            />
-          </motion.span>
-        )}
+        <AnimatePresence mode="wait" initial={false}>
+          {mounted &&
+            (isDark ? (
+              <motion.span
+                key="sun"
+                initial={{ opacity: 0, rotate: -45, scale: 0.7 }}
+                animate={{ opacity: 1, rotate: 0, scale: 1 }}
+                exit={{ opacity: 0, rotate: 45, scale: 0.7 }}
+                transition={{ duration: 0.2, ease: "easeOut" }}
+                className="flex items-center justify-center"
+              >
+                <Sun
+                  className="text-neutral-300 transition-colors group-hover:text-indigo-400"
+                  strokeWidth={1.5}
+                />
+              </motion.span>
+            ) : (
+              <motion.span
+                key="moon"
+                initial={{ opacity: 0, rotate: 45, scale: 0.7 }}
+                animate={{ opacity: 1, rotate: 0, scale: 1 }}
+                exit={{ opacity: 0, rotate: -45, scale: 0.7 }}
+                transition={{ duration: 0.2, ease: "easeOut" }}
+                className="flex items-center justify-center"
+              >
+                <Moon
+                  className="text-neutral-500 transition-colors group-hover:text-orange-400"
+                  strokeWidth={1.5}
+                />
+              </motion.span>
+            ))}
+        </AnimatePresence>
       </AnimatePresence>
     </button>
   );
 };
 
-const getPositionCoords = (position: ThemeStart): { cx: string; cy: string } | undefined => {
-
+const getPositionCoords = (
+  position: ThemeStart
+): { cx: string; cy: string } | undefined => {
   switch (position) {
-
     case "top-left":
-
       return { cx: "0", cy: "0" };
 
     case "top-right":
-
       return { cx: "40", cy: "0" };
 
     case "bottom-left":
-
       return { cx: "0", cy: "40" };
 
     case "bottom-right":
-
       return { cx: "40", cy: "40" };
 
     case "top-center":
-
       return { cx: "20", cy: "0" };
 
     case "bottom-center":
-
       return { cx: "20", cy: "40" };
 
     // For directional positions, deafult to center
@@ -202,37 +203,30 @@ const getPositionCoords = (position: ThemeStart): { cx: string; cy: string } | u
     case "left-right":
 
     case "right-left":
-
       return { cx: "20", cy: "20" };
-
   }
-
 };
 
-const generateSVG = (variant: ThemeVariant, start: ThemeStart): string | undefined => {
-
+const generateSVG = (
+  variant: ThemeVariant,
+  start: ThemeStart
+): string | undefined => {
   // circle-blur variant handles center case differently, so check it first
 
   if (variant === "circle-blur") {
-
     if (start === "center") {
-
       return `data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40"><defs><filter id="blur"><feGaussianBlur stdDeviation="2"/></filter></defs><circle cx="20" cy="20" r="18" fill="white" filter="url(%23blur)"/></svg>`;
-
     }
 
     const positionCoords = getPositionCoords(start);
 
     if (!positionCoords) {
-
       throw new Error(`Invalid start position: ${start}`);
-
     }
 
     const { cx, cy } = positionCoords;
 
     return `data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40"><defs><filter id="blur"><feGaussianBlur stdDeviation="2"/></filter></defs><circle cx="${cx}" cy="${cy}" r="18" fill="white" filter="url(%23blur)"/></svg>`;
-
   }
 
   if (start === "center") return;
@@ -244,49 +238,36 @@ const generateSVG = (variant: ThemeVariant, start: ThemeStart): string | undefin
   const positionCoords = getPositionCoords(start);
 
   if (!positionCoords) {
-
     throw new Error(`Invalid start position: ${start}`);
-
   }
 
   const { cx, cy } = positionCoords;
 
   if (variant === "circle") {
-
     return `data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40"><circle cx="${cx}" cy="${cy}" r="20" fill="white"/></svg>`;
-
   }
 
   return "";
-
 };
 
 const getTransformOrigin = (start: ThemeStart): string | undefined => {
-
   switch (start) {
-
     case "top-left":
-
       return "top left";
 
     case "top-right":
-
       return "top right";
 
     case "bottom-left":
-
       return "bottom left";
 
     case "bottom-right":
-
       return "bottom right";
 
     case "top-center":
-
       return "top center";
 
     case "bottom-center":
-
       return "bottom center";
 
     case "bottom-up":
@@ -296,123 +277,92 @@ const getTransformOrigin = (start: ThemeStart): string | undefined => {
     case "left-right":
 
     case "right-left":
-
       return "center";
-
   }
-
 };
 
-export const createAnimation = (variant: ThemeVariant, start: ThemeStart = "center", blur = false): AnimationResult => {
-
+export const createAnimation = (
+  variant: ThemeVariant,
+  start: ThemeStart = "center",
+  blur = false
+): AnimationResult => {
   const svg = generateSVG(variant, start);
 
   const transformOrigin = getTransformOrigin(start);
 
   if (variant === "rectangle") {
-
-    const getClipPath = (direction: ThemeStart): { from: string; to: string } => {
-
+    const getClipPath = (
+      direction: ThemeStart
+    ): { from: string; to: string } => {
       switch (direction) {
-
         case "bottom-up":
-
           return {
-
             from: "polygon(0% 100%, 100% 100%, 100% 100%, 0% 100%)",
 
             to: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
-
           };
 
         case "top-down":
-
           return {
-
             from: "polygon(0% 0%, 100% 0%, 100% 0%, 0% 0%)",
 
             to: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
-
           };
 
         case "left-right":
-
           return {
-
             from: "polygon(0% 0%, 0% 0%, 0% 100%, 0% 100%)",
 
             to: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
-
           };
 
         case "right-left":
-
           return {
-
             from: "polygon(100% 0%, 100% 0%, 100% 100%, 100% 100%)",
 
             to: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
-
           };
 
         case "top-left":
-
           return {
-
             from: "polygon(0% 0%, 0% 0%, 0% 0%, 0% 0%)",
 
             to: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
-
           };
 
         case "top-right":
-
           return {
-
             from: "polygon(100% 0%, 100% 0%, 100% 0%, 100% 0%)",
 
             to: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
-
           };
 
         case "bottom-left":
-
           return {
-
             from: "polygon(0% 100%, 0% 100%, 0% 100%, 0% 100%)",
 
             to: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
-
           };
 
         case "bottom-right":
-
           return {
-
             from: "polygon(100% 100%, 100% 100%, 100% 100%, 100% 100%)",
 
             to: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
-
           };
 
         default:
-
           return {
-
             from: "polygon(0% 100%, 100% 100%, 100% 100%, 0% 100%)",
 
             to: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
-
           };
-
       }
-
     };
 
     const clipPath = getClipPath(start);
 
     return {
-
       name: `${variant}-${start}${blur ? "-blur" : ""}`,
 
       css: `
@@ -496,15 +446,11 @@ export const createAnimation = (variant: ThemeVariant, start: ThemeStart = "cent
       }
 
       `,
-
     };
-
   }
 
   if (variant === "circle" && start === "center") {
-
     return {
-
       name: `${variant}-${start}${blur ? "-blur" : ""}`,
 
       css: `
@@ -588,17 +534,12 @@ export const createAnimation = (variant: ThemeVariant, start: ThemeStart = "cent
       }
 
       `,
-
     };
-
   }
 
   if (variant === "circle-blur") {
-
     if (start === "center") {
-
       return {
-
         name: `${variant}-${start}`,
 
         css: `
@@ -644,13 +585,10 @@ export const createAnimation = (variant: ThemeVariant, start: ThemeStart = "cent
         }
 
         `,
-
       };
-
     }
 
     return {
-
       name: `${variant}-${start}`,
 
       css: `
@@ -696,21 +634,21 @@ export const createAnimation = (variant: ThemeVariant, start: ThemeStart = "cent
       }
 
       `,
-
     };
-
   }
 
   if (variant === "polygon") {
-
-    const getPolygonClipPaths = (position: ThemeStart): { darkFrom: string; darkTo: string; lightFrom: string; lightTo: string } => {
-
+    const getPolygonClipPaths = (
+      position: ThemeStart
+    ): {
+      darkFrom: string;
+      darkTo: string;
+      lightFrom: string;
+      lightTo: string;
+    } => {
       switch (position) {
-
         case "top-left":
-
           return {
-
             darkFrom: "polygon(50% -71%, -50% 71%, -50% 71%, 50% -71%)",
 
             darkTo: "polygon(50% -71%, -50% 71%, 50% 171%, 171% 50%)",
@@ -718,13 +656,10 @@ export const createAnimation = (variant: ThemeVariant, start: ThemeStart = "cent
             lightFrom: "polygon(171% 50%, 50% 171%, 50% 171%, 171% 50%)",
 
             lightTo: "polygon(171% 50%, 50% 171%, -50% 71%, 50% -71%)",
-
           };
 
         case "top-right":
-
           return {
-
             darkFrom: "polygon(150% -71%, 250% 71%, 250% 71%, 150% -71%)",
 
             darkTo: "polygon(150% -71%, 250% 71%, 50% 171%, -71% 50%)",
@@ -732,15 +667,12 @@ export const createAnimation = (variant: ThemeVariant, start: ThemeStart = "cent
             lightFrom: "polygon(-71% 50%, 50% 171%, 50% 171%, -71% 50%)",
 
             lightTo: "polygon(-71% 50%, 50% 171%, 250% 71%, 150% -71%)",
-
           };
 
         default:
-
           // Default to top-left behavior
 
           return {
-
             darkFrom: "polygon(50% -71%, -50% 71%, -50% 71%, 50% -71%)",
 
             darkTo: "polygon(50% -71%, -50% 71%, 50% 171%, 171% 50%)",
@@ -748,17 +680,13 @@ export const createAnimation = (variant: ThemeVariant, start: ThemeStart = "cent
             lightFrom: "polygon(171% 50%, 50% 171%, 50% 171%, 171% 50%)",
 
             lightTo: "polygon(171% 50%, 50% 171%, -50% 71%, 50% -71%)",
-
           };
-
       }
-
     };
 
     const clipPaths = getPolygonClipPaths(start);
 
     return {
-
       name: `${variant}-${start}${blur ? "-blur" : ""}`,
 
       css: `
@@ -842,55 +770,40 @@ export const createAnimation = (variant: ThemeVariant, start: ThemeStart = "cent
       }
 
       `,
-
     };
-
   }
 
   // Handle circle variants with start positions using clip-path
 
   if (variant === "circle" && start !== "center") {
-
     const getClipPathPosition = (position: ThemeStart): string => {
-
       switch (position) {
-
         case "top-left":
-
           return "0% 0%";
 
         case "top-right":
-
           return "100% 0%";
 
         case "bottom-left":
-
           return "0% 100%";
 
         case "bottom-right":
-
           return "100% 100%";
 
         case "top-center":
-
           return "50% 0%";
 
         case "bottom-center":
-
           return "50% 100%";
 
         default:
-
           return "50% 50%";
-
       }
-
     };
 
     const clipPosition = getClipPathPosition(start);
 
     return {
-
       name: `${variant}-${start}${blur ? "-blur" : ""}`,
 
       css: `
@@ -974,13 +887,10 @@ export const createAnimation = (variant: ThemeVariant, start: ThemeStart = "cent
       }
 
       `,
-
     };
-
   }
 
   return {
-
     name: `${variant}-${start}${blur ? "-blur" : ""}`,
 
     css: `
@@ -1038,7 +948,5 @@ export const createAnimation = (variant: ThemeVariant, start: ThemeStart = "cent
       }
 
     `,
-
   };
-
 };

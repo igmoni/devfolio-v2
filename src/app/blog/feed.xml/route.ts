@@ -1,6 +1,6 @@
 
 const SITE_URL =
-  process.env.SITE_URL || "http://localhost:3000";
+  process.env.SITE_URL || "http://monxdev.vercel.app";
 
 const posts = [
   {

@@ -15,8 +15,6 @@ const WakaTimeData = () => {
   const [displaySeconds, setDisplaySeconds] = useState(0);
   const [hasError, setHasError] = useState(false);
 
-  // Store the latest known total and when it was received.
-  // Refs avoid re-rendering just because these internal values changed.
   const baseSecondsRef = useRef(0);
   const baseTimeRef = useRef(0);
   const requestInFlightRef = useRef(false);
@@ -25,7 +23,6 @@ const WakaTimeData = () => {
     let active = true;
 
     async function fetchData() {
-      // Don't stack requests if WakaTime is slow to respond.
       if (requestInFlightRef.current) return;
 
       requestInFlightRef.current = true;
@@ -54,8 +51,6 @@ const WakaTimeData = () => {
       } catch (error) {
         if (!active) return;
 
-        // Keep the last successful result, but expose the failure.
-        // Never silently treat a network failure as confirmed offline.
         console.error("Unable to refresh WakaTime:", error);
         setHasError(true);
       } finally {
@@ -63,17 +58,14 @@ const WakaTimeData = () => {
       }
     }
 
-    // Fetch immediately, then poll at a reasonable interval.
     void fetchData();
 
     const pollId = window.setInterval(() => {
-      // Avoid unnecessary requests when the visitor switches tabs.
       if (document.visibilityState === "visible") {
         void fetchData();
       }
     }, POLL_INTERVAL);
 
-    // Refresh immediately when the visitor returns to the tab.
     const handleVisibilityChange = () => {
       if (document.visibilityState === "visible") {
         void fetchData();
@@ -92,7 +84,6 @@ const WakaTimeData = () => {
   useEffect(() => {
     if (!data || data.status !== "online") return;
 
-    // One timer updates the display between API responses.
     const timerId = window.setInterval(() => {
       const elapsed = Math.floor((Date.now() - baseTimeRef.current) / 1000);
 
@@ -103,7 +94,6 @@ const WakaTimeData = () => {
   }, [data?.status]);
 
   if (!data) {
-    // Don't display stale cached online status before checking the API.
     return (
       <span className="text-sm text-neutral-500 dark:text-neutral-400">
         {hasError ? "WakaTime unavailable" : "Loading coding activity..."}

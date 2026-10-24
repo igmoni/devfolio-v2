@@ -65,13 +65,13 @@ async function fetchWakaTime<T>(
 }
 
 async function loadWakaTimeData(
-  apiKey: string,
+  oauthToken: string,
   timezone: string
 ): Promise<WakaTimeApiResponse> {
   const today = getDateInTimezone(new Date(), timezone);
   const yesterday = shiftDate(today, -1);
 
-  const authorization = `Basic ${Buffer.from(`${apiKey}:`).toString("base64")}`;
+  const authorization = `Bearer ${oauthToken}`;
   const dateParams = `timezone=${encodeURIComponent(timezone)}`;
 
   const [todaySummary, heartbeats, yesterdaySummary] = await Promise.all([
@@ -99,17 +99,18 @@ async function loadWakaTimeData(
 export async function GET() {
   await connection();
 
-  const apiKey = process.env.WAKATIME_API_KEY;
+  const oauthToken = process.env.WAKATIME_OAUTH_TOKEN;
   const timezone = process.env.WAKATIME_TIMEZONE || "Asia/Kolkata";
 
-  if (!apiKey) {
+  if (!oauthToken) {
     return NextResponse.json(
-      { error: "WakaTime API key is not configured." },
+      { error: "WakaTime OAuth token is not configured." },
       { status: 500 }
     );
   }
 
   try {
+    // Validate the configured timezone.
     new Intl.DateTimeFormat("en-US", { timeZone: timezone });
 
     // Reuse the last successful result for five minutes.
@@ -121,7 +122,7 @@ export async function GET() {
       });
     }
 
-    // Don't repeatedly hit WakaTime while rate-limited.
+    // Avoid repeatedly hitting WakaTime while rate-limited.
     if (Date.now() < rateLimitedUntil) {
       if (cachedData) {
         return NextResponse.json(cachedData, {
@@ -147,7 +148,7 @@ export async function GET() {
 
     // Share one upstream request among concurrent visitors.
     if (!pendingRequest) {
-      pendingRequest = loadWakaTimeData(apiKey, timezone);
+      pendingRequest = loadWakaTimeData(oauthToken, timezone);
     }
 
     const request = pendingRequest;

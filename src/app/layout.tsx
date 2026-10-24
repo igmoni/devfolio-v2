@@ -5,6 +5,7 @@ import type { Metadata } from "next";
 import { Analytics } from "@vercel/analytics/next";
 import { Toaster } from "sonner";
 
+import { UmamiAnalytics } from "@/components/analytics/UmamiAnalytics";
 import { CustomCursor } from "@/components/common/CustomCursor";
 import { Footer } from "@/components/common/Footer";
 import { Navbar } from "@/components/common/Navbar";
@@ -22,6 +23,10 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "https://monxdev.vercel.app",
   },
+  title: {
+    default: "Mohan S P - Full Stack Web Developer",
+    template: "%s",
+  },
 
   description:
     "I build modern websites and digital products focused on design and performance.",
@@ -35,7 +40,7 @@ export const metadata: Metadata = {
     siteName: "Mohan S P",
     images: [
       {
-        url: "https://monxdev.vercel.app/meta/opengraph-img.png",
+        url: "https://monxdev.vercel.app/meta/og-img.png",
         width: 1200,
         height: 630,
         alt: "Mohan S P Portfolio Preview",
@@ -80,6 +85,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
             </Reveal>
             <Footer />
             <Analytics />
+            <UmamiAnalytics />
           </AppProviders>
         </Suspense>
       </body>

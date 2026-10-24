@@ -5,7 +5,6 @@ import type {
   WakaTimeStatus,
 } from "@/types/wakatime";
 
-// Normalize editor names for consistent display.
 export function normalizeEditor(name?: string): string {
   if (!name) return "Cursor";
 
