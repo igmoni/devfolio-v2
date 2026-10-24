@@ -1,4 +1,5 @@
 import { cn } from "@/lib/utils";
+import { SvgType } from "@/types/common";
 
 const X = ({ className }: SvgType) => {
   return (

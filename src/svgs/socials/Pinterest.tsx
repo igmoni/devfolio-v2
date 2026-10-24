@@ -1,6 +1,8 @@
 import { cn } from "cn";
 
-export default function Pinterest({ className }: SvgType) {
+import { SvgType } from "@/types/common";
+
+const Pinterest = ({ className }: SvgType) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -26,4 +28,6 @@ export default function Pinterest({ className }: SvgType) {
       <path d="M3 12a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" />
     </svg>
   );
-}
+};
+
+export { Pinterest };

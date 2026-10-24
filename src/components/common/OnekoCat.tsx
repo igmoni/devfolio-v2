@@ -3,7 +3,12 @@
 import { useEffect } from "react";
 
 import { catConfig } from "@/config/Cat";
-import { Window } from "@/types/common";
+
+declare global {
+  interface Window {
+    __ONEKO_LOADED__?: boolean;
+  }
+}
 
 export function OnekoCat() {
   useEffect(() => {

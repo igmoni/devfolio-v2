@@ -1,7 +1,3 @@
-"use client";
-
-import { useEffect, useState } from "react";
-
 import Link from "next/link";
 
 import { ArrowUpRight } from "lucide-react";
@@ -9,15 +5,13 @@ import { ArrowUpRight } from "lucide-react";
 import { footerLinks } from "@/config/common";
 import { heroConfig } from "@/config/hero";
 
+import { Coffee } from "./Coffee";
 import { Container } from "./Container";
 
 const Footer = () => {
-  const [year, setYear] = useState<number | null>(null);
-
+  const year = new Date().getFullYear();
   const { socialLinks: socials, name } = heroConfig;
-  useEffect(() => {
-    setYear(new Date().getFullYear());
-  }, []);
+
   return (
     <footer className="border-t border-neutral-200 bg-neutral-50 pb-24 dark:border-neutral-800 dark:bg-neutral-900">
       <Container className="px-5 pt-16 pb-8 sm:pt-24">
@@ -68,7 +62,7 @@ const Footer = () => {
               Elsewhere
             </p>
 
-            <div className="flex flex-wrap gap-4">
+            <div className="flex flex-wrap items-center gap-4">
               {socials.map(({ id, name, icon: Icon, value }) => (
                 <a
                   key={id}
@@ -83,18 +77,19 @@ const Footer = () => {
                   title={name}
                   className="text-neutral-500 transition-colors hover:text-black dark:hover:text-white"
                 >
-                  <Icon className={"size-6"} />
+                  <Icon className="size-6" />
                 </a>
               ))}
+              <Coffee className="size-6" />
             </div>
           </div>
         </div>
 
         <div className="mt-12 flex flex-col gap-3 border-t border-neutral-800 pt-6 text-sm text-neutral-600 sm:flex-row sm:items-center sm:justify-between">
           <span>
-            © {year ?? "abc"} {name}. All rights reserved.
+            © {year} {name}. All rights reserved.
           </span>
-          <span>Designed & built with intention.</span>
+          <span>Designed &amp; built with intention.</span>
         </div>
       </Container>
     </footer>

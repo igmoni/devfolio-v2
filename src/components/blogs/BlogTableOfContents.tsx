@@ -2,8 +2,6 @@
 
 import { useEffect, useState } from "react";
 
-import { List, X } from "lucide-react";
-
 type TocItem = {
   id: string;
   text: string;
@@ -30,7 +28,7 @@ export function BlogTableOfContents() {
       level: Number(heading.tagName.slice(1)),
     }));
 
-    setItems(tocItems);
+    let frameId = 0;
 
     const updateProgress = () => {
       const scrollableHeight =
@@ -61,20 +59,23 @@ export function BlogTableOfContents() {
       updateProgress();
     };
 
-    updateActive();
+    // Defer initial state updates until after the effect runs.
+    frameId = window.requestAnimationFrame(() => {
+      setItems(tocItems);
+      updateActive();
+    });
 
     window.addEventListener("scroll", updateActive, { passive: true });
     window.addEventListener("resize", updateProgress);
 
     return () => {
+      window.cancelAnimationFrame(frameId);
       window.removeEventListener("scroll", updateActive);
       window.removeEventListener("resize", updateProgress);
     };
   }, []);
 
   if (!items.length) return null;
-
-  const activeIndex = items.findIndex((item) => item.id === activeId);
 
   return (
     <div className="fixed top-6 right-5 z-50 sm:top-8 sm:right-8">
@@ -136,7 +137,7 @@ export function BlogTableOfContents() {
               </p>
             </div>
 
-            <ul className="max-h-[min(65vh,600px)] [scrollbar-width:none] space-y-0.5 overflow-y-auto px-3 pb-3 [&::-webkit-scrollbar]:hidden">
+            <ul className="max-h-[min(65vh,600px)] scrollbar-none space-y-0.5 overflow-y-auto px-3 pb-3 [&::-webkit-scrollbar]:hidden">
               {items.map((item) => {
                 const active = activeId === item.id;
 
@@ -150,7 +151,7 @@ export function BlogTableOfContents() {
                       } ${
                         active
                           ? "bg-white/10 font-semibold text-white"
-                          : "text-white/55 hover:bg-white/[0.04] hover:text-white/90"
+                          : "text-white/55 hover:bg-white/4 hover:text-white/90"
                       }`}
                     >
                       <span className="min-w-0 flex-1">{item.text}</span>

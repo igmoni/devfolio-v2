@@ -8,12 +8,14 @@ import { EyeIcon } from "lucide-react";
 
 export function PageViews() {
   const pathname = usePathname();
-  const [views, setViews] = useState<number | 0>(0);
+
+  const [viewData, setViewData] = useState<{
+    pathname: string;
+    count: number;
+  } | null>(null);
 
   useEffect(() => {
     const controller = new AbortController();
-
-    setViews(0);
 
     fetch(`/api/analytics?path=${encodeURIComponent(pathname)}`, {
       signal: controller.signal,
@@ -22,9 +24,14 @@ export function PageViews() {
         if (!res.ok) throw new Error("Analytics fetch failed");
         return res.json();
       })
-      .then((data) => setViews(data.pageviews))
-      .catch((error) => {
-        if (error.name !== "AbortError") {
+      .then((data) => {
+        setViewData({
+          pathname,
+          count: data.pageviews,
+        });
+      })
+      .catch((error: unknown) => {
+        if (error instanceof Error && error.name !== "AbortError") {
           console.error(error);
         }
       });
@@ -32,15 +39,16 @@ export function PageViews() {
     return () => controller.abort();
   }, [pathname]);
 
+  const views = viewData?.pathname === pathname ? viewData.count : 0;
+
   return (
-    <div className="mx-auto mt-10 mb-5 flex w-fit items-center justify-center rounded-xl border border-neutral-200 px-5 py-2 dark:border-neutral-700">
-      <p className="flex items-center gap-3">
-        <EyeIcon />
+    <div className="mx-auto flex w-fit items-center justify-center rounded-xl border border-neutral-200 px-2 py-0.5 text-neutral-500 dark:border-neutral-700">
+      <p className="flex items-center gap-2">
+        <EyeIcon className="text-neutral-500" />
         {new Intl.NumberFormat("en", {
           notation: "compact",
           maximumFractionDigits: 1,
-        }).format(views)}{" "}
-        visitors
+        }).format(views)}
       </p>
     </div>
   );

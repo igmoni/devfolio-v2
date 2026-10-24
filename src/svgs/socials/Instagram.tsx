@@ -1,6 +1,8 @@
 import { cn } from "cn";
 
-export default function Instagram({ className }: SvgType) {
+import { SvgType } from "@/types/common";
+
+const Instagram = ({ className }: SvgType) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -26,4 +28,6 @@ export default function Instagram({ className }: SvgType) {
       <path d="M16.5 7.5v.01" />
     </svg>
   );
-}
+};
+
+export { Instagram };

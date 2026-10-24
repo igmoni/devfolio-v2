@@ -18,7 +18,7 @@ import {
 } from "../ui/tooltip";
 
 export const HeroInfo = () => {
-  const { name, about, description, socialLinks, professions } = heroConfig;
+  const { name, description, socialLinks, professions } = heroConfig;
   const [index, setIndex] = useState(0);
 
   useEffect(() => {
@@ -52,8 +52,7 @@ export const HeroInfo = () => {
         </div>
       </Reveal>
       <Reveal delay={0.4}>
-        <p className="text-center text-sm text-neutral-500 md:text-left md:text-base">
-          {about}{" "}
+        <p className="text-center text-sm text-neutral-500 md:text-left md:text-xl">
           {professions.length > 0 && (
             <AnimatePresence mode="wait">
               <motion.span

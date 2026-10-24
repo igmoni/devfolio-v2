@@ -1,6 +1,8 @@
 import { cn } from "cn";
 
-export default function LinkedIn({ className }: SvgType) {
+import { SvgType } from "@/types/common";
+
+const LinkedIn = ({ className }: SvgType) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -30,4 +32,6 @@ export default function LinkedIn({ className }: SvgType) {
       <path d="M3 7a4 4 0 0 1 4 -4h10a4 4 0 0 1 4 4v10a4 4 0 0 1 -4 4h-10a4 4 0 0 1 -4 -4l0 -10" />
     </svg>
   );
-}
+};
+
+export { LinkedIn };

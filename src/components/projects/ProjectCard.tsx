@@ -47,7 +47,7 @@ export { ProjectCard };
 // Technology stack
 const ProjectTechStack = ({ stacks = [] }: { stacks?: StacksProps[] }) => {
   return (
-    <div className="mt-5 flex items-center pl-2">
+    <div className="mt-5 flex items-center pl-2 transition-all duration-300 hover:pl-5">
       {stacks.map(({ name, Icon }, index) => (
         <motion.div
           key={name}

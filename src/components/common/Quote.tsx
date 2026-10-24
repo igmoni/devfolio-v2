@@ -7,16 +7,24 @@ import { quotes } from "@/config/quote";
 import { Container } from "./Container";
 
 const Quote = () => {
-  const [currentQuote, setCurrentQuote] = useState({ quote: "", author: "" });
+  const [currentQuote, setCurrentQuote] = useState<{
+    quote: string;
+    author: string;
+  } | null>(null);
 
   useEffect(() => {
-    const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
-    setCurrentQuote(randomQuote);
+    const frameId = window.requestAnimationFrame(() => {
+      const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
+      setCurrentQuote(randomQuote);
+    });
+
+    return () => window.cancelAnimationFrame(frameId);
   }, []);
 
   if (!currentQuote) return null;
 
   const { quote, author } = currentQuote;
+
   return (
     <Container className={"px-4 py-16"}>
       <div className="dark:border-dark-white-50 relative rounded-xl border px-16 py-10">

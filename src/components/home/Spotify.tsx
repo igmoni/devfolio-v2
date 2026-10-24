@@ -64,7 +64,7 @@ const Spotify = ({ track }: SpotifyProps) => {
         />
       ) : (
         <Image
-          src="/assets/spotify1.svg"
+          src="/assets/spotify.svg"
           width={44}
           height={44}
           alt="Spotify"

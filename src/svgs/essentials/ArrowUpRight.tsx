@@ -1,3 +1,5 @@
+import { SvgType } from "@/types/common";
+
 const ArrowUpRight = ({ className }: SvgType) => {
   return (
     <svg

@@ -13,7 +13,7 @@ const page = async () => {
     <Container className="mt-5">
       <Reveal>
         <Heading as="h1">Projects</Heading>
-        <SubHeading>A few products and experiments I've shipped.</SubHeading>
+        <SubHeading>A few products and experiments I&apos;ve shipped.</SubHeading>
 
         <Separator className="my-5 mt-10" />
       </Reveal>

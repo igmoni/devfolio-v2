@@ -1,6 +1,8 @@
 import { cn } from "cn";
 
-export default function YouTubeIcon({ className }: SvgType) {
+import { SvgType } from "@/types/common";
+
+const YouTubeIcon = ({ className }: SvgType) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -26,4 +28,6 @@ export default function YouTubeIcon({ className }: SvgType) {
       <path d="M10 9l5 3l-5 3l0 -6" />
     </svg>
   );
-}
+};
+
+export { YouTubeIcon };

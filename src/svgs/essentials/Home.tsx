@@ -1,4 +1,5 @@
 import { cn } from "@/lib/utils";
+import { SvgType } from "@/types/common";
 
 const Home = ({ className }: SvgType) => {
   return (
@@ -25,4 +26,3 @@ const Home = ({ className }: SvgType) => {
 };
 
 export { Home };
-

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import { useTheme } from "next-themes";
 
@@ -8,12 +8,7 @@ import { Moon, Sun } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
 
 const ToggleTheme = () => {
-  const { theme, resolvedTheme, setTheme } = useTheme();
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+  const { resolvedTheme, setTheme } = useTheme();
 
   const handleToggle = () => {
     document.documentElement.classList.add("theme-transition");
@@ -25,7 +20,7 @@ const ToggleTheme = () => {
     }, 350);
   };
 
-  if (!mounted) return null;
+  if (!resolvedTheme) return null;
 
   return (
     <button
