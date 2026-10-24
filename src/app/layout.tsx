@@ -1,3 +1,5 @@
+import { Suspense } from "react";
+
 import type { Metadata } from "next";
 
 import { Analytics } from "@vercel/analytics/next";
@@ -10,8 +12,7 @@ import { OnekoCat } from "@/components/common/OnekoCat";
 import { Quote } from "@/components/common/Quote";
 import { Reveal } from "@/components/common/Reveal";
 import { poppins } from "@/config/font";
-import { SoundProvider } from "@/context/SoundContext";
-import { ThemeProvider } from "@/providers/ThemeProvider";
+import { AppProviders } from "@/providers/AppProviders";
 
 import "./globals.css";
 
@@ -29,8 +30,8 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       suppressHydrationWarning
     >
       <body className="flex min-h-full flex-col">
-        <ThemeProvider>
-          <SoundProvider>
+        <Suspense fallback={null}>
+          <AppProviders>
             <NavigationProgress />
             <CustomCursor />
             <Navbar />
@@ -41,8 +42,8 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
             </Reveal>
             <Footer />
             <Analytics />
-          </SoundProvider>
-        </ThemeProvider>
+          </AppProviders>
+        </Suspense>
       </body>
     </html>
   );

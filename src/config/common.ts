@@ -55,3 +55,5 @@ export const footerLinks = [
   { name: "Movies", href: "/movies" },
   { name: "RSS Feed", href: "/blog/feed.xml" },
 ];
+
+

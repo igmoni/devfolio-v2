@@ -3,13 +3,13 @@ import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 
 import { footerLinks } from "@/config/common";
+import { CurrentYear } from "@/config/CurrentYear";
 import { heroConfig } from "@/config/hero";
 
 import { Coffee } from "./Coffee";
 import { Container } from "./Container";
 
 const Footer = () => {
-  const year = new Date().getFullYear();
   const { socialLinks: socials, name } = heroConfig;
 
   return (
@@ -87,7 +87,7 @@ const Footer = () => {
 
         <div className="mt-12 flex flex-col gap-3 border-t border-neutral-800 pt-6 text-sm text-neutral-600 sm:flex-row sm:items-center sm:justify-between">
           <span>
-            © {year} {name}. All rights reserved.
+            © <CurrentYear /> {name}. All rights reserved.
           </span>
           <span>Designed &amp; built with intention.</span>
         </div>

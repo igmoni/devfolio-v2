@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { connection, NextResponse } from "next/server";
 
 import type { WakaTimeApiResponse } from "@/types/wakatime";
 
@@ -97,6 +97,8 @@ async function loadWakaTimeData(
 }
 
 export async function GET() {
+  await connection();
+
   const apiKey = process.env.WAKATIME_API_KEY;
   const timezone = process.env.WAKATIME_TIMEZONE || "Asia/Kolkata";
 

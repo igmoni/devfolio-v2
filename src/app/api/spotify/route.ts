@@ -1,8 +1,10 @@
-import { NextResponse } from "next/server";
+import { connection, NextResponse } from "next/server";
 
 import { getSpotifyTrack } from "@/lib/spotify";
 
 export async function GET() {
+  await connection();
+
   try {
     const track = await getSpotifyTrack();
 

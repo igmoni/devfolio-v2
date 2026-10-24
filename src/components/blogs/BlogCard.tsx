@@ -35,7 +35,7 @@ const BlogCard = ({ blog }: { blog: Blog }) => {
             {title}
           </Heading>
 
-          <SubHeading className="max-w-xl text-xs sm:text-sm">
+          <SubHeading className="line-clamp-2 max-w-xl truncate text-xs sm:text-sm">
             {desc}
           </SubHeading>
 
