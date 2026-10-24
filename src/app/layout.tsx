@@ -51,9 +51,9 @@ export const metadata: Metadata = {
 
   twitter: {
     card: "summary_large_image",
-    title: "Mohan S P - Full Stack Web Developer ",
+    title: "Mohan S P - Full Stack Web Developer",
     description:
-      "II build modern websites and digital products focused on design and performance.",
+      "I build modern websites and digital products focused on design and performance.",
     images: ["https://monxdev.vercel.app/meta/og-img.png"],
     creator: "@_igmoni",
   },

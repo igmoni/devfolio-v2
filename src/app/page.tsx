@@ -11,6 +11,7 @@ import { Projects } from "@/components/home/Projects";
 import { Setup } from "@/components/home/Setup";
 import { SkillsCarousel } from "@/components/home/SkillsCarousel";
 import { Spotify } from "@/components/home/Spotify";
+import { Testimonial } from "@/components/home/Testimonial";
 import { getAnalytics } from "@/lib/analytics";
 
 const Page = async () => {
@@ -43,6 +44,8 @@ const Page = async () => {
       <Suspense fallback={<div>Loading blog...</div>}>
         <Blog />
       </Suspense>
+
+      <Testimonial />
 
       <Setup />
       <Personal />
