@@ -11,7 +11,7 @@ import { generateContentMetadata } from "@/lib/seo";
 
 export function generateMetadata(): Metadata {
   return generateContentMetadata({
-    title: "Books - Reading & Recommendations",
+    title: "Books - My Reading List",
     description:
       "Explore books that have influenced my thinking, learning, and growth.",
     image: "/meta/books.png",

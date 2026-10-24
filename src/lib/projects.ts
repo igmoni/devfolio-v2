@@ -1,3 +1,5 @@
+import { cacheLife } from "next/cache";
+
 import matter from "gray-matter";
 import fs from "node:fs/promises";
 import path from "node:path";
@@ -46,6 +48,10 @@ async function readProjectFile(filename: string): Promise<ProjectPageData> {
 }
 
 export async function getProjects(): Promise<ProjectCardData[]> {
+  "use cache";
+
+  cacheLife("hours");
+
   const files = await fs.readdir(PROJECTS_DIR);
 
   const results = await Promise.all(

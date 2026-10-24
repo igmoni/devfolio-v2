@@ -1,3 +1,5 @@
+import { cacheLife } from "next/cache";
+
 import matter from "gray-matter";
 import fs from "node:fs/promises";
 import path from "node:path";
@@ -8,6 +10,10 @@ import type { Blog } from "@/types/blog";
 const BLOG_DIR = path.join(process.cwd(), "src/data/blog");
 
 export async function getBlogs(): Promise<Blog[]> {
+  "use cache";
+
+  cacheLife("hours");
+
   const files = await fs.readdir(BLOG_DIR);
 
   const blogs = await Promise.all(

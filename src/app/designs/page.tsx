@@ -35,7 +35,7 @@ export default function Page() {
       <Reveal delay={0.15}>
         <div className="relative flex min-h-[30vh] items-center justify-center overflow-hidden rounded-2xl">
           <p
-            className={`${instrumentSerif.className} animate-coming-soon-color relative z-10 text-center text-6xl italic sm:text-8xl`}
+            className={`${instrumentSerif.className} h-36 animate-coming-soon-color relative z-10 text-center text-6xl italic sm:text-8xl`}
           >
             Coming soon...
           </p>

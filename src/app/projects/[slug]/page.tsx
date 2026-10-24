@@ -4,6 +4,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
+import { ArrowLeft } from "lucide-react";
+
 import { Container } from "@/components/common/Container";
 import { Heading } from "@/components/common/Heading";
 import { Separator } from "@/components/ui/separator";
@@ -68,9 +70,10 @@ export default async function Page({ params }: Props) {
     <Container className="mt-5">
       <Link
         href="/projects"
-        className="text-muted-foreground hover:text-foreground text-sm transition-colors"
+        className="text-muted-foreground hover:text-foreground inline-flex items-center gap-2 text-sm transition-colors"
       >
-        ← All projects
+        <ArrowLeft className="size-4" />
+        All projects
       </Link>
 
       <header className="mt-8">

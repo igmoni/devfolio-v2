@@ -10,7 +10,7 @@ import { setupSections } from "@/lib/setup";
 
 export function generateMetadata(): Metadata {
   return generateContentMetadata({
-    title: "Setup - My Development Environment",
+    title: "Setup Guide - VS Code Configuration",
     description:
       "Explore my development environment, editor configuration, tools, and setup guide.",
     image: "/meta/setup.png",

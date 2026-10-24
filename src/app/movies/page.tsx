@@ -10,7 +10,7 @@ import { generateContentMetadata } from "@/lib/seo";
 
 export function generateMetadata(): Metadata {
   return generateContentMetadata({
-    title: "Movies - Watchlist & Recommendations",
+    title: "Movies - My Favorites",
     description: "Movies and shows that have inspired and entertained me.",
     image: "/meta/movies.png",
     path: "/movies",

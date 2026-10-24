@@ -8,7 +8,7 @@ import { getBlogs } from "@/lib/blog";
 import { Blog as BlogSvg } from "@/svgs/essentials/Blog";
 
 export const metadata = {
-  title: "Blog",
+  title: "Blog - Thoughts & Tutorials",
   description:
     "Thoughts, tutorials, and insights on engineering and programming.",
 };

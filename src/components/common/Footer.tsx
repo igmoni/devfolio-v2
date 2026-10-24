@@ -38,7 +38,7 @@ const Footer = () => {
 
         <div className="my-12 h-px bg-neutral-800 sm:my-16" />
 
-        <div className="grid gap-10 sm:grid-cols-2">
+        <div className="grid gap-5 sm:grid-cols-2">
           <div>
             <p className="mb-4 font-mono text-xs tracking-widest text-neutral-500 uppercase">
               Explore
@@ -62,7 +62,7 @@ const Footer = () => {
               Elsewhere
             </p>
 
-            <div className="flex flex-wrap items-center gap-4">
+            <div className="grid grid-cols-5 items-center gap-4">
               {socials.map(({ id, name, icon: Icon, value }) => (
                 <a
                   key={id}
