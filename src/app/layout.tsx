@@ -53,7 +53,7 @@ export const metadata: Metadata = {
     title: "Mohan S P - Full Stack Web Developer ",
     description:
       "II build modern websites and digital products focused on design and performance.",
-    images: ["https://monxdev.vercel.app/meta/opengraph-img.png"],
+    images: ["https://monxdev.vercel.app/meta/og-img.png"],
     creator: "@_igmoni",
   },
 

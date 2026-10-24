@@ -13,7 +13,7 @@ export function generateMetadata(): Metadata {
     title: "Designs - UI/UX & Creative Experiments",
     description:
       "Explore UI/UX designs, interface concepts, and creative design experiments. Coming soon.",
-    image: "/meta/designs.png",
+    image: "/meta/og-img.png",
     path: "/designs",
     type: "website",
   });

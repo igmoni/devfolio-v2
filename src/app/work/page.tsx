@@ -13,7 +13,7 @@ export function generateMetadata(): Metadata {
     title: "Work Experience - Professional Journey",
     description:
       "Explore my professional experience, roles, technical skills, and contributions across different companies.",
-    image: "/meta/experience.png",
+    image: "/meta/work.png",
     path: "/experience",
     type: "website",
   });
