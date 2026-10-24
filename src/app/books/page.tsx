@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Image from "next/image";
 
 import { Container } from "@/components/common/Container";
@@ -6,8 +7,20 @@ import { Reveal } from "@/components/common/Reveal";
 import { SubHeading } from "@/components/common/SubHeading";
 import { Separator } from "@/components/ui/separator";
 import { books } from "@/lib/personal";
+import { generateContentMetadata } from "@/lib/seo";
 
-const page = () => {
+export function generateMetadata(): Metadata {
+  return generateContentMetadata({
+    title: "Books - Reading & Recommendations",
+    description:
+      "Explore books that have influenced my thinking, learning, and growth.",
+    image: "/meta/books.png",
+    path: "/books",
+    type: "website",
+  });
+}
+
+export default function Page() {
   const categories = [...new Set(books.map((book) => book.category))];
 
   return (
@@ -30,8 +43,8 @@ const page = () => {
             );
 
             return (
-              <Reveal delay={id * 0.08} key={id}>
-                <section key={category}>
+              <Reveal delay={id * 0.08} key={category}>
+                <section>
                   <Heading as="h2">{category}</Heading>
 
                   <div className="mt-5 grid grid-cols-2 gap-5 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
@@ -61,6 +74,4 @@ const page = () => {
       </Reveal>
     </Container>
   );
-};
-
-export default page;
+}

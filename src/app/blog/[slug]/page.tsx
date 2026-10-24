@@ -14,6 +14,7 @@ import { Heading } from "@/components/common/Heading";
 import { SubHeading } from "@/components/common/SubHeading";
 import { Separator } from "@/components/ui/separator";
 import { getBlogBySlug, getBlogs } from "@/lib/blog";
+import { generateContentMetadata } from "@/lib/seo";
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -21,37 +22,53 @@ type Props = {
 
 export async function generateStaticParams() {
   const blogs = await getBlogs();
-  return blogs.map((blog) => ({ slug: blog.slug }));
+
+  return blogs
+    .filter((blog) => blog.isPublished)
+    .map((blog) => ({
+      slug: blog.slug,
+    }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const result = await getBlogBySlug(slug);
 
-  if (!result) return { title: "Blog not found" };
+  if (!result || !result.blog.isPublished) {
+    return {
+      title: "Blog Not Found",
+      robots: {
+        index: false,
+        follow: false,
+      },
+    };
+  }
 
-  return {
-    title: result.blog.title,
-    description: result.blog.desc,
-    openGraph: {
-      title: result.blog.title,
-      description: result.blog.desc,
-      images: [result.blog.image],
-      type: "article",
-      publishedTime: result.blog.date,
-      tags: result.blog.tags,
-    },
-  };
+  const { blog } = result;
+
+  return generateContentMetadata({
+    title: blog.title,
+    description: blog.desc,
+    image: blog.image,
+    path: `/blog/${slug}`,
+    type: "article",
+    publishedTime: blog.date,
+    tags: blog.tags,
+  });
 }
 
 export default async function BlogPage({ params }: Props) {
   const { slug } = await params;
   const result = await getBlogBySlug(slug);
 
-  if (!result) notFound();
+  if (!result || !result.blog.isPublished) {
+    notFound();
+  }
 
   const { blog, content } = result;
+
   const allBlogs = await getBlogs();
+  const publishedBlogs = allBlogs.filter((item) => item.isPublished);
 
   const formattedDate = new Date(`${blog.date}T00:00:00Z`).toLocaleDateString(
     "en-US",
@@ -104,7 +121,7 @@ export default async function BlogPage({ params }: Props) {
             </div>
           </header>
 
-          <div className="bg-muted relative mt-9 aspect-[16/9] overflow-hidden rounded-2xl border">
+          <div className="bg-muted relative mt-9 aspect-video overflow-hidden rounded-2xl border">
             <Image
               src={blog.image}
               alt={blog.title}
@@ -131,7 +148,7 @@ export default async function BlogPage({ params }: Props) {
           <RelatedBlogs
             currentSlug={blog.slug}
             currentTags={blog.tags}
-            blogs={allBlogs}
+            blogs={publishedBlogs}
           />
         </div>
       </Container>

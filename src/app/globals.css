@@ -324,3 +324,40 @@ html.theme-transition *::after {
   color: var(--foreground);
   font-weight: 600;
 }
+
+@keyframes coming-soon-shimmer {
+  from {
+    background-position: 200% 0;
+  }
+
+  to {
+    background-position: -200% 0;
+  }
+}
+
+.animate-coming-soon-color {
+  background-image: linear-gradient(
+    100deg,
+    #737373 40%,
+    #ffffff 48%,
+    #ffffff 52%,
+    #737373 60%
+  );
+  background-size: 200% 100%;
+  background-position: 200% 0;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  animation: coming-soon-shimmer 4s linear infinite;
+}
+
+.dark .animate-coming-soon-color {
+  background-image: linear-gradient(
+    100deg,
+    #a3a3a3 40%,
+    #000000 48%,
+    #000000 52%,
+    #a3a3a3 60%
+  );
+}

@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 
 import { LinkIcon, Puzzle } from "lucide-react";
@@ -13,17 +14,31 @@ import {
   vsCodeExtensions,
   webExtensions,
 } from "@/lib/gears";
+import { generateContentMetadata } from "@/lib/seo";
 import { Monitor } from "@/svgs/devices/Monitor";
 
-const Page = () => {
+export function generateMetadata(): Metadata {
+  return generateContentMetadata({
+    title: "Gears - My Setup & Tools",
+    description:
+      "Explore the devices, software, and tools I use to build products.",
+    image: "/meta/gears.png",
+    path: "/gears",
+    type: "website",
+  });
+}
+
+export default function Page() {
   return (
     <Container className="mt-5">
       <Reveal>
         <Heading as="h1">Gears</Heading>
+
         <SubHeading>My gears and tools I use to get my work done.</SubHeading>
 
         <Separator className="my-5 mt-10" />
       </Reveal>
+
       {/* Devices */}
       <Reveal delay={0.1}>
         <div className="space-y-4">
@@ -42,8 +57,9 @@ const Page = () => {
                   <div className="flex items-center gap-1">
                     <Link
                       href={device.href}
-                      className="text-sm text-neutral-500 underline-offset-2"
+                      className="text-sm text-neutral-500 underline-offset-2 hover:underline"
                       target="_blank"
+                      rel="noopener noreferrer"
                     >
                       {device.name}
                     </Link>
@@ -55,13 +71,15 @@ const Page = () => {
           </div>
         </div>
       </Reveal>
+
+      {/* Web Extensions */}
       <Reveal delay={0.2}>
-        {/* Web Extensions */}
         <div className="space-y-4 pt-10">
           <div className="flex items-center gap-4">
             <div className="bg-muted flex items-center justify-center rounded-md border border-black/10 p-2 text-[#736f70] dark:border-white/10">
               <Puzzle className="size-4" />
             </div>
+
             <h2 className="text-2xl font-semibold">Web Extensions</h2>
           </div>
 
@@ -76,6 +94,7 @@ const Page = () => {
                   <h3 className="text-secondary ml-4 flex items-center gap-1 text-sm underline-offset-2 hover:underline">
                     <Link
                       target="_blank"
+                      rel="noopener noreferrer"
                       href={extension.href}
                       className="text-neutral-500"
                     >
@@ -89,13 +108,15 @@ const Page = () => {
           </div>
         </div>
       </Reveal>
+
+      {/* Software */}
       <Reveal delay={0.3}>
-        {/* Software */}
         <div className="space-y-4 pt-10">
           <div className="flex items-center gap-4">
             <div className="bg-muted flex items-center justify-center rounded-md border border-black/10 p-2 text-[#736f70] dark:border-white/10">
               <Monitor className="size-4" />
             </div>
+
             <h2 className="text-2xl font-semibold">Software</h2>
           </div>
 
@@ -110,6 +131,7 @@ const Page = () => {
                   <h3 className="text-secondary ml-4 flex items-center gap-1 text-sm underline-offset-2 hover:underline">
                     <Link
                       target="_blank"
+                      rel="noopener noreferrer"
                       href={app.href}
                       className="text-neutral-500"
                     >
@@ -123,13 +145,15 @@ const Page = () => {
           </div>
         </div>
       </Reveal>
+
+      {/* VS Code / Cursor Extensions */}
       <Reveal delay={0.4}>
-        {/* VS Code / Cursor Extensions */}
         <div className="space-y-4 pt-10">
           <div className="flex items-center gap-4">
             <div className="bg-muted flex items-center justify-center rounded-md border border-black/10 p-2 text-[#736f70] dark:border-white/10">
               <Puzzle className="size-4" />
             </div>
+
             <h2 className="text-2xl font-semibold">
               VS Code/Cursor Extensions
             </h2>
@@ -146,6 +170,7 @@ const Page = () => {
                   <h3 className="text-secondary ml-4 flex items-center gap-1 text-sm underline-offset-2 hover:underline">
                     <Link
                       target="_blank"
+                      rel="noopener noreferrer"
                       href={extension.href}
                       className="text-neutral-500"
                     >
@@ -161,6 +186,4 @@ const Page = () => {
       </Reveal>
     </Container>
   );
-};
-
-export default Page;
+}

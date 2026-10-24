@@ -202,7 +202,7 @@ export const HeroAvatar = () => {
       </div>
 
       {/* Desktop: Hire Me annotation */}
-      <Reveal delay={0.5}>
+      {/* <Reveal delay={0.5}>
         <div className="absolute -bottom-5 -left-30 z-30 hidden -rotate-12 flex-col items-center lg:flex">
           <a
             href="mailto:mohansp119@gmail.com"
@@ -233,7 +233,7 @@ export const HeroAvatar = () => {
             />
           </svg>
         </div>
-      </Reveal>
+      </Reveal> */}
 
       {/* Tablet and desktop: avatar positioning remains fixed */}
       <div className="absolute -bottom-15 left-10 z-10 hidden size-35 md:block">

@@ -46,14 +46,14 @@ export const personalConfig = [
 
 export const footerLinks = [
   { name: "Home", href: "/" },
-  { name: "Work", href: "/work" },
-  { name: "Blog", href: "/blog" },
   { name: "Projects", href: "/projects" },
+  { name: "Blog", href: "/blog" },
+  { name: "Work", href: "/work" },
+  { name: "Designs", href: "/designs" },
   { name: "Gears", href: "/gears" },
   { name: "Setup", href: "/setup" },
   { name: "Books", href: "/books" },
   { name: "Movies", href: "/movies" },
+  { name: "Contact", href: "/contact" },
   { name: "RSS Feed", href: "/blog/feed.xml" },
 ];
-
-

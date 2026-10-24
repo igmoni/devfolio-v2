@@ -1,8 +1,22 @@
+import type { Metadata } from "next";
+
 import { Container } from "@/components/common/Container";
 import { Heading } from "@/components/common/Heading";
 import { Reveal } from "@/components/common/Reveal";
 import { SubHeading } from "@/components/common/SubHeading";
 import { Separator } from "@/components/ui/separator";
+import { generateContentMetadata } from "@/lib/seo";
+
+export function generateMetadata(): Metadata {
+  return generateContentMetadata({
+    title: "Resume - Professional Experience",
+    description:
+      "View my professional resume, technical skills, projects, and experience.",
+    image: "/meta/resume.png",
+    path: "/resume",
+    type: "website",
+  });
+}
 
 export default function ResumePage() {
   return (

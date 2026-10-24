@@ -1,15 +1,29 @@
+import type { Metadata } from "next";
+
 import { Container } from "@/components/common/Container";
 import { Heading } from "@/components/common/Heading";
 import { Reveal } from "@/components/common/Reveal";
 import { SubHeading } from "@/components/common/SubHeading";
 import { Separator } from "@/components/ui/separator";
 import { movies } from "@/lib/personal";
+import { generateContentMetadata } from "@/lib/seo";
 
-const page = () => {
+export function generateMetadata(): Metadata {
+  return generateContentMetadata({
+    title: "Movies - Watchlist & Recommendations",
+    description: "Movies and shows that have inspired and entertained me.",
+    image: "/meta/movies.png",
+    path: "/movies",
+    type: "website",
+  });
+}
+
+export default function Page() {
   return (
     <Container className="mt-5">
       <Reveal>
         <Heading as="h1">Movies</Heading>
+
         <SubHeading>
           Movies and shows that have inspired and entertained me.
         </SubHeading>
@@ -29,6 +43,4 @@ const page = () => {
       </div>
     </Container>
   );
-};
-
-export default page;
+}

@@ -12,6 +12,7 @@ import {
   getProjects,
   getRelatedProjects,
 } from "@/lib/projects";
+import { generateContentMetadata } from "@/lib/seo";
 import { ArrowUpRight } from "@/svgs/essentials/ArrowUpRight";
 
 type Props = {
@@ -30,34 +31,38 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const result = await getProjectBySlug(slug);
 
-  if (!result) return { title: "Project Not Found" };
+  if (!result) {
+    return {
+      title: "Project Not Found",
+      robots: {
+        index: false,
+        follow: false,
+      },
+    };
+  }
 
   const { project } = result;
 
-  return {
+  return generateContentMetadata({
     title: project.title,
     description: project.description,
-    openGraph: {
-      title: project.title,
-      description: project.description,
-      images: [project.image],
-    },
-  };
+    image: project.image,
+    path: `/projects/${slug}`,
+    type: "website",
+  });
 }
 
-const Page = async ({ params }: Props) => {
+export default async function Page({ params }: Props) {
   const { slug } = await params;
   const result = await getProjectBySlug(slug);
 
-  const relatedProjects = await getRelatedProjects(
-    slug,
-    result?.project.stack,
-    2
-  );
-
-  if (!result) notFound();
+  if (!result) {
+    notFound();
+  }
 
   const { project, content } = result;
+
+  const relatedProjects = await getRelatedProjects(slug, project.stack, 2);
 
   return (
     <Container className="mt-5">
@@ -74,7 +79,7 @@ const Page = async ({ params }: Props) => {
         </p>
 
         <Heading
-          as={"h1"}
+          as="h1"
           className="mt-3 text-3xl font-semibold tracking-tight sm:text-5xl"
         >
           {project.title}
@@ -100,7 +105,7 @@ const Page = async ({ params }: Props) => {
             <a
               href={project.live}
               target="_blank"
-              rel="noreferrer"
+              rel="noopener noreferrer"
               className="underline underline-offset-4"
             >
               Live website ↗
@@ -111,7 +116,7 @@ const Page = async ({ params }: Props) => {
             <a
               href={project.github}
               target="_blank"
-              rel="noreferrer"
+              rel="noopener noreferrer"
               className="underline underline-offset-4"
             >
               Source code ↗
@@ -120,7 +125,7 @@ const Page = async ({ params }: Props) => {
         </div>
       </header>
 
-      <div className="bg-muted relative mt-8 aspect-[16/9] overflow-hidden rounded-xl">
+      <div className="bg-muted relative mt-8 aspect-video overflow-hidden rounded-xl">
         <Image
           src={project.image}
           alt={project.title}
@@ -167,6 +172,4 @@ const Page = async ({ params }: Props) => {
       )}
     </Container>
   );
-};
-
-export default Page;
+}
