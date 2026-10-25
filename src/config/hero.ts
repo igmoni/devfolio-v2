@@ -9,7 +9,7 @@ import { YouTubeIcon } from "@/svgs/socials/YouTube";
 
 export const heroConfig = {
   name: "Mohan S P",
-  description: "Love building cool things, creating content, & a polymath.",
+  description: "Love building digital products, creating content & a polymath.",
   professions: [
     "Full Stack Developer",
     "UI/UX Designer",

@@ -1,4 +1,4 @@
-import { ScrollText } from "lucide-react";
+import { CircleUserRound, ScrollText } from "lucide-react";
 
 import { Blog } from "@/svgs/essentials/Blog";
 import { Home } from "@/svgs/essentials/Home";
@@ -11,6 +11,7 @@ export const navItems = [
   { id: 2, name: "Projects", icon: Project, value: "/projects" },
   { id: 3, name: "Blog", icon: Blog, value: "/blog" },
   { id: 4, name: "Resume", icon: ScrollText, value: "/resume" },
+  { id: 5, name: "Contact", icon: CircleUserRound, value: "/contact" },
 ];
 
 export const navSocialLinks = [
@@ -50,11 +51,13 @@ export const footerLinks = [
   { name: "Blog", href: "/blog" },
   { name: "Work", href: "/work" },
   { name: "Designs", href: "/designs" },
+  { name: "Resume", href: "/resume" },
   { name: "Gears", href: "/gears" },
   { name: "Setup", href: "/setup" },
+  { name: "Contact", href: "/contact" },
+  { name: "Side Quests", href: "/side-quests" },
   { name: "Books", href: "/books" },
   { name: "Movies", href: "/movies" },
-  { name: "Contact", href: "/contact" },
   { name: "RSS Feed", href: "/blog/feed.xml" },
 ];
 

@@ -120,24 +120,7 @@ const Navbar = () => {
         })}
       </div>
 
-      <div className="h-full w-[1.5px] shrink-0 bg-linear-to-b from-transparent via-neutral-300 to-transparent dark:via-neutral-600" />
-
-      <div className="flex items-center gap-3">
-        {navSocialLinks.map((item) => {
-          const Icon = item.icon;
-
-          return (
-            <DockItem
-              key={item.id}
-              mouseX={mouseX}
-              href={item.value}
-              label={item.name}
-            >
-              <Icon className="size-6 transition-colors" />
-            </DockItem>
-          );
-        })}
-      </div>
+    
 
       <div className="h-full w-[1.5px] shrink-0 bg-linear-to-b from-transparent via-neutral-300 to-transparent dark:via-neutral-600" />
 

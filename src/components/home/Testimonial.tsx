@@ -17,18 +17,20 @@ const Testimonial = () => {
             Testimonials
           </Heading>
 
-          <div className="flex justify-center overflow-hidden">
+          <div className="w-full overflow-hidden">
             <div
-              className={`flex w-max gap-4 ${
-                isMarquee ? "animate-marquee" : "flex-wrap justify-center"
+              className={`flex w-max items-center gap-4 ${
+                isMarquee
+                  ? "animate-marquee"
+                  : "mx-auto flex-wrap justify-center"
               }`}
             >
               {testimonials.map((item) => (
                 <article
                   key={item.id}
-                  className="flex w-90 shrink-0 flex-col justify-between gap-6 rounded-2xl border border-neutral-200 bg-neutral-100/70 p-6 text-center transition-colors duration-300 hover:border-neutral-300 dark:border-neutral-800 dark:bg-neutral-900/70 dark:hover:border-neutral-700"
+                  className="flex w-[min(22.5rem,calc(100vw-3rem))] shrink-0 flex-col justify-between gap-6 rounded-2xl border border-neutral-200 bg-neutral-100/70 p-5 text-center transition-colors duration-300 hover:border-neutral-300 sm:p-6 dark:border-neutral-800 dark:bg-neutral-900/70 dark:hover:border-neutral-700"
                 >
-                  <p className="text-sm leading-7 text-neutral-600 dark:text-neutral-400">
+                  <p className="text-sm leading-7 wrap-break-word text-neutral-600 dark:text-neutral-400">
                     “{item.text}”
                   </p>
 

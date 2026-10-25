@@ -8,7 +8,9 @@ const SubHeading = ({
   className?: string;
 }) => {
   return (
-    <p className={cn("text-base text-neutral-500", className)}>{children}</p>
+    <p className={cn("mt-2 text-base text-neutral-500", className)}>
+      {children}
+    </p>
   );
 };
 
