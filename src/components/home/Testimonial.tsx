@@ -11,7 +11,7 @@ const Testimonial = () => {
 
   return (
     <Reveal delay={0.1}>
-      <Container>
+      <Container className="mb-5">
         <section className="space-y-8 overflow-hidden">
           <Heading as="h2" Icon={<Mailbox />}>
             Testimonials
