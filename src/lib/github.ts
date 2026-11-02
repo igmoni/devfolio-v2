@@ -7,15 +7,12 @@ export type Contribution = {
 };
 
 export const ActivityCalendar = dynamic(
-  () =>
-    import("react-activity-calendar").then(
-      (mod) => mod.ActivityCalendar,
-    ),
-  { ssr: false },
+  () => import("react-activity-calendar").then((mod) => mod.ActivityCalendar),
+  { ssr: false }
 );
 
 export const filterLastYear = (
-  contributions: Contribution[],
+  contributions: Contribution[]
 ): Contribution[] => {
   const today = new Date();
   today.setHours(23, 59, 59, 999);

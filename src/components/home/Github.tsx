@@ -117,7 +117,7 @@ const Github = () => {
   return (
     <Container className="space-y-6">
       <div className="mt-5 mb-1 flex items-end justify-between md:items-center">
-        <Heading as="h2" className="flex items-center gap-2 ">
+        <Heading as="h2" className="flex items-center gap-2">
           <GithubSvg className="size-7" />
           Github Activity
         </Heading>
