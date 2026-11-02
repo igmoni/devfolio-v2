@@ -1,4 +1,4 @@
-import { Mailbox } from "lucide-react";
+import { Mailbox, Quote } from "lucide-react";
 
 import { testimonials } from "@/lib/testimonials";
 
@@ -19,23 +19,30 @@ const Testimonial = () => {
 
           <div className="w-full overflow-hidden">
             <div
-              className={`flex w-max items-center gap-4 ${
-                isMarquee
-                  ? "animate-marquee"
-                  : "mx-auto flex-wrap justify-center"
+              className={`flex items-stretch gap-4 ${
+                isMarquee ? "animate-marquee w-max" : "w-full justify-center"
               }`}
             >
               {testimonials.map((item) => (
                 <article
                   key={item.id}
-                  className="flex w-[min(22.5rem,calc(100vw-3rem))] shrink-0 flex-col justify-between gap-6 rounded-2xl border border-neutral-200 bg-neutral-100/70 p-5 text-center transition-colors duration-300 hover:border-neutral-300 sm:p-6 dark:border-neutral-800 dark:bg-neutral-900/70 dark:hover:border-neutral-700"
+                  className={`flex shrink-0 flex-col justify-between gap-6 rounded-2xl border border-neutral-200 bg-neutral-100/70 p-6 transition-colors duration-300 hover:border-neutral-300 dark:border-neutral-800 dark:bg-neutral-900/70 dark:hover:border-neutral-700 ${
+                    isMarquee
+                      ? "w-[min(24.5rem,calc(100vw-3rem))]"
+                      : "w-full max-w-full"
+                  }`}
                 >
+                  <Quote
+                    size={22}
+                    className="text-neutral-400 dark:text-neutral-600"
+                  />
+
                   <p className="text-sm leading-7 wrap-break-word text-neutral-600 dark:text-neutral-400">
-                    “{item.text}”
+                    {item.text}
                   </p>
 
                   <p className="text-sm font-semibold text-neutral-900 dark:text-neutral-100">
-                    - {item.name}
+                    — {item.name}
                   </p>
                 </article>
               ))}

@@ -11,7 +11,6 @@ export const heroConfig = {
   name: "Mohan S P",
   description: "Love building digital products, creating content & a polymath.",
   professions: [
-    "Full Stack Developer",
     "UI/UX Designer",
     "Product Designeer",
     "Design Engineer",

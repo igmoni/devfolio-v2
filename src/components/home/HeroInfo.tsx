@@ -53,20 +53,26 @@ export const HeroInfo = () => {
       </Reveal>
       <Reveal delay={0.4}>
         <p className="text-center text-sm text-neutral-500 md:text-left md:text-xl">
-          {professions.length > 0 && (
-            <AnimatePresence mode="wait">
+          I'm a<span className="text-foreground"> Full Stack Developer</span> &{" "}
+          <span className="relative inline-grid min-w-[11ch] text-left align-bottom font-medium text-neutral-900 dark:text-neutral-100">
+            {professions.map((profession, i) => (
               <motion.span
-                key={index}
-                initial={{ y: 10, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                exit={{ y: -10, opacity: 0 }}
-                transition={{ duration: 0.4, ease: "easeInOut" }}
-                className="inline-block"
+                key={profession}
+                initial={false}
+                animate={{
+                  opacity: index === i ? 1 : 0,
+                  filter: index === i ? "blur(0px)" : "blur(4px)",
+                  y: index === i ? 0 : 5,
+                }}
+                transition={{ duration: 0.3 }}
+                className={`col-start-1 row-start-1 whitespace-nowrap ${
+                  index === i ? "relative" : "pointer-events-none absolute"
+                }`}
               >
-                {professions[index]}
+                {profession}
               </motion.span>
-            </AnimatePresence>
-          )}
+            ))}
+          </span>
         </p>
       </Reveal>
       <Reveal delay={0.4}>
