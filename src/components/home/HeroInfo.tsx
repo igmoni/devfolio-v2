@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 
 import Link from "next/link";
 
-import { AnimatePresence, motion } from "motion/react";
+import {  motion } from "motion/react";
 
 import { instrumentSerif } from "@/config/font";
 import { heroConfig } from "@/config/hero";
@@ -53,7 +53,7 @@ export const HeroInfo = () => {
       </Reveal>
       <Reveal delay={0.4}>
         <p className="text-center text-sm text-neutral-500 md:text-left md:text-xl">
-          I'm a<span className="text-foreground"> Full Stack Developer</span> &{" "}
+          I&apos;m a<span className="text-foreground"> Full Stack Developer</span> &{" "}
           <span className="relative inline-grid min-w-[11ch] text-left align-bottom font-medium text-neutral-900 dark:text-neutral-100">
             {professions.map((profession, i) => (
               <motion.span

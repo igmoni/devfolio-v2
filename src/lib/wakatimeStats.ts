@@ -2,7 +2,6 @@ import type {
   WakaTimeApiResponse,
   WakaTimeData,
   WakaTimeHeartbeat,
-  WakaTimeStatus,
 } from "@/types/wakatime";
 
 export function normalizeEditor(name?: string): string {

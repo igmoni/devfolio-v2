@@ -8,7 +8,7 @@ import Link from "next/link";
 import type { MotionValue } from "motion/react";
 import { motion, useMotionValue, useSpring, useTransform } from "motion/react";
 
-import { navItems, navSocialLinks } from "@/config/common";
+import { navItems } from "@/config/common";
 
 import { ThemeToggleButton } from "./ThemeToggle";
 

@@ -25,7 +25,6 @@ const ProjectCard = ({ project }: { project: Project }) => {
         imgUrl={project.imgUrl}
         live={project.live}
         githubLink={project.githubLink}
-        tool={project.tool}
       />
 
       <div className="">
@@ -112,8 +111,7 @@ const ProjectPreview = ({
   imgUrl,
   live,
   githubLink,
-  tool,
-}: Pick<Project, "shortTitle" | "imgUrl" | "live" | "githubLink" | "tool">) => {
+}: Pick<Project, "shortTitle" | "imgUrl" | "live" | "githubLink">) => {
   return (
     <div className="relative aspect-[16/10] overflow-hidden rounded-2xl border border-neutral-200 bg-neutral-100 dark:border-neutral-800 dark:bg-neutral-900">
       <Image

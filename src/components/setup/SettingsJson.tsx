@@ -7,8 +7,6 @@ import { Check, ChevronDown, Clipboard, SlidersHorizontal } from "lucide-react";
 import { geistMono } from "@/config/font";
 import type { EditorSettings } from "@/types/setup";
 
-import { Container } from "../common/Container";
-
 export function SettingsJson({ settings }: { settings: EditorSettings }) {
   const [isOpen, setIsOpen] = useState(false);
   const [copied, setCopied] = useState(false);

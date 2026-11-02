@@ -5,7 +5,7 @@ import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
-import { ExternalLink, LayoutGrid, List, TextAlignStart } from "lucide-react";
+import { LayoutGrid, TextAlignStart } from "lucide-react";
 
 import { ArrowUpRight } from "@/svgs/essentials/ArrowUpRight";
 import { Project as ProjectIcon } from "@/svgs/essentials/Project";

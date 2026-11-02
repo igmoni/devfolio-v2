@@ -6,7 +6,7 @@ import path from "node:path";
 import "server-only";
 
 import { getStacks } from "@/config/technologies";
-import type { Project as ProjectCardData, StacksProps } from "@/types/projects";
+import type { Project as ProjectCardData } from "@/types/projects";
 
 const PROJECTS_DIR = path.join(process.cwd(), "src/data/projects");
 
