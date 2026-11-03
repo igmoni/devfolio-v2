@@ -1,6 +1,8 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
+
+import Image from "next/image";
 
 import type { Blog } from "@/types/blog";
 
@@ -9,6 +11,8 @@ import { BlogCard } from "./BlogCard";
 
 const BlogList = ({ blogs }: { blogs: Blog[] }) => {
   const [selectedCategory, setSelectedCategory] = useState("all");
+  const [hoveredSlug, setHoveredSlug] = useState<string | null>(null);
+  const tooltipRef = useRef<HTMLDivElement>(null);
 
   const categories = useMemo(() => {
     const tags = blogs.flatMap((blog) => blog.tags);
@@ -25,6 +29,12 @@ const BlogList = ({ blogs }: { blogs: Blog[] }) => {
       )
     );
   }, [blogs, selectedCategory]);
+
+  // Move the tooltip with the cursor without re-rendering
+  const moveTooltip = (x: number, y: number) => {
+    if (!tooltipRef.current) return;
+    tooltipRef.current.style.transform = `translate3d(${x + 24}px, ${y + 24}px, 0)`;
+  };
 
   return (
     <div>
@@ -62,11 +72,24 @@ const BlogList = ({ blogs }: { blogs: Blog[] }) => {
 
       {/* Filtered blog posts */}
       {filteredBlogs.length > 0 ? (
-        <div className="flex flex-col gap-10 md:gap-8">
+        <div
+          className="flex flex-col gap-10 md:gap-8"
+          onMouseMove={(e) => moveTooltip(e.clientX, e.clientY)}
+        >
           {filteredBlogs.map((blog, index) => (
-            <Reveal key={blog.slug} delay={index * 0.08}>
-              <BlogCard blog={blog} />
-            </Reveal>
+            <div key={blog.title}>
+              <Reveal delay={index * 0.08}>
+                <BlogCard
+                  blog={blog}
+                  dimmed={hoveredSlug !== null && hoveredSlug !== blog.slug}
+                  onHoverStart={(e) => {
+                    if (e) moveTooltip(e.clientX, e.clientY);
+                    setHoveredSlug(blog.slug);
+                  }}
+                  onHoverEnd={() => setHoveredSlug(null)}
+                />
+              </Reveal>
+            </div>
           ))}
         </div>
       ) : (
@@ -74,6 +97,32 @@ const BlogList = ({ blogs }: { blogs: Blog[] }) => {
           No blogs found in this category.
         </p>
       )}
+
+      {/* Cursor-following image tooltip (desktop only) */}
+      <div
+        ref={tooltipRef}
+        aria-hidden
+        className="pointer-events-none fixed top-0 left-0 z-50 hidden md:block"
+      >
+        <div
+          className={`relative h-44 w-72 overflow-hidden rounded-xl border bg-neutral-100 shadow-2xl transition-all duration-200 ${
+            hoveredSlug ? "scale-100 opacity-100" : "scale-95 opacity-0"
+          }`}
+        >
+          {filteredBlogs.map((blog) => (
+            <Image
+              key={blog.slug}
+              src={blog.image}
+              alt=""
+              fill
+              sizes="288px"
+              className={`object-cover transition-opacity duration-200 ${
+                hoveredSlug === blog.slug ? "opacity-100" : "opacity-0"
+              }`}
+            />
+          ))}
+        </div>
+      </div>
     </div>
   );
 };
