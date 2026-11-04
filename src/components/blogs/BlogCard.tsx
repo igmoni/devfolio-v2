@@ -12,6 +12,7 @@ import { SubHeading } from "../common/SubHeading";
 type BlogCardProps = {
   blog: Blog;
   dimmed?: boolean;
+  isBlog: boolean;
   onHoverStart?: (e?: React.MouseEvent) => void;
   onHoverEnd?: () => void;
 };
@@ -19,6 +20,7 @@ type BlogCardProps = {
 const BlogCard = ({
   blog,
   dimmed,
+  isBlog = false,
   onHoverStart,
   onHoverEnd,
 }: BlogCardProps) => {
@@ -38,12 +40,12 @@ const BlogCard = ({
       <div className="flex min-w-0 flex-col gap-2">
         <Heading
           as="h3"
-          className="text-xl transition-colors group-hover:text-neutral-500"
+          className="text-lg transition-colors group-hover:text-neutral-500"
         >
           {title}
         </Heading>
 
-        <SubHeading className="line-clamp-2 max-w-xl text-xs sm:text-sm">
+        <SubHeading className="line-clamp-1 max-w-xl text-xs sm:text-sm">
           {desc}
         </SubHeading>
 
@@ -58,17 +60,18 @@ const BlogCard = ({
             })}
           </time>
         </p>
-
-        <div className="flex flex-wrap gap-2">
-          {tags.map((tag) => (
-            <span
-              key={tag}
-              className="text-muted-foreground rounded-md border px-2 py-0.5 text-xs"
-            >
-              {tag}
-            </span>
-          ))}
-        </div>
+        {isBlog && (
+          <div className="flex flex-wrap gap-2">
+            {tags.map((tag) => (
+              <span
+                key={tag}
+                className="text-muted-foreground rounded-md border px-2 py-0.5 text-xs"
+              >
+                {tag}
+              </span>
+            ))}
+          </div>
+        )}
       </div>
 
       <div className="group-hover:text-foreground flex shrink-0 items-center gap-1 text-xs text-neutral-500 transition-colors sm:text-sm">

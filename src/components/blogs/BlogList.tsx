@@ -12,13 +12,30 @@ import { BlogCard } from "./BlogCard";
 const BlogList = ({ blogs }: { blogs: Blog[] }) => {
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [hoveredSlug, setHoveredSlug] = useState<string | null>(null);
+  const [showAllCategories, setShowAllCategories] = useState(false);
+
   const tooltipRef = useRef<HTMLDivElement>(null);
 
-  const categories = useMemo(() => {
-    const tags = blogs.flatMap((blog) => blog.tags);
+  // Get categories and sort by blog count
+  const rankedCategories = useMemo(() => {
+    const categoryCounts = new Map<string, number>();
 
-    return [...new Set(tags)].sort((a, b) => a.localeCompare(b));
+    blogs.forEach((blog) => {
+      blog.tags.forEach((tag) => {
+        categoryCounts.set(tag, (categoryCounts.get(tag) ?? 0) + 1);
+      });
+    });
+
+    return [...categoryCounts.entries()]
+      .sort(([a, countA], [b, countB]) => {
+        return countB - countA || a.localeCompare(b);
+      })
+      .map(([category]) => category);
   }, [blogs]);
+
+  const visibleCategories = showAllCategories
+    ? rankedCategories
+    : rankedCategories.slice(0, 5);
 
   const filteredBlogs = useMemo(() => {
     if (selectedCategory === "all") return blogs;
@@ -33,41 +50,67 @@ const BlogList = ({ blogs }: { blogs: Blog[] }) => {
   // Move the tooltip with the cursor without re-rendering
   const moveTooltip = (x: number, y: number) => {
     if (!tooltipRef.current) return;
+
     tooltipRef.current.style.transform = `translate3d(${x + 24}px, ${y + 24}px, 0)`;
   };
 
   return (
     <div>
       {/* Category filters */}
-      <div className="mb-8 flex flex-wrap gap-2">
+      {/* Category filters */}
+      {/* Category filters */}
+      <div className="mb-8 flex flex-wrap items-center gap-2">
         <button
           type="button"
           onClick={() => setSelectedCategory("all")}
           aria-pressed={selectedCategory === "all"}
-          className={`rounded-full border px-2 py-1 text-sm transition-colors ${
+          className={`rounded-full border px-3 py-1.5 text-sm transition-colors ${
             selectedCategory === "all"
               ? "border-foreground bg-foreground text-background"
-              : "border-border text-muted-foreground hover:text-foreground"
+              : "border-border text-muted-foreground hover:text-foreground bg-neutral-100 dark:bg-neutral-900"
           }`}
         >
           All
+          <span className="ml-1.5 opacity-60">{blogs.length}</span>
         </button>
 
-        {categories.map((category) => (
+        {visibleCategories.map((category) => {
+          const count = blogs.filter((blog) =>
+            blog.tags.some(
+              (tag) => tag.toLowerCase() === category.toLowerCase()
+            )
+          ).length;
+
+          const isSelected = selectedCategory === category;
+
+          return (
+            <button
+              key={category}
+              type="button"
+              onClick={() => setSelectedCategory(category)}
+              aria-pressed={isSelected}
+              className={`rounded-full border px-3 py-1.5 text-sm capitalize transition-colors ${
+                isSelected
+                  ? "border-foreground bg-foreground text-background"
+                  : "border-border text-muted-foreground hover:text-foreground bg-neutral-100 dark:bg-neutral-900"
+              }`}
+            >
+              {category}
+              <span className="ml-1.5 opacity-60">{count}</span>
+            </button>
+          );
+        })}
+
+        {rankedCategories.length > 5 && (
           <button
-            key={category}
             type="button"
-            onClick={() => setSelectedCategory(category)}
-            aria-pressed={selectedCategory === category}
-            className={`rounded-full border px-2 py-1 text-sm capitalize transition-colors ${
-              selectedCategory === category
-                ? "border-foreground bg-foreground text-background"
-                : "border-border text-muted-foreground hover:text-foreground"
-            }`}
+            onClick={() => setShowAllCategories((prev) => !prev)}
+            aria-expanded={showAllCategories}
+            className="border-border text-muted-foreground hover:text-foreground rounded-full border bg-neutral-100 px-3 py-1.5 text-sm transition-colors dark:bg-neutral-900"
           >
-            {category}
+            {showAllCategories ? "Hide" : "Show all"}
           </button>
-        ))}
+        )}
       </div>
 
       {/* Filtered blog posts */}
@@ -77,10 +120,11 @@ const BlogList = ({ blogs }: { blogs: Blog[] }) => {
           onMouseMove={(e) => moveTooltip(e.clientX, e.clientY)}
         >
           {filteredBlogs.map((blog, index) => (
-            <div key={blog.title}>
+            <div key={blog.slug}>
               <Reveal delay={index * 0.08}>
                 <BlogCard
                   blog={blog}
+                  isBlog
                   dimmed={hoveredSlug !== null && hoveredSlug !== blog.slug}
                   onHoverStart={(e) => {
                     if (e) moveTooltip(e.clientX, e.clientY);

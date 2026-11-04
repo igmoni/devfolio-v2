@@ -59,21 +59,30 @@ export function BlogTableOfContents() {
       updateProgress();
     };
 
-    // Defer initial state updates until after the effect runs.
     frameId = window.requestAnimationFrame(() => {
       setItems(tocItems);
       updateActive();
     });
 
     window.addEventListener("scroll", updateActive, { passive: true });
-    window.addEventListener("resize", updateProgress);
+    window.addEventListener("resize", updateActive);
 
     return () => {
       window.cancelAnimationFrame(frameId);
       window.removeEventListener("scroll", updateActive);
-      window.removeEventListener("resize", updateProgress);
+      window.removeEventListener("resize", updateActive);
     };
   }, []);
+
+  // Close on Escape
+  useEffect(() => {
+    if (!isOpen) return;
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setIsOpen(false);
+    };
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [isOpen]);
 
   if (!items.length) return null;
 
@@ -87,7 +96,7 @@ export function BlogTableOfContents() {
           isOpen ? "Close table of contents" : "Open table of contents"
         }
         aria-expanded={isOpen}
-        className="relative flex size-11 items-center justify-center rounded-full border border-white/15 bg-[#111111] text-white shadow-lg transition-transform hover:scale-105"
+        className="relative flex size-11 items-center justify-center rounded-full border border-neutral-300 bg-white text-neutral-900 shadow-lg transition-transform hover:scale-105 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-neutral-900 dark:border-white/15 dark:bg-[#111111] dark:text-white dark:shadow-black/40 dark:focus-visible:outline-white"
       >
         <svg
           viewBox="0 0 44 44"
@@ -129,15 +138,15 @@ export function BlogTableOfContents() {
 
           <nav
             aria-label="Table of contents"
-            className="absolute top-14 right-0 w-100 overflow-hidden rounded-2xl border border-white/10 bg-[#191919] text-white shadow-2xl"
+            className="absolute top-14 right-0 w-75 overflow-hidden rounded-2xl border border-neutral-200 bg-white text-neutral-900 shadow-2xl md:w-100 dark:border-white/10 dark:bg-[#191919] dark:text-white dark:shadow-black/60"
           >
-            <div className="px-4 pt-4 pb-3">
-              <p className="text-[11px] font-bold tracking-[0.14em] text-white/40 uppercase">
+            <div className="border-b border-neutral-200 px-4 pt-4 pb-3 dark:border-white/10">
+              <p className="text-[11px] font-bold tracking-[0.14em] text-neutral-500 uppercase dark:text-white/60">
                 Table of contents
               </p>
             </div>
 
-            <ul className="max-h-[min(65vh,600px)] scrollbar-none space-y-0.5 overflow-y-auto px-3 pb-3 [&::-webkit-scrollbar]:hidden">
+            <ul className="max-h-[min(65vh,600px)] space-y-0.5 overflow-y-auto px-3 py-3 [&::-webkit-scrollbar]:hidden">
               {items.map((item) => {
                 const active = activeId === item.id;
 
@@ -145,19 +154,23 @@ export function BlogTableOfContents() {
                   <li key={item.id}>
                     <a
                       href={`#${item.id}`}
-                      onClick={() => setActiveId(item.id)}
-                      className={`flex items-center gap-3 rounded-lg px-3 py-2.5 text-[13px] leading-5 transition-colors ${
+                      onClick={() => {
+                        setActiveId(item.id);
+                        setIsOpen(false);
+                      }}
+                      aria-current={active ? "location" : undefined}
+                      className={`flex items-center gap-3 rounded-lg px-3 py-2.5 text-[13px] leading-5 transition-colors focus-visible:outline-2 focus-visible:outline-neutral-900 dark:focus-visible:outline-white ${
                         item.level === 3 ? "pl-6" : ""
                       } ${
                         active
-                          ? "bg-white/10 font-semibold text-white"
-                          : "text-white/55 hover:bg-white/4 hover:text-white/90"
+                          ? "bg-neutral-100 font-semibold text-neutral-950 dark:bg-white/10 dark:text-white"
+                          : "text-neutral-500 hover:bg-neutral-100 hover:text-neutral-900 dark:text-white/55 dark:hover:bg-white/5 dark:hover:text-white/90"
                       }`}
                     >
                       <span className="min-w-0 flex-1">{item.text}</span>
 
                       {active && (
-                        <span className="size-1.5 shrink-0 rounded-full bg-white" />
+                        <span className="size-1.5 shrink-0 rounded-full bg-neutral-900 dark:bg-white" />
                       )}
                     </a>
                   </li>

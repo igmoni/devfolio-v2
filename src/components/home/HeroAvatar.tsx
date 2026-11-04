@@ -66,15 +66,13 @@ export const HeroAvatar = () => {
 
   // Shared avatar image and glitch effect
   const AvatarImage = (
-    <div className="relative size-full overflow-hidden rounded-full bg-[#8EC0E8] shadow-xl ring-4 ring-white sm:ring-5 dark:bg-[#EEDA66] dark:ring-black">
+    <div className="bg- relative size-full overflow-hidden rounded-full shadow-xl ring-4 ring-white sm:ring-5 dark:ring-black">
       <Image
         src={image}
         alt="Avatar"
         fill
         sizes="140px"
-        className={`rounded-full object-cover ${
-          image === AVATAR ? "scale-150" : ""
-        }`}
+        className={`rounded-full object-cover`}
       />
 
       <AnimatePresence>
