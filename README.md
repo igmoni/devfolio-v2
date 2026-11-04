@@ -89,8 +89,8 @@ Not every integration is required to run the portfolio. Configure the variables 
 | `WAKATIME_TIMEZONE`                 | Timezone used for coding activity summaries                |
 | `WAKATIME_ONLINE_THRESHOLD_SECONDS` | Threshold used to determine recent coding activity         |
 | `VERCEL_TOKEN`                      | Vercel API token, if required by the analytics integration |
-| `NEXT_PUBLIC_UMAMI_SRC`             | Umami tracking script URL                                  |
-| `NEXT_PUBLIC_UMAMI_ID`              | Umami website ID                                           |
+| `UMAMI_SRC`             | Umami tracking script URL                                  |
+| `UMAMI_ID`              | Umami website ID                                           |
 | `RESEND_API_KEY`                    | Resend API key for contact emails                          |
 | `CONTACT_EMAIL`                     | Recipient email for contact submissions                    |
 | `RESEND_FROM_EMAIL`                 | Sender address authorized by Resend                        |
