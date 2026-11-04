@@ -120,8 +120,6 @@ const Navbar = () => {
         })}
       </div>
 
-    
-
       <div className="h-full w-[1.5px] shrink-0 bg-linear-to-b from-transparent via-neutral-300 to-transparent dark:via-neutral-600" />
 
       <DockItem mouseX={mouseX} label="Toggle theme">

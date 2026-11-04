@@ -5,7 +5,6 @@ import { Reveal } from "@/components/common/Reveal";
 import { SubHeading } from "@/components/common/SubHeading";
 import { Separator } from "@/components/ui/separator";
 import { getBlogs } from "@/lib/blog";
-import { Blog as BlogSvg } from "@/svgs/essentials/Blog";
 
 export const metadata = {
   title: "Blog - Thoughts & Tutorials",

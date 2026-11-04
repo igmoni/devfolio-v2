@@ -1,4 +1,4 @@
-export  function ReactIcon() {
+export function ReactIcon() {
   return (
     <svg viewBox="0 0 128 128">
       <g fill="#61DAFB">

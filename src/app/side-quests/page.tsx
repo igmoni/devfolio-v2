@@ -68,8 +68,8 @@ const Page = () => {
         <Heading as="h1">Side Quests</Heading>
 
         <SubHeading>
-          What I do when I&apos;m not building: gym, running, swimming, and exploring
-          languages.
+          What I do when I&apos;m not building: gym, running, swimming, and
+          exploring languages.
         </SubHeading>
 
         <Separator className="my-5 mt-10" />

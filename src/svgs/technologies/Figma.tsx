@@ -1,4 +1,4 @@
-export  function Figma() {
+export function Figma() {
   return (
     <svg viewBox="0 0 128 128">
       <path

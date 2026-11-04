@@ -12,11 +12,8 @@ import { Setup } from "@/components/home/Setup";
 import { SkillsCarousel } from "@/components/home/SkillsCarousel";
 import { Spotify } from "@/components/home/Spotify";
 import { Testimonial } from "@/components/home/Testimonial";
-import { getAnalytics } from "@/lib/analytics";
 
 const Page = async () => {
-  const stats = await getAnalytics("/");
-
   return (
     <Container className="mt-5 px-4 md:px-6 lg:px-0">
       <Hero />

@@ -1,4 +1,4 @@
-export  function NextJs() {
+export function NextJs() {
   return (
     <svg viewBox="0 0 128 128">
       <circle cx="64" cy="64" r="64"></circle>

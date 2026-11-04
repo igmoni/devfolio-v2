@@ -63,7 +63,7 @@ export const HeroInfo = () => {
             Full Stack Developer
           </span>
           &{" "}
-          <span className="relative md:mt-0 mt-3 inline-grid h-[1.5em] min-w-[11ch] text-left align-bottom font-medium text-neutral-900 md:h-auto dark:text-neutral-100">
+          <span className="relative mt-3 inline-grid h-[1.5em] min-w-[11ch] text-left align-bottom font-medium text-neutral-900 md:mt-0 md:h-auto dark:text-neutral-100">
             {professions.map((profession, i) => (
               <motion.span
                 key={profession}
@@ -85,7 +85,9 @@ export const HeroInfo = () => {
         </p>
       </Reveal>
       <Reveal delay={0.4}>
-        <p className="my-2 text-center text-sm md:text-base   md:text-left">{description}</p>
+        <p className="my-2 text-center text-sm md:text-left md:text-base">
+          {description}
+        </p>
       </Reveal>
       <Reveal delay={0.5}>
         <TooltipProvider>

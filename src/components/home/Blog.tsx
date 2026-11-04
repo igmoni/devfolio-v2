@@ -21,7 +21,7 @@ const Blog = async () => {
         <div className="flex flex-col gap-10 md:gap-0">
           {blogs.slice(0, 3).map((item, id) => (
             <Reveal delay={0.08} key={id}>
-              <BlogCard blog={item} />
+              <BlogCard isBlog={false} blog={item} />
             </Reveal>
           ))}
         </div>
