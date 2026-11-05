@@ -1,4 +1,9 @@
-export const quotes = [
+interface QuoteType {
+  quote: string;
+  author: string;
+}
+
+export const quotes: QuoteType[] = [
   {
     quote:
       "You have a right to perform your prescribed duty, but you are not entitled to fruits of actions.",
@@ -52,5 +57,18 @@ export const quotes = [
   {
     quote: "As long as I'm alive, there are infinite chances!",
     author: "Monkey D. Luffy",
+  },
+  {
+    quote: "If it was easy, anyone could have done it.",
+    author: "A WISE MAN",
+  },
+  {
+    quote:
+      "A person is elevated by their own effort & degraded by their own actions.",
+    author: "Shri Krishna",
+  },
+  {
+    quote: "A man who is master of patience is master of everything else.",
+    author: "George Savile",
   },
 ];

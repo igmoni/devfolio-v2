@@ -75,12 +75,12 @@ const Footer = () => {
                   }
                   aria-label={name}
                   title={name}
-                  className="text-neutral-500 transition-colors hover:text-black dark:hover:text-white"
+                  className="rounded-md border border-neutral-700/60 bg-white p-1 text-neutral-500 transition-colors hover:text-black dark:bg-black/50 dark:hover:text-white"
                 >
                   <Icon className="size-6" />
                 </a>
               ))}
-              <Coffee className="size-6" />
+              <Coffee className="size-8" />
             </div>
           </div>
         </div>

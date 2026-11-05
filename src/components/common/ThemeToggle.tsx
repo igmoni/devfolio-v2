@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useSyncExternalStore } from "react";
+import { useCallback, useEffect, useSyncExternalStore } from "react";
 import { flushSync } from "react-dom";
 
 import { useTheme } from "next-themes";
@@ -82,6 +82,10 @@ export const useThemeToggle = ({
     [setTheme, variant, start, blur, updateStyles]
   );
 
+  const changeThemeWithoutAnimation = useCallback(() => {
+    setTheme(resolvedTheme === "dark" ? "light" : "dark");
+  }, [setTheme, resolvedTheme]);
+
   const toggleTheme = useCallback(() => {
     changeTheme(resolvedTheme === "dark" ? "light" : "dark");
   }, [changeTheme, resolvedTheme]);
@@ -99,6 +103,7 @@ export const useThemeToggle = ({
     toggleTheme,
     setCrazyLightTheme,
     setCrazyDarkTheme,
+    changeThemeWithoutAnimation,
   };
 };
 
@@ -112,11 +117,34 @@ export const ThemeToggleButton = ({
   start = "center",
   blur = false,
 }: ThemeToggleButtonProps) => {
-  const { isDark, toggleTheme } = useThemeToggle({
+  const { isDark, toggleTheme, changeThemeWithoutAnimation } = useThemeToggle({
     variant,
     start,
     blur,
   });
+
+  useEffect(() => {
+    const handleKeyPress = (e: KeyboardEvent) => {
+      if (
+        e.key.toLowerCase() === "d" &&
+        !(e.target instanceof HTMLInputElement) &&
+        !(e.target instanceof HTMLTextAreaElement) &&
+        !(e.target instanceof HTMLSelectElement) &&
+        !e.ctrlKey &&
+        !e.metaKey &&
+        !e.altKey
+      ) {
+        changeThemeWithoutAnimation();
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyPress);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyPress);
+    };
+  }, [toggleTheme]);
+
   const mounted = useSyncExternalStore(
     () => () => {},
     () => true,

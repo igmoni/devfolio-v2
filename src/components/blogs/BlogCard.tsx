@@ -26,6 +26,16 @@ const BlogCard = ({
 }: BlogCardProps) => {
   const { slug, title, desc, date, tags } = blog;
 
+  const formattedDate = new Date(`${date}T00:00:00Z`).toLocaleDateString(
+    "en-US",
+    {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+      timeZone: "UTC",
+    }
+  );
+
   return (
     <Link
       href={`/blog/${slug}`}
@@ -51,14 +61,7 @@ const BlogCard = ({
 
         <p className="flex items-center gap-1.5 text-xs text-neutral-500 sm:text-sm">
           <CalendarDays className="size-3.5 shrink-0 sm:size-4" />
-          <time dateTime={date}>
-            {new Date(`${date}T00:00:00`).toLocaleDateString("en-US", {
-              year: "numeric",
-              month: "long",
-              day: "numeric",
-              timeZone: "UTC",
-            })}
-          </time>
+          <time dateTime={date}>{formattedDate}</time>
         </p>
         {isBlog && (
           <div className="flex flex-wrap gap-2">
