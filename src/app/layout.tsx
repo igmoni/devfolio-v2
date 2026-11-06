@@ -14,6 +14,7 @@ import { NavigationProgress } from "@/components/common/NavigationProgress";
 import { OnekoCat } from "@/components/common/OnekoCat";
 import { Quote } from "@/components/common/Quote";
 import { Reveal } from "@/components/common/Reveal";
+import SwarmTrigger from "@/components/common/SwarmTrigger";
 import { poppins } from "@/config/font";
 import { AppProviders } from "@/providers/AppProviders";
 
@@ -81,6 +82,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
             <Navbar />
             <OnekoCat />
             {children}
+            <SwarmTrigger />
             <Reveal delay={0.2}>
               <Quote />
             </Reveal>
