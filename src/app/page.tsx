@@ -6,6 +6,7 @@ import { Blog } from "@/components/home/Blog";
 import { Experience } from "@/components/home/Experience";
 import { Github } from "@/components/home/Github";
 import { Hero } from "@/components/home/Hero";
+import { OpenWork } from "@/components/home/OpenWork";
 import { Personal } from "@/components/home/Personal";
 import { Projects } from "@/components/home/Projects";
 import { Setup } from "@/components/home/Setup";
@@ -28,6 +29,10 @@ const Page = async () => {
 
       <Reveal delay={0.2}>
         <Github />
+      </Reveal>
+
+      <Reveal delay={0.2}>
+        <OpenWork />
       </Reveal>
 
       <Reveal delay={0.2}>
