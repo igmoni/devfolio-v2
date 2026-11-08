@@ -57,11 +57,11 @@ const ProjectsView = ({ projects }: ProjectsViewProps) => {
             <div className="mt-5 flex flex-col gap-3">
               {projects.slice(0, 4).map((project, index) => (
                 <Reveal delay={index * 0.1} key={project.slug}>
-                  <div className="group hover:bg-muted/30 flex flex-col gap-4 rounded-xl p-3 transition-colors sm:flex-row sm:items-center sm:p-4">
+                  <div className="group hover:bg-muted/30 flex flex-col md:gap-4 rounded-xl md:p-3 transition-colors sm:flex-row sm:items-center sm:p-4">
                     {/* Project image */}
                     <Link
                       href={`/projects/${project.slug}`}
-                      className="bg-muted relative block aspect-video w-full shrink-0 overflow-hidden rounded-lg sm:w-40"
+                      className="bg-muted relative block aspect-video w-0 shrink-0 overflow-hidden rounded-lg sm:w-40"
                     >
                       <Image
                         src={project.imgUrl}
@@ -77,7 +77,7 @@ const ProjectsView = ({ projects }: ProjectsViewProps) => {
                       <Link href={`/projects/${project.slug}`}>
                         <Heading
                           as="h3"
-                          className="group-hover:text-muted-foreground font-medium transition-colors"
+                          className="group-hover:text-muted-foreground font-medium transition-colors mt-0 md:mt-5"
                         >
                           {project.shortTitle}
                         </Heading>

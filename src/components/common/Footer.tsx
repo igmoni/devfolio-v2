@@ -23,14 +23,14 @@ const Footer = () => {
 
             <Link
               href="/contact"
-              className="group inline-flex items-start gap-2 text-5xl leading-none tracking-tight sm:text-7xl"
+              className="group inline-flex items-start gap-2 text-5xl leading-none tracking-tight sm:text-7xl shrink-0"
             >
               Let&apos;s talk
               <ArrowUpRight className="mt-1 size-7 text-neutral-500 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1 sm:size-10" />
             </Link>
           </div>
 
-          <p className="max-w-xs text-sm leading-6 text-neutral-500">
+          <p className="max-w-3xs text-sm leading-6 text-neutral-500">
             Building things for the web, exploring ideas, and figuring things
             out along the way.
           </p>

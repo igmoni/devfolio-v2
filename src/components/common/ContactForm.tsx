@@ -235,11 +235,11 @@ export function ContactForm({
             )}
           </div>
 
-          <div className="flex flex-col gap-4 pt-2 sm:flex-row sm:items-center">
+          <div className="flex  gap-4 pt-2  items-center">
             <Button
               type="submit"
               disabled={isSubmitting}
-              className="group bg-foreground text-background h-12 w-full rounded-xl px-5 shadow-md transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg disabled:translate-y-0 sm:flex-1 dark:bg-white dark:text-black dark:hover:bg-neutral-200"
+              className="group bg-foreground flex-1 text-background h-12 w-full rounded-xl px-5 shadow-md transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg disabled:translate-y-0 sm:flex-1 dark:bg-white dark:text-black dark:hover:bg-neutral-200"
             >
               {isSubmitting ? (
                 <>
