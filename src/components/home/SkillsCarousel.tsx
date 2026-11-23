@@ -1,6 +1,7 @@
 "use client";
 
 import { mySkills } from "@/config/skills";
+import { Code } from "@/svgs/essentials/Code";
 
 import { Container } from "../common/Container";
 import { Heading } from "../common/Heading";
@@ -9,10 +10,12 @@ const SkillsCarousel = () => {
   const skills = [...mySkills, ...mySkills];
 
   return (
-    <Container>
-      <Heading as="h2">Tech Stack</Heading>
+    <Container >
+      <Heading as="h2" Icon={<Code />}>
+        Tech Stack
+      </Heading>
 
-      <div className="group relative w-full overflow-hidden py-4">
+      <div className="group relative w-full overflow-hidden py-8">
         <div className="animate-marquee flex w-max items-center gap-3">
           {skills.map(({ name, icon: Icon }, index) => (
             <div

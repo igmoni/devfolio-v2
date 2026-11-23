@@ -1,7 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { type ReactElement } from "react";
+import { type ReactElement, useEffect, useRef, useState } from "react";
 
 import { useTheme } from "next-themes";
 import Link from "next/link";
@@ -21,6 +20,17 @@ import { Button } from "../ui/button";
 import { WakaTimeData } from "./WakatimeData";
 
 const NEW_REPO_EMOJIS = ["💥", "🌟", "🌸", "🌼", "🍥", "🦀", "🌀", "🪸", "🌿"];
+
+const GAP = 3; // space between circles
+const MIN_SIZE = 11; // below this the calendar scrolls sideways instead of shrinking
+const MAX_SIZE = 22;
+
+const formatDate = (date: string) =>
+  new Date(`${date}T00:00:00`).toLocaleDateString("en-GB", {
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+  });
 
 const pickEmoji = (key: string) => {
   let hash = 0;
@@ -46,6 +56,13 @@ const Github = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [hasError, setHasError] = useState(false);
   const [repoDays, setRepoDays] = useState<Record<string, string>>({});
+  const wrapperRef = useRef<HTMLDivElement>(null);
+  const [blockSize, setBlockSize] = useState(16);
+  const [tooltip, setTooltip] = useState<{
+    text: string;
+    left: number;
+    top: number;
+  } | null>(null);
 
   const {
     githubLink: gitSrc,
@@ -55,6 +72,7 @@ const Github = () => {
     errorState,
   } = githubConfig;
 
+  // Contributions
   useEffect(() => {
     let cancelled = false;
 
@@ -124,6 +142,7 @@ const Github = () => {
     };
   }, []);
 
+  // "New repo" days
   useEffect(() => {
     let cancelled = false;
 
@@ -148,12 +167,34 @@ const Github = () => {
     };
   }, []);
 
+  // Fit the circles to the available width
+  useEffect(() => {
+    const el = wrapperRef.current;
+    if (!el || contributions.length === 0) return;
+
+    const firstDay = new Date(`${contributions[0].date}T00:00:00`).getDay();
+    const weeks = Math.ceil((firstDay + contributions.length) / 7);
+
+    const fit = () => {
+      const width = el.clientWidth - 10; // padding + safety margin
+      const size = Math.floor((width - (weeks - 1) * GAP) / weeks);
+      setBlockSize(Math.max(MIN_SIZE, Math.min(MAX_SIZE, size)));
+    };
+
+    fit();
+    const observer = new ResizeObserver(fit);
+    observer.observe(el);
+
+    return () => observer.disconnect();
+  }, [contributions, isLoading, hasError]);
+
   const renderBlock = (block: ReactElement, activity: Contribution) => {
-    const { x, y, width, height } = block.props as {
+    const { x, y, width, height, rx } = block.props as {
       x: number | string;
       y: number | string;
       width: number | string;
       height: number | string;
+      rx?: number | string;
     };
 
     const cx = Number(x) + Number(width) / 2;
@@ -162,17 +203,70 @@ const Github = () => {
     const emoji = repoDays[activity.date];
     const label = emoji ?? (activity.count > 0 ? String(activity.count) : "");
 
+    const fontSize = emoji
+      ? Math.max(9, Math.round(blockSize * 0.62))
+      : Math.max(6, Math.round(blockSize * (label.length > 2 ? 0.4 : 0.52)));
+
+    const showTooltip = (e: React.MouseEvent<SVGGElement>) => {
+      const wrapper = wrapperRef.current;
+      if (!wrapper) return;
+
+      const target = e.currentTarget.getBoundingClientRect();
+      const box = wrapper.getBoundingClientRect();
+
+      const rawLeft = target.left - box.left + target.width / 2;
+      const left = Math.max(80, Math.min(box.width - 80, rawLeft));
+
+      setTooltip({
+        text: `${formatDate(activity.date)}: ${activity.count} contribution${
+          activity.count === 1 ? "" : "s"
+        }${emoji ? " · New repo" : ""}`,
+        left,
+        top: target.top - box.top,
+      });
+    };
+
     return (
-      <g>
-        <title>{`${activity.count} contributions on ${activity.date}`}</title>
-        {block}
+      <g
+        className="group cursor-pointer"
+        onMouseEnter={showTooltip}
+        onMouseLeave={() => setTooltip(null)}
+        onClick={showTooltip} // tap support on mobile
+      >
+        {emoji ? (
+          <rect
+            x={x}
+            y={y}
+            width={width}
+            height={height}
+            rx={rx}
+            fill="transparent"
+          />
+        ) : (
+          block
+        )}
+
+        {/* hover border */}
+        <rect
+          x={x}
+          y={y}
+          width={width}
+          height={height}
+          rx={rx}
+          fill="none"
+          strokeWidth={1}
+          className="stroke-transparent transition-colors duration-150 group-hover:stroke-neutral-900 dark:group-hover:stroke-white"
+          style={{ pointerEvents: "none" }}
+        />
+
+        {/* number or new-repo emoji */}
         {label && (
           <text
             x={cx}
             y={cy}
             textAnchor="middle"
             dominantBaseline="central"
-            fontSize={emoji ? 11 : label.length > 2 ? 7 : 9}
+            fontSize={fontSize}
             fontWeight={700}
             fill={activity.level >= 3 ? "#0a1a33" : "#ffffff"}
             style={{ pointerEvents: "none", userSelect: "none" }}
@@ -183,6 +277,9 @@ const Github = () => {
       </g>
     );
   };
+
+  const themeColors =
+    githubConfig.theme[resolvedTheme === "dark" ? "dark" : "light"];
 
   return (
     <Container className="space-y-6">
@@ -206,6 +303,7 @@ const Github = () => {
           <ArrowUpRight className="size-3 transition-all duration-300 ease-out group-hover:translate-x-1 group-hover:scale-150 md:size-4" />
         </Link>
       </div>
+
       <div className="flex flex-col justify-between md:flex-row">
         <p className="mb-1">
           <b>{username}</b>&apos;s {subtitle}
@@ -214,6 +312,7 @@ const Github = () => {
           <WakaTimeData />
         </div>
       </div>
+
       {isLoading && (
         <div className="flex items-center justify-center py-16">
           <div className="text-center">
@@ -249,17 +348,19 @@ const Github = () => {
       )}
 
       {!isLoading && !hasError && contributions.length > 0 && (
-        <div className="relative">
-          <div className="bg-background/50 mt-5 rounded-lg border-2 border-dashed border-neutral-200 p-6 backdrop-blur-sm dark:border-neutral-800">
-            <div className="w-full ">
+        <div className="mt-5 w-full">
+          {/* Tooltip is positioned against this wrapper, outside the scroller */}
+          <div ref={wrapperRef} className="relative w-full">
+            {/* Only scrolls on very narrow screens */}
+            <div className="overflow-none w-full py-1">
               <ActivityCalendar
                 data={contributions}
                 colorScheme={resolvedTheme === "dark" ? "dark" : "light"}
                 maxLevel={githubConfig.maxLevel}
                 theme={githubConfig.theme}
-                blockSize={18}
-                blockMargin={4}
-                blockRadius={5}
+                blockSize={blockSize}
+                blockMargin={GAP}
+                blockRadius={10}
                 fontSize={12}
                 showColorLegend={false}
                 showTotalCount={false}
@@ -270,26 +371,35 @@ const Github = () => {
                 }}
                 style={{ color: "rgb(139, 148, 158)", margin: "0 auto" }}
               />
+            </div>
 
-              {/* Legend */}
-              <div className="text-muted-foreground mt-4 flex items-center justify-center gap-3 text-xs">
-                <span>Less</span>
-                <div className="flex gap-1">
-                  {githubConfig.theme[
-                    resolvedTheme === "dark" ? "dark" : "light"
-                  ].map((color: string) => (
-                    <span
-                      key={color}
-                      className="size-3 rounded-full"
-                      style={{ backgroundColor: color }}
-                    />
-                  ))}
-                </div>
-                <span>More</span>
-                <span className="ml-2 inline-flex items-center gap-1">
-                  <span>💥</span> New repo
-                </span>
+            {/* Tooltip */}
+            {tooltip && (
+              <div
+                role="tooltip"
+                className="pointer-events-none absolute z-20 -translate-x-1/2 -translate-y-full rounded-lg bg-white px-3 py-1.5 text-xs font-medium whitespace-nowrap text-neutral-900 shadow-lg"
+                style={{ left: tooltip.left, top: tooltip.top - 8 }}
+              >
+                {tooltip.text}
               </div>
+            )}
+
+            {/* Legend */}
+            <div className="text-muted-foreground mt-4 flex items-center justify-center gap-3 text-xs">
+              <span>Less</span>
+              <div className="flex gap-1">
+                {themeColors.map((color: string) => (
+                  <span
+                    key={color}
+                    className="size-3 rounded-full"
+                    style={{ backgroundColor: color }}
+                  />
+                ))}
+              </div>
+              <span>More</span>
+              <span className="ml-2 inline-flex items-center gap-1">
+                <span>💥</span> New repo
+              </span>
             </div>
           </div>
         </div>

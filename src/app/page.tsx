@@ -29,21 +29,17 @@ const Page = async () => {
         <SkillsCarousel />
       </Reveal>
 
-      <Reveal delay={0.2}>
-        <Github />
-      </Reveal>
-
-      <Reveal delay={0.2}>
-        <OpenWork />
-      </Reveal>
-
-      <Reveal delay={0.2}>
-        <Experience />
-      </Reveal>
-
       <Suspense fallback={<div>Loading projects...</div>}>
         <Projects />
       </Suspense>
+
+      <Reveal delay={0.1}>
+        <Experience />
+      </Reveal>
+
+      <Reveal delay={0.1}>
+        <Github />
+      </Reveal>
 
       <Suspense fallback={null}>
         <SponsorsCard />
@@ -51,11 +47,11 @@ const Page = async () => {
 
       <InsightsCard />
 
+      <Testimonial />
+
       <Suspense fallback={<div>Loading blog...</div>}>
         <Blog />
       </Suspense>
-
-      <Testimonial />
 
       <Setup />
       <Personal />

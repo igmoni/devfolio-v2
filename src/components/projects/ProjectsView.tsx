@@ -27,13 +27,17 @@ const ProjectsView = ({ projects }: ProjectsViewProps) => {
 
   return (
     <Reveal delay={0.3}>
-      <Container className="mt-10">
+      <Container className="">
         <div className="flex items-center justify-between">
-          <Heading as="h2" Icon={<ProjectIcon className="size-6" />}>
+          <Heading
+            as="h2"
+            Icon={<ProjectIcon className="size-6" />}
+            className="mt-2"
+          >
             Projects
           </Heading>
 
-          <div className="mt-7 flex items-center gap-5 rounded-lg">
+          <div className="mt-2 flex items-center gap-5 rounded-lg">
             <button aria-label="List view" onClick={() => setView("list")}>
               <TextAlignStart className="hover:text-accent-foreground size-6 text-neutral-500" />
             </button>
@@ -57,7 +61,7 @@ const ProjectsView = ({ projects }: ProjectsViewProps) => {
             <div className="mt-5 flex flex-col gap-3">
               {projects.slice(0, 4).map((project, index) => (
                 <Reveal delay={index * 0.1} key={project.slug}>
-                  <div className="group hover:bg-muted/30 flex flex-col md:gap-4 rounded-xl md:p-3 transition-colors sm:flex-row sm:items-center sm:p-4">
+                  <div className="group hover:bg-muted/30 flex flex-col rounded-xl transition-colors sm:flex-row sm:items-center sm:p-4 md:gap-4 md:p-3">
                     {/* Project image */}
                     <Link
                       href={`/projects/${project.slug}`}
@@ -77,7 +81,7 @@ const ProjectsView = ({ projects }: ProjectsViewProps) => {
                       <Link href={`/projects/${project.slug}`}>
                         <Heading
                           as="h3"
-                          className="group-hover:text-muted-foreground font-medium transition-colors mt-0 md:mt-5"
+                          className="group-hover:text-muted-foreground mt-0 font-medium transition-colors md:mt-5"
                         >
                           {project.shortTitle}
                         </Heading>

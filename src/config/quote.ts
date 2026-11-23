@@ -60,7 +60,7 @@ export const quotes: QuoteType[] = [
   },
   {
     quote: "If it was easy, anyone could have done it.",
-    author: "A WISE MAN",
+    author: "A Wise Man",
   },
   {
     quote:
@@ -73,10 +73,14 @@ export const quotes: QuoteType[] = [
   },
   {
     quote: "First solve the problem, then write code.",
-    author: "John Johnson"
+    author: "John Johnson",
   },
   {
     quote: "The best way to predict the future is to create it.",
-    author: "Alan kay"
-  }
+    author: "Alan kay",
+  },
+  {
+    quote: "The soul becomes dyed with the color of its thoughts.",
+    author: "Marcus Aurelius",
+  },
 ];
