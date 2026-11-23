@@ -12,8 +12,8 @@ import { Projects } from "@/components/home/Projects";
 import { Setup } from "@/components/home/Setup";
 import { SkillsCarousel } from "@/components/home/SkillsCarousel";
 import { Spotify } from "@/components/home/Spotify";
-import { Testimonial } from "@/components/testimonials/Testimonial";
 import { SponsorsCard } from "@/components/sponsors/SponsorsCard";
+import { Testimonial } from "@/components/testimonials/Testimonial";
 
 const Page = async () => {
   return (

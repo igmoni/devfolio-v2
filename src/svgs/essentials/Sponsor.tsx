@@ -28,14 +28,14 @@ const Sponsor = () => {
           transform="translate(1 2)"
           fill="var(--foreground)"
           stroke="var(--foreground)"
-          stroke-width="10"
+          strokeWidth="10"
           opacity="0.1"
         ></path>
         <path
           d="M29 10 35 25 51 30 36 37 30 54 23 39 8 33 23 26Z"
           fill="var(--cutout-paper)"
           stroke="var(--cutout-paper)"
-          stroke-width="9"
+          strokeWidth="9"
         ></path>
         <path
           d="M29 10 35 25 51 30 36 37 30 54 23 39 8 33 23 26Z"
@@ -44,14 +44,14 @@ const Sponsor = () => {
         <path
           d="m29 10 1 23 21-3-15 7-6 17V33L8 33l15-7Z"
           fill="currentColor"
-          stroke-width="1.5"
+          strokeWidth="1.5"
         ></path>
         <path
           d="m47 8 1 5 5 2-5 2-1 5-2-5-4-2 4-2Z"
           fill="var(--chart-1)"
-          stroke-width="2"
+          strokeWidth="2"
         ></path>
-        <path d="m12 47-2 3m34-3 3 3" stroke-width="2.5"></path>
+        <path d="m12 47-2 3m34-3 3 3" strokeWidth="2.5"></path>
       </g>
     </svg>
   );

@@ -123,7 +123,7 @@ export function SponsorsGrid({
 
           return (
             <HoverTip
-              key={sponsor.id}
+              key={i}
               label={sponsor.name}
               sub={sponsor.link ? hostOf(sponsor.link) : "Sponsor"}
             >
