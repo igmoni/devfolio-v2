@@ -23,7 +23,7 @@ const Footer = () => {
 
             <Link
               href="/contact"
-              className="group inline-flex items-start gap-2 text-5xl leading-none tracking-tight sm:text-7xl shrink-0"
+              className="group inline-flex shrink-0 items-start gap-2 text-5xl leading-none tracking-tight sm:text-7xl"
             >
               Let&apos;s talk
               <ArrowUpRight className="mt-1 size-7 text-neutral-500 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1 sm:size-10" />
@@ -75,7 +75,7 @@ const Footer = () => {
                   }
                   aria-label={name}
                   title={name}
-                  className="rounded-md border border-neutral-700/60 bg-white p-1 text-neutral-500 transition-colors hover:text-black dark:bg-black/50 dark:hover:text-white w-fit"
+                  className="w-fit rounded-md border border-neutral-700/60 bg-white p-1 text-neutral-500 transition-colors hover:text-black dark:bg-black/50 dark:hover:text-white"
                 >
                   <Icon className="size-6" />
                 </a>
