@@ -7,6 +7,7 @@ export type ContainerProps = {
 
 export type SvgType = {
   className?: string;
+  color?: string;
 };
 
 export type SpotifyTrack = {

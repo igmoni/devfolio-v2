@@ -4,105 +4,100 @@ import { NextRequest } from "next/server";
 import { Webhooks } from "@dodopayments/nextjs";
 
 import { prisma } from "@/lib/prisma";
+import { createSeatFromPayment } from "@/lib/sponsors/seats";
 
-type EventData = {
-  subscription_id?: string;
+type PaymentData = {
+  payment_id?: string;
+  subscription_id?: string | null;
+  customer?: { email?: string | null } | null;
   metadata?: Record<string, string> | null;
 };
 
-function read(payload: { data: unknown }) {
-  const data = payload.data as EventData;
+type SubscriptionData = {
+  subscription_id?: string;
+};
 
-  return {
-    subscriptionId: data.subscription_id,
-    name: data.metadata?.sponsor_name,
-    imageUrl: data.metadata?.sponsor_image_url,
-  };
-}
-
-async function activate(payload: { data: unknown }) {
+// One-time seat purchase -> create the seat (idempotent on payment_id).
+async function onPaid(payload: { data: unknown }) {
   try {
-    const { subscriptionId, name, imageUrl } = read(payload);
+    const data = payload.data as PaymentData;
 
-    if (!subscriptionId) {
-      throw new Error("Missing subscription ID");
-    }
+    // Renewal payments of old subscriptions are handled by the legacy block below.
+    if (data.subscription_id) return;
 
-    if (name && imageUrl) {
-      // Initial activation: create the sponsor.
-      await prisma.sponsor.upsert({
-        where: { subscriptionId },
-        create: {
-          name,
-          imageUrl,
-          subscriptionId,
-          status: "ACTIVE",
-        },
-        update: {
-          name,
-          imageUrl,
-          status: "ACTIVE",
-        },
-      });
-    } else {
-      // Renewal: existing sponsor should become active again.
-      const result = await prisma.sponsor.updateMany({
-        where: { subscriptionId },
-        data: { status: "ACTIVE" },
-      });
+    if (!data.payment_id) throw new Error("Missing payment ID");
 
-      if (result.count === 0) {
-        throw new Error(`Sponsor not found for subscription ${subscriptionId}`);
-      }
-    }
-
-    revalidatePath("/");
+    await createSeatFromPayment({
+      paymentId: data.payment_id,
+      email: data.customer?.email,
+      metadata: data.metadata,
+    });
   } catch (error) {
-    console.error("[dodo] activation failed:", error);
-    throw error;
+    console.error("[dodo] payment handling failed:", error);
+    throw error; // 500 -> Dodo retries
   }
 }
 
-async function deactivate(payload: { data: unknown }) {
+// Refund -> take the seat off the wall.
+async function onRefunded(payload: { data: unknown }) {
   try {
-    const { subscriptionId } = read(payload);
-
-    if (!subscriptionId) {
-      throw new Error("Missing subscription ID");
-    }
+    const data = payload.data as PaymentData;
+    if (!data.payment_id) throw new Error("Missing payment ID");
 
     await prisma.sponsor.updateMany({
-      where: { subscriptionId },
+      where: { paymentId: data.payment_id },
       data: { status: "INACTIVE" },
     });
 
     revalidatePath("/");
+    revalidatePath("/sponsor");
   } catch (error) {
-    console.error("[dodo] deactivation failed:", error);
+    console.error("[dodo] refund handling failed:", error);
     throw error;
   }
+}
+
+// ---- Legacy subscription sponsors (delete when none remain) ----
+async function legacyRenewed(payload: { data: unknown }) {
+  const { subscription_id } = payload.data as SubscriptionData;
+  if (!subscription_id) return;
+
+  await prisma.sponsor.updateMany({
+    where: { subscriptionId: subscription_id },
+    data: { status: "ACTIVE" },
+  });
+  revalidatePath("/");
+}
+
+async function legacyEnded(payload: { data: unknown }) {
+  const { subscription_id } = payload.data as SubscriptionData;
+  if (!subscription_id) return;
+
+  await prisma.sponsor.updateMany({
+    where: { subscriptionId: subscription_id },
+    data: { status: "INACTIVE" },
+  });
+  revalidatePath("/");
 }
 
 const handler = Webhooks({
   webhookKey: process.env.DODO_PAYMENTS_WEBHOOK_KEY!,
 
-  onSubscriptionActive: activate,
-  onSubscriptionRenewed: activate,
+  onPaymentSucceeded: onPaid,
+  onRefundSucceeded: onRefunded,
 
-  onSubscriptionCancelled: deactivate,
-  onSubscriptionExpired: deactivate,
-  onSubscriptionFailed: deactivate,
-  onSubscriptionOnHold: deactivate,
+  onSubscriptionRenewed: legacyRenewed,
+  onSubscriptionCancelled: legacyEnded,
+  onSubscriptionExpired: legacyEnded,
+  onSubscriptionFailed: legacyEnded,
+  onSubscriptionOnHold: legacyEnded,
 });
 
 export async function POST(req: NextRequest) {
   try {
-    const response = await handler(req);
-    return response;
+    return await handler(req);
   } catch (error) {
     console.error("[dodo] webhook handler failed:", error);
-    return new Response("Webhook processing failed", {
-      status: 500,
-    });
+    return new Response("Webhook processing failed", { status: 500 });
   }
 }

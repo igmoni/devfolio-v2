@@ -11,7 +11,6 @@ generator client {
 datasource db {
   provider = "postgresql"
 }
-
 enum SponsorStatus {
   PENDING
   ACTIVE
@@ -22,9 +21,15 @@ model Sponsor {
   id             String        @id @default(cuid())
   name           String
   imageUrl       String
+  link           String?
+  email          String?
+  paymentId      String?       @unique
+  claimedAt      DateTime?
   status         SponsorStatus @default(PENDING)
   hidden         Boolean       @default(false) // kill switch for moderation
-  subscriptionId String?       @unique
+  subscriptionId String?       @unique // unused for one-time seats, safe to drop later
   createdAt      DateTime      @default(now())
   updatedAt      DateTime      @updatedAt
+
+  @@index([email])
 }

@@ -6,8 +6,12 @@ import Image from "next/image";
 
 import { ImagePlus, Loader2, X } from "lucide-react";
 
-const MAX_BYTES = 2 * 1024 * 1024;
+import { sponsorConfig } from "@/config/sponsor";
+
 const TYPES = ["image/png", "image/jpeg", "image/webp"];
+
+const inputClass =
+  "border-border bg-background/60 focus-visible:ring-foreground/10 h-11 w-full rounded-xl border px-4 text-sm outline-none focus-visible:ring-2";
 
 export function SponsorModal({
   open,
@@ -18,9 +22,10 @@ export function SponsorModal({
 }) {
   const dialogRef = useRef<HTMLDialogElement>(null);
   const [name, setName] = useState("");
+  const [link, setLink] = useState("");
   const [file, setFile] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState<"pay" | "skip" | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -31,7 +36,6 @@ export function SponsorModal({
     if (!open && dialog.open) dialog.close();
   }, [open]);
 
-  // Free the preview URL when it changes or the modal unmounts.
   useEffect(() => {
     return () => {
       if (preview) URL.revokeObjectURL(preview);
@@ -44,10 +48,12 @@ export function SponsorModal({
 
     if (!TYPES.includes(selected.type)) {
       setError("Use a PNG, JPG or WebP image");
+      event.target.value = "";
       return;
     }
-    if (selected.size > MAX_BYTES) {
-      setError("Image must be under 2 MB");
+    if (selected.size > sponsorConfig.maxLogoBytes) {
+      setError(`Image must be under ${sponsorConfig.maxLogoBytes / 1024} KB`);
+      event.target.value = "";
       return;
     }
 
@@ -56,21 +62,17 @@ export function SponsorModal({
     setPreview(URL.createObjectURL(selected));
   }
 
-  async function handleSubmit(event: React.FormEvent) {
-    event.preventDefault();
-
-    if (!file) {
-      setError("Please add an image");
-      return;
-    }
-
+  async function checkout(mode: "pay" | "skip") {
     try {
-      setLoading(true);
+      setLoading(mode);
       setError(null);
 
       const body = new FormData();
-      body.append("name", name.trim());
-      body.append("image", file);
+      if (mode === "pay") {
+        body.append("name", name.trim());
+        body.append("link", link.trim());
+        if (file) body.append("logo", file);
+      }
 
       const response = await fetch("/api/sponsor/checkout", {
         method: "POST",
@@ -85,7 +87,7 @@ export function SponsorModal({
       window.location.assign(json.url);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Something went wrong");
-      setLoading(false);
+      setLoading(null);
     }
   }
 
@@ -98,14 +100,20 @@ export function SponsorModal({
       }}
       className="border-border bg-background text-foreground m-auto w-[calc(100%-2rem)] max-w-sm rounded-3xl border p-0 shadow-2xl backdrop:bg-black/60 backdrop:backdrop-blur-sm"
     >
-      <form onSubmit={handleSubmit} className="space-y-5 p-6">
+      <form
+        onSubmit={(event) => {
+          event.preventDefault();
+          checkout("pay");
+        }}
+        className="space-y-5 p-6"
+      >
         <div className="flex items-start justify-between">
           <div>
             <h3 className="text-lg font-semibold tracking-tight">
-              Become a sponsor
+              Take a seat
             </h3>
             <p className="text-muted-foreground text-xs">
-              $11.11 / month 
+              {sponsorConfig.price} · monthly · no subscription
             </p>
           </div>
 
@@ -119,7 +127,7 @@ export function SponsorModal({
           </button>
         </div>
 
-        {/* Image */}
+        {/* Logo */}
         <div className="flex items-center gap-4">
           <label className="border-border bg-muted/40 hover:bg-muted relative flex size-20 shrink-0 cursor-pointer items-center justify-center overflow-hidden rounded-2xl border border-dashed transition">
             {preview ? (
@@ -143,8 +151,8 @@ export function SponsorModal({
           </label>
 
           <p className="text-muted-foreground text-xs leading-relaxed">
-            Add your logo or photo. Square works best. PNG, JPG or WebP, max 2
-            MB.
+            Add your logo or photo. Square works best. PNG, JPG or WebP, max{" "}
+            {sponsorConfig.maxLogoBytes / 1024} KB.
           </p>
         </div>
 
@@ -156,30 +164,64 @@ export function SponsorModal({
           <input
             id="sponsor-name"
             type="text"
-            required
             minLength={2}
             maxLength={40}
             value={name}
             onChange={(event) => setName(event.target.value)}
             placeholder="Your name or company"
-            className="border-border bg-background/60 focus-visible:ring-foreground/10 h-11 w-full rounded-xl border px-4 text-sm outline-none focus-visible:ring-2"
+            className={inputClass}
           />
+        </div>
+
+        {/* Link */}
+        <div className="space-y-1.5">
+          <label htmlFor="sponsor-link" className="text-xs font-medium">
+            Link <span className="text-muted-foreground">(optional)</span>
+          </label>
+          <div className="border-border bg-background/60 focus-within:ring-foreground/10 flex h-11 items-center rounded-xl border px-4 text-sm focus-within:ring-2">
+            <span className="text-muted-foreground mr-1 font-mono text-xs">
+              https://
+            </span>
+            <input
+              id="sponsor-link"
+              type="text"
+              inputMode="url"
+              maxLength={200}
+              value={link}
+              onChange={(event) =>
+                setLink(event.target.value.replace(/^https?:\/\//i, ""))
+              }
+              placeholder="your-site.dev"
+              className="placeholder:text-muted-foreground h-full min-w-0 flex-1 bg-transparent outline-none"
+            />
+          </div>
         </div>
 
         {error && <p className="text-xs text-rose-500">{error}</p>}
 
-        <button
-          type="submit"
-          disabled={loading}
-          className="bg-foreground text-background flex h-11 w-full cursor-pointer items-center justify-center gap-2 rounded-xl text-sm font-medium transition hover:opacity-90 disabled:opacity-60"
-        >
-          {loading && <Loader2 className="size-4 animate-spin" />}
-          {loading ? "Redirecting..." : "Continue to payment"}
-        </button>
+        <div className="space-y-2">
+          <button
+            type="submit"
+            disabled={loading !== null}
+            className="bg-foreground text-background flex h-11 w-full cursor-pointer items-center justify-center gap-2 rounded-xl text-sm font-medium transition hover:opacity-90 disabled:opacity-60"
+          >
+            {loading === "pay" && <Loader2 className="size-4 animate-spin" />}
+            {loading === "pay" ? "Redirecting..." : "Continue to payment"}
+          </button>
+
+          <button
+            type="button"
+            onClick={() => checkout("skip")}
+            disabled={loading !== null}
+            className="text-muted-foreground hover:text-foreground flex h-9 w-full cursor-pointer items-center justify-center gap-2 text-xs transition disabled:opacity-60"
+          >
+            {loading === "skip" && <Loader2 className="size-3 animate-spin" />}
+            Skip, I&apos;ll add my details after paying
+          </button>
+        </div>
 
         <p className="text-muted-foreground text-center text-[11px]">
-          Your name and image are shown publicly while your subscription is
-          active.
+          Your name, link and image are shown publicly on this site.
         </p>
       </form>
     </dialog>

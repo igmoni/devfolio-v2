@@ -1,8 +1,9 @@
-import { CircleUserRound, ScrollText } from "lucide-react";
+import { CircleUserRound, MessageSquareQuote, ScrollText } from "lucide-react";
 
 import { Blog } from "@/svgs/essentials/Blog";
 import { Home } from "@/svgs/essentials/Home";
 import { Project } from "@/svgs/essentials/Project";
+import { Sponsor } from "@/svgs/essentials/Sponsor";
 import { Github } from "@/svgs/socials/Github";
 import { X } from "@/svgs/socials/X";
 
@@ -12,6 +13,7 @@ export const navItems = [
   { id: 3, name: "Blog", icon: Blog, value: "/blog" },
   { id: 4, name: "Resume", icon: ScrollText, value: "/resume" },
   { id: 5, name: "Contact", icon: CircleUserRound, value: "/contact" },
+  { id: 6, name: "Sponsor", icon: Sponsor, value: "/sponsor" },
 ];
 
 export const navSocialLinks = [

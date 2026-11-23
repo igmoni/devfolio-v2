@@ -7,18 +7,22 @@ import Image from "next/image";
 import { cn } from "cn";
 import { Coffee, Heart, MessageCircle, Plus } from "lucide-react";
 
+import { sponsorConfig } from "@/config/sponsor";
 import { Sponsor } from "@/lib/sponsors/sponsors";
 import { Github as GithubSvg } from "@/svgs/technologies/Github";
 
 import { SponsorModal } from "./SponsorModal";
 
-// TODO: replace with your own links
-const COFFEE_URL = "https://buymeacoffee.com/igmoni";
-const X_URL = "https://x.com/_igmoni";
-const GITHUB_SPONSOR_URL = "https://github.com/sponsors/igmoni";
-
 const MIN_SLOTS = 4;
 const TILTS = ["-rotate-3", "rotate-2", "-rotate-2", "rotate-3"];
+
+const hostOf = (link: string) => {
+  try {
+    return new URL(link).hostname.replace(/^www\./, "");
+  } catch {
+    return "Sponsor";
+  }
+};
 
 function HoverTip({
   children,
@@ -67,7 +71,11 @@ function XLogo({ className }: { className?: string }) {
 
 function AddButton({ index, onClick }: { index: number; onClick: () => void }) {
   return (
-    <HoverTip accent label="Become a sponsor" sub="$11.11 / month">
+    <HoverTip
+      accent
+      label="Become a sponsor"
+      sub={`${sponsorConfig.price} · monthly`}
+    >
       <button
         type="button"
         onClick={onClick}
@@ -83,21 +91,24 @@ function AddButton({ index, onClick }: { index: number; onClick: () => void }) {
   );
 }
 
-export function SponsorsGrid({ sponsors }: { sponsors: Sponsor[] }) {
+export function SponsorsGrid({
+  sponsors,
+  intro = "The people backing what I build.",
+}: {
+  sponsors: Sponsor[];
+  intro?: string;
+}) {
   const [modalOpen, setModalOpen] = useState(false);
-
   const addSlots = Math.max(MIN_SLOTS - sponsors.length, 1);
 
   return (
     <div id="sponsors" className="space-y-6 py-8">
-      <p className="text-muted-foreground max-w-md text-sm">
-        The people backing what I build.
-      </p>
+      <p className="text-muted-foreground max-w-md text-sm">{intro}</p>
 
       <div className="flex flex-wrap items-center gap-4">
         {/* Existing sponsors */}
-        {sponsors.map((sponsor, i) => (
-          <HoverTip key={sponsor.id} label={sponsor.name} sub="Monthly sponsor">
+        {sponsors.map((sponsor, i) => {
+          const avatar = (
             <Image
               src={sponsor.imageUrl}
               alt={sponsor.name}
@@ -108,8 +119,29 @@ export function SponsorsGrid({ sponsors }: { sponsors: Sponsor[] }) {
                 TILTS[i % TILTS.length]
               )}
             />
-          </HoverTip>
-        ))}
+          );
+
+          return (
+            <HoverTip
+              key={sponsor.id}
+              label={sponsor.name}
+              sub={sponsor.link ? hostOf(sponsor.link) : "Sponsor"}
+            >
+              {sponsor.link ? (
+                <a
+                  href={sponsor.link}
+                  target="_blank"
+                  rel="noopener noreferrer nofollow"
+                  className="inline-flex"
+                >
+                  {avatar}
+                </a>
+              ) : (
+                avatar
+              )}
+            </HoverTip>
+          );
+        })}
 
         {/* Empty slots (start at 4, shrink as sponsors join) */}
         {Array.from({ length: addSlots }, (_, i) => (
@@ -120,24 +152,26 @@ export function SponsorsGrid({ sponsors }: { sponsors: Sponsor[] }) {
           />
         ))}
 
+        {/* GitHub Sponsors */}
         <HoverTip label="Sponsor on GitHub">
           <a
-            href={GITHUB_SPONSOR_URL}
+            href={sponsorConfig.githubSponsorUrl}
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Sponsor on GitHub"
-            className="border-border relative flex size-14 rotate-3 items-center justify-center rounded-2xl border bg-zinc-200 text-white shadow-sm transition duration-200 hover:scale-110 hover:-rotate-3 dark:bg-zinc-800"
+            className="border-border relative flex size-14 rotate-3 items-center justify-center rounded-2xl border bg-neutral-100 text-zinc-900 shadow-sm transition duration-200 hover:scale-110 hover:-rotate-3 dark:bg-zinc-800 dark:text-white"
           >
-            <GithubSvg className="size-6" />
+            <GithubSvg className="text-foreground size-6" />
             <span className="bg-foreground text-background absolute -top-1.5 -right-1.5 flex size-5 items-center justify-center rounded-full">
               <Plus className="size-3" strokeWidth={3} />
             </span>
           </a>
         </HoverTip>
+
         {/* Coffee */}
         <HoverTip label="Buy me a coffee">
           <a
-            href={COFFEE_URL}
+            href={sponsorConfig.coffeeUrl}
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Buy me a coffee"
@@ -153,7 +187,7 @@ export function SponsorsGrid({ sponsors }: { sponsors: Sponsor[] }) {
         {/* X chat */}
         <HoverTip label="Chat on X">
           <a
-            href={X_URL}
+            href={sponsorConfig.xUrl}
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Chat on X"
@@ -168,8 +202,8 @@ export function SponsorsGrid({ sponsors }: { sponsors: Sponsor[] }) {
       </div>
 
       <p className="text-muted-foreground text-xs">
-        Cancel anytime. Your name and logo will be featured on this site for as
-        long as your sponsorship is active.
+        One payment, no subscription. Your name and logo stay on this site as a
+        supporter.
       </p>
 
       <SponsorModal open={modalOpen} onClose={() => setModalOpen(false)} />
