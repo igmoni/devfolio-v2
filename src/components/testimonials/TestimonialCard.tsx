@@ -14,7 +14,7 @@ export function TestimonialCard({ item, duplicate = false }: Props) {
   const isGenerated = !item.avatar;
 
   const className =
-    "testimonial-card-pattern group relative flex w-full min-h-40 flex-col justify-between gap-6 overflow-hidden p-6 transition-colors duration-300 hover:bg-white/[0.02]";
+    "testimonial-card-pattern group relative flex min-w-0 flex-1 flex-col justify-between gap-6 overflow-hidden p-6 transition-colors duration-300 hover:bg-white/[0.02]";
 
   const content = (
     <>
@@ -28,7 +28,7 @@ export function TestimonialCard({ item, duplicate = false }: Props) {
         strokeWidth={1.5}
       />
 
-      <p className="text-muted-foreground pr-6 text-[15px] leading-relaxed">
+      <p className="text-muted-foreground w-full min-w-0 text-[15px] leading-relaxed">
         {item.text}
       </p>
 

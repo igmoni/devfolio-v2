@@ -13,7 +13,7 @@ import { Button } from "../ui/button";
 import { TestimonialCard } from "./TestimonialCard";
 
 const MIN_WIDTH = 280; // short texts never go narrower than this
-const MAX_WIDTH = 620; // long texts never go wider than this
+const MAX_WIDTH = 1020; // long texts never go wider than this
 const CARD_CHROME = 72; // padding around the text
 const PX_PER_CHAR = 2.6; // aims for about 3 lines of text
 
