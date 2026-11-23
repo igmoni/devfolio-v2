@@ -1,5 +1,3 @@
-import { SVGProps } from "react";
-
 import { cn } from "cn";
 
 const Code = ({ className }: { className?: string }) => {

@@ -1,4 +1,4 @@
-import { CircleUserRound, MessageSquareQuote, ScrollText } from "lucide-react";
+import { CircleUserRound, ScrollText } from "lucide-react";
 
 import { Blog } from "@/svgs/essentials/Blog";
 import { Home } from "@/svgs/essentials/Home";
@@ -52,6 +52,9 @@ export const footerLinks = [
   { name: "Projects", href: "/projects" },
   { name: "Blog", href: "/blog" },
   { name: "Work", href: "/work" },
+  { name: "Sponsor", href: "/sponsor" },
+  { name: "Testimonials", href: "/testimonials" },
+  { name: "Claim sponsor", href: "/sponsor/claim" },
   { name: "Designs", href: "/designs" },
   { name: "Resume", href: "/resume" },
   { name: "Gears", href: "/gears" },

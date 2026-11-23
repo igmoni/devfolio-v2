@@ -361,3 +361,64 @@ html.theme-transition *::after {
     #a3a3a3 60%
   );
 }
+
+.testimonial-marquee-track {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+}
+
+.testimonial-marquee-forward {
+  animation: testimonial-scroll-left 55s linear infinite;
+}
+
+.testimonial-marquee-reverse {
+  animation: testimonial-scroll-right 60s linear infinite;
+}
+
+/* Pause only the hovered row */
+.testimonial-marquee:hover .testimonial-marquee-track {
+  animation-play-state: paused;
+}
+
+@keyframes testimonial-scroll-left {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes testimonial-scroll-right {
+  from {
+    transform: translateX(-50%);
+  }
+
+  to {
+    transform: translateX(0);
+  }
+}
+
+.testimonial-card-pattern {
+  width: min(25rem, calc(100vw - 3rem));
+  background-color: rgb(10 10 10 / 0.8);
+  background-image: repeating-linear-gradient(
+    45deg,
+    transparent,
+    transparent 5px,
+    rgb(255 255 255 / 0.012) 5px,
+    rgb(255 255 255 / 0.012) 6px
+  );
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .testimonial-marquee-track {
+    animation: none;
+  }
+
+  .testimonial-marquee {
+    overflow-x: auto;
+  }
+}

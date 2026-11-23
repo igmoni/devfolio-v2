@@ -5,7 +5,7 @@ import { useState } from "react";
 import Image from "next/image";
 
 import { cn } from "cn";
-import { Coffee, Heart, MessageCircle, Plus } from "lucide-react";
+import { Coffee, MessageCircle, Plus } from "lucide-react";
 
 import { sponsorConfig } from "@/config/sponsor";
 import { Sponsor } from "@/lib/sponsors/sponsors";
