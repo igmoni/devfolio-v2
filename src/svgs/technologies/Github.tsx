@@ -7,7 +7,7 @@ export function Github({ className }: SvgType) {
       viewBox="0 0 128 128"
       className={className}
     >
-      <g fill="#181616">
+      <g>
         <path
           fillRule="evenodd"
           clipRule="evenodd"

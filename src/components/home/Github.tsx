@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { type ReactElement } from "react";
 
 import { useTheme } from "next-themes";
 import Link from "next/link";
@@ -19,6 +20,14 @@ import { Heading } from "../common/Heading";
 import { Button } from "../ui/button";
 import { WakaTimeData } from "./WakatimeData";
 
+const NEW_REPO_EMOJIS = ["💥", "🌟", "🌸", "🌼", "🍥", "🦀", "🌀", "🪸", "🌿"];
+
+const pickEmoji = (key: string) => {
+  let hash = 0;
+  for (const ch of key) hash = (hash * 31 + ch.charCodeAt(0)) >>> 0;
+  return NEW_REPO_EMOJIS[hash % NEW_REPO_EMOJIS.length];
+};
+
 type GithubApiContribution = {
   date: string;
   count: number | string;
@@ -36,6 +45,7 @@ const Github = () => {
   const [contributions, setContributions] = useState<Contribution[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [hasError, setHasError] = useState(false);
+  const [repoDays, setRepoDays] = useState<Record<string, string>>({});
 
   const {
     githubLink: gitSrc,
@@ -114,6 +124,66 @@ const Github = () => {
     };
   }, []);
 
+  useEffect(() => {
+    let cancelled = false;
+
+    (async () => {
+      try {
+        const res = await fetch("/api/github/repos");
+        if (!res.ok) return;
+        const data: { repos?: { name: string; date: string }[] } =
+          await res.json();
+        const map: Record<string, string> = {};
+        for (const repo of data.repos ?? []) {
+          map[repo.date] = pickEmoji(repo.name);
+        }
+        if (!cancelled) setRepoDays(map);
+      } catch {
+        /* emojis are optional */
+      }
+    })();
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  const renderBlock = (block: ReactElement, activity: Contribution) => {
+    const { x, y, width, height } = block.props as {
+      x: number | string;
+      y: number | string;
+      width: number | string;
+      height: number | string;
+    };
+
+    const cx = Number(x) + Number(width) / 2;
+    const cy = Number(y) + Number(height) / 2;
+
+    const emoji = repoDays[activity.date];
+    const label = emoji ?? (activity.count > 0 ? String(activity.count) : "");
+
+    return (
+      <g>
+        <title>{`${activity.count} contributions on ${activity.date}`}</title>
+        {block}
+        {label && (
+          <text
+            x={cx}
+            y={cy}
+            textAnchor="middle"
+            dominantBaseline="central"
+            fontSize={emoji ? 11 : label.length > 2 ? 7 : 9}
+            fontWeight={700}
+            fill={activity.level >= 3 ? "#0a1a33" : "#ffffff"}
+            style={{ pointerEvents: "none", userSelect: "none" }}
+          >
+            {label}
+          </text>
+        )}
+      </g>
+    );
+  };
+
   return (
     <Container className="space-y-6">
       <div className="mt-5 mb-1 flex items-end justify-between md:items-center">
@@ -181,21 +251,45 @@ const Github = () => {
       {!isLoading && !hasError && contributions.length > 0 && (
         <div className="relative">
           <div className="bg-background/50 mt-5 rounded-lg border-2 border-dashed border-neutral-200 p-6 backdrop-blur-sm dark:border-neutral-800">
-            <div className="w-full overflow-x-auto">
+            <div className="w-full ">
               <ActivityCalendar
                 data={contributions}
                 colorScheme={resolvedTheme === "dark" ? "dark" : "light"}
                 maxLevel={githubConfig.maxLevel}
                 theme={githubConfig.theme}
+                blockSize={18}
+                blockMargin={4}
+                blockRadius={5}
+                fontSize={12}
+                showColorLegend={false}
+                showTotalCount={false}
+                renderBlock={renderBlock}
                 labels={{
                   months: githubConfig.months,
                   weekdays: githubConfig.weekDays,
                 }}
-                style={{
-                  color: "rgb(139, 148, 158)",
-                  margin: "0 auto",
-                }}
+                style={{ color: "rgb(139, 148, 158)", margin: "0 auto" }}
               />
+
+              {/* Legend */}
+              <div className="text-muted-foreground mt-4 flex items-center justify-center gap-3 text-xs">
+                <span>Less</span>
+                <div className="flex gap-1">
+                  {githubConfig.theme[
+                    resolvedTheme === "dark" ? "dark" : "light"
+                  ].map((color: string) => (
+                    <span
+                      key={color}
+                      className="size-3 rounded-full"
+                      style={{ backgroundColor: color }}
+                    />
+                  ))}
+                </div>
+                <span>More</span>
+                <span className="ml-2 inline-flex items-center gap-1">
+                  <span>💥</span> New repo
+                </span>
+              </div>
             </div>
           </div>
         </div>

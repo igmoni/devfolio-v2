@@ -6,6 +6,10 @@ export const githubConfig = {
   blockMargin: 3,
   fontSize: 12,
   maxLevel: 4,
+  theme: {
+    light: ["#ebedf0", "#bcd9ff", "#7ab6ff", "#4b9bff", "#1f6fe0"],
+    dark: ["#1c1f24", "#1e3a5f", "#2563b0", "#3b82f6", "#4b9bff"],
+  },
 
   months: [
     "Jan",
@@ -23,22 +27,22 @@ export const githubConfig = {
   ],
   weekDays: ["", "M", "", "W", "", "F", ""],
   totalCountLabel: `{{count}} contributions in the last year`,
-  theme: {
-    dark: [
-      "rgb(22, 27, 34)", // No contributions
-      "rgb(12, 45, 80)", // Dark blue
-      "rgb(0, 91, 172)", // Medium blue
-      "rgb(30, 144, 255)", // Bright blue
-      "rgb(87, 185, 255)", // Very bright blue
-    ],
-    light: [
-      "rgb(235, 237, 240)", // Light gray
-      "rgb(166, 210, 255)", // Light blue
-      "rgb(92, 173, 255)", // Medium blue
-      "rgb(48, 129, 226)", // Dark blue
-      "rgb(31, 81, 163)", // Very dark blue
-    ],
-  },
+  // theme: {
+  //   dark: [
+  //     "rgb(22, 27, 34)", // No contributions
+  //     "rgb(12, 45, 80)", // Dark blue
+  //     "rgb(0, 91, 172)", // Medium blue
+  //     "rgb(30, 144, 255)", // Bright blue
+  //     "rgb(87, 185, 255)", // Very bright blue
+  //   ],
+  //   light: [
+  //     "rgb(235, 237, 240)", // Light gray
+  //     "rgb(166, 210, 255)", // Light blue
+  //     "rgb(92, 173, 255)", // Medium blue
+  //     "rgb(48, 129, 226)", // Dark blue
+  //     "rgb(31, 81, 163)", // Very dark blue
+  //   ],
+  // },
 
   errorState: {
     title: "Unable to load GitHub Contributions",

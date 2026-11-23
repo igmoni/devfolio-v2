@@ -5,15 +5,17 @@ import { useState } from "react";
 import Image from "next/image";
 
 import { cn } from "cn";
-import { Coffee, MessageCircle, Plus } from "lucide-react";
+import { Coffee, Heart, MessageCircle, Plus } from "lucide-react";
 
 import { Sponsor } from "@/lib/sponsors/sponsors";
+import { Github as GithubSvg } from "@/svgs/technologies/Github";
 
 import { SponsorModal } from "./SponsorModal";
 
 // TODO: replace with your own links
 const COFFEE_URL = "https://buymeacoffee.com/igmoni";
 const X_URL = "https://x.com/_igmoni";
+const GITHUB_SPONSOR_URL = "https://github.com/sponsors/igmoni";
 
 const MIN_SLOTS = 4;
 const TILTS = ["-rotate-3", "rotate-2", "-rotate-2", "rotate-3"];
@@ -118,6 +120,20 @@ export function SponsorsGrid({ sponsors }: { sponsors: Sponsor[] }) {
           />
         ))}
 
+        <HoverTip label="Sponsor on GitHub">
+          <a
+            href={GITHUB_SPONSOR_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Sponsor on GitHub"
+            className="border-border relative flex size-14 rotate-3 items-center justify-center rounded-2xl border bg-zinc-200 text-white shadow-sm transition duration-200 hover:scale-110 hover:-rotate-3 dark:bg-zinc-800"
+          >
+            <GithubSvg className="size-6" />
+            <span className="bg-foreground text-background absolute -top-1.5 -right-1.5 flex size-5 items-center justify-center rounded-full">
+              <Plus className="size-3" strokeWidth={3} />
+            </span>
+          </a>
+        </HoverTip>
         {/* Coffee */}
         <HoverTip label="Buy me a coffee">
           <a
