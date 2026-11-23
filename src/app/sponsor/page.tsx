@@ -17,9 +17,11 @@ import {
 
 import { Container } from "@/components/common/Container";
 import { Heading } from "@/components/common/Heading";
+import { Reveal } from "@/components/common/Reveal";
 import { SubHeading } from "@/components/common/SubHeading";
 import { SponsorsCard } from "@/components/sponsors/SponsorsCard";
 import { TakeSeatButton } from "@/components/sponsors/TakeSeatButton";
+import { Separator } from "@/components/ui/separator";
 import { sponsorConfig } from "@/config/sponsor";
 
 export const metadata: Metadata = {
@@ -89,68 +91,82 @@ function ItemList({ items }: { items: Item[] }) {
 
 const SponsorPage = () => {
   return (
-    <>
+    <div className="mt-5 px-4 md:px-6 lg:px-0">
       <Container>
-        <Heading as="h1">Sponsor the work.</Heading>
+        <Reveal>
+          <Heading as="h1">Sponsor the work.</Heading>
+          <SubHeading>Support the work and help keep it growing.</SubHeading>
+          <Separator className="mt-10" />
+        </Reveal>
 
-        <div className="flex flex-col gap-8 py-6 md:flex-row md:items-center md:justify-between">
-          <div className="max-w-md space-y-4">
-            <Heading as="h3">A little support goes a long way.</Heading>
-            <SubHeading>
-              Everything on this site is built and paid for out of pocket: the
-              components, the case studies, the small experiments. Your support
-              keeps it independent and ad free. 11.11 dollars monthly, and your
-              name stays with the supporters.
-            </SubHeading>
+        <Reveal delay={0.1}>
+          <div className="flex flex-col gap-8 py-6 md:flex-row md:items-center md:justify-between">
+            <div className="max-w-md space-y-4">
+              <Heading as="h3">A little support goes a long way.</Heading>
+              <SubHeading>
+                Everything on this site is built and paid for out of pocket: the
+                components, the case studies, the small experiments. Your
+                support keeps it independent and ad free. 11.11 dollars monthly,
+                and your name stays with the supporters.
+              </SubHeading>
 
-            <div className="flex flex-wrap items-start gap-3 pt-2">
-              <TakeSeatButton />
-              <Link
-                href="/sponsor/claim"
-                className="bg-muted hover:bg-muted/70 inline-flex h-9 items-center rounded-full px-4 text-sm font-medium transition"
-              >
-                Already paid? Claim it
-              </Link>
+              <div className="flex flex-wrap items-start gap-3 pt-2">
+                <TakeSeatButton />
+                <Link
+                  href="/sponsor/claim"
+                  className="bg-muted hover:bg-muted/70 inline-flex h-9 items-center rounded-full px-4 text-sm font-medium transition"
+                >
+                  Already paid? Claim it
+                </Link>
+              </div>
+
+              <p className="text-muted-foreground text-xs">
+                Your name and logo stay featured while sponsored. Questions?{" "}
+                <a
+                  href={sponsorConfig.xUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-foreground inline-flex items-center gap-0.5 font-medium underline underline-offset-4"
+                >
+                  DM me on X
+                  <ArrowUpRight className="size-3" />
+                </a>
+              </p>
             </div>
 
-            <p className="text-muted-foreground text-xs">
-              One payment, no subscription. Questions?{" "}
-              <a
-                href={sponsorConfig.xUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-foreground inline-flex items-center gap-0.5 font-medium underline underline-offset-4"
-              >
-                DM me on X
-                <ArrowUpRight className="size-3" />
-              </a>
-            </p>
+            <div
+              className="relative mr-6 hidden h-32 w-48 md:block"
+              aria-hidden
+            >
+              <Sparkles className="text-muted-foreground absolute top-0 left-0 size-6" />
+              <Coffee className="text-muted-foreground absolute top-0 right-0 size-6" />
+              <HandHeart
+                className="absolute bottom-0 left-8 size-20"
+                strokeWidth={1.25}
+              />
+            </div>
           </div>
+        </Reveal>
 
-          {/* Replace with your own illustration */}
-          <div className="relative mr-6 hidden h-32 w-48 md:block" aria-hidden>
-            <Sparkles className="text-muted-foreground absolute top-0 left-0 size-6" />
-            <Coffee className="text-muted-foreground absolute top-0 right-0 size-6" />
-            <HandHeart
-              className="absolute bottom-0 left-8 size-20"
-              strokeWidth={1.25}
-            />
+        <Reveal delay={0.1}>
+          <SponsorsCard intro="You just scrolled to the most important section of the site. This tiny project is sponsored by:" />
+        </Reveal>
+
+        <Reveal delay={0.1}>
+          <div>
+            <Heading as="h2">What a seat does</Heading>
+            <ItemList items={benefits} />
           </div>
-        </div>
-      </Container>
+        </Reveal>
 
-      <SponsorsCard intro="You just scrolled to the most important section of the site. This tiny project is sponsored by:" />
-
-      <Container>
-        <Heading as="h2">What a seat does</Heading>
-        <ItemList items={benefits} />
+        <Reveal delay={0.1}>
+          <div>
+            <Heading as="h2">How it works</Heading>
+            <ItemList items={steps} />
+          </div>
+        </Reveal>
       </Container>
-
-      <Container>
-        <Heading as="h2">How it works</Heading>
-        <ItemList items={steps} />
-      </Container>
-    </>
+    </div>
   );
 };
 

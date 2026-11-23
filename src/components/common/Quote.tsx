@@ -45,7 +45,7 @@ const Quote = () => {
           “{quote}”
         </p>
         <p
-          className={`text-right ${caveat.className} text-pretty text-neutral-500 md:text-base`}
+          className={`text-right ${caveat.className} text-base text-pretty text-neutral-500 md:text-lg`}
         >
           — {author}
         </p>

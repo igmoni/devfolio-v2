@@ -202,8 +202,8 @@ export function SponsorsGrid({
       </div>
 
       <p className="text-muted-foreground text-xs">
-        One payment, no subscription. Your name and logo stay on this site as a
-        supporter.
+        Cancel anytime. Your name and logo will be featured on this site for as
+        long as your sponsorship is active.
       </p>
 
       <SponsorModal open={modalOpen} onClose={() => setModalOpen(false)} />
