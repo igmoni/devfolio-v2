@@ -1,11 +1,12 @@
 import { SvgType } from "@/types/common";
 
-export function Github({ className }: SvgType) {
+export function Github({ className, color }: SvgType) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 128 128"
       className={className}
+      fill={color ?? "currentColor"}
     >
       <g>
         <path

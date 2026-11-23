@@ -5,6 +5,8 @@ import { type ReactElement, useEffect, useRef, useState } from "react";
 import { useTheme } from "next-themes";
 import Link from "next/link";
 
+import { Star } from "lucide-react";
+
 import { githubConfig } from "@/config/github";
 import {
   ActivityCalendar,
@@ -19,11 +21,30 @@ import { Heading } from "../common/Heading";
 import { Button } from "../ui/button";
 import { WakaTimeData } from "./WakatimeData";
 
-const NEW_REPO_EMOJIS = ["💥", "🌟", "🌸", "🌼", "🍥", "🦀", "🌀", "🪸", "🌿"];
+const NEW_REPO_EMOJIS = [
+  "💥",
+  "🌟",
+  "🍥",
+  "🦀",
+  "🌀",
+  "🪸",
+  "⚡",
+  "🔥",
+  "👾",
+  "🚀",
+  "🛸",
+  "🎯",
+  "💎",
+  "🪐",
+  "🎮",
+  "☄️",
+  "🤖",
+];
 
 const GAP = 3; // space between circles
-const MIN_SIZE = 11; // below this the calendar scrolls sideways instead of shrinking
+const MIN_SIZE = 11; // smallest circle size
 const MAX_SIZE = 22;
+const MAX_REPOS_IN_TIP = 3;
 
 const formatDate = (date: string) =>
   new Date(`${date}T00:00:00`).toLocaleDateString("en-GB", {
@@ -49,20 +70,27 @@ type GithubApiResponse = {
   contributions?: GithubApiContribution[];
 };
 
+type RepoInfo = { name: string; stars: number };
+type RepoDay = { emoji: string; repos: RepoInfo[] };
+
+type TooltipState = {
+  date: string;
+  count: number;
+  repos: RepoInfo[];
+  left: number;
+  top: number;
+};
+
 const Github = () => {
   const { resolvedTheme } = useTheme();
 
   const [contributions, setContributions] = useState<Contribution[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [hasError, setHasError] = useState(false);
-  const [repoDays, setRepoDays] = useState<Record<string, string>>({});
+  const [repoDays, setRepoDays] = useState<Record<string, RepoDay>>({});
   const wrapperRef = useRef<HTMLDivElement>(null);
   const [blockSize, setBlockSize] = useState(16);
-  const [tooltip, setTooltip] = useState<{
-    text: string;
-    left: number;
-    top: number;
-  } | null>(null);
+  const [tooltip, setTooltip] = useState<TooltipState | null>(null);
 
   const {
     githubLink: gitSrc,
@@ -142,7 +170,7 @@ const Github = () => {
     };
   }, []);
 
-  // "New repo" days
+  // "New repo" days (name + stars, grouped by creation date)
   useEffect(() => {
     let cancelled = false;
 
@@ -150,12 +178,21 @@ const Github = () => {
       try {
         const res = await fetch("/api/github/repos");
         if (!res.ok) return;
-        const data: { repos?: { name: string; date: string }[] } =
-          await res.json();
-        const map: Record<string, string> = {};
+
+        const data: {
+          repos?: { name: string; date: string; stars?: number }[];
+        } = await res.json();
+
+        const map: Record<string, RepoDay> = {};
         for (const repo of data.repos ?? []) {
-          map[repo.date] = pickEmoji(repo.name);
+          const day = map[repo.date] ?? {
+            emoji: pickEmoji(repo.name),
+            repos: [],
+          };
+          day.repos.push({ name: repo.name, stars: repo.stars ?? 0 });
+          map[repo.date] = day;
         }
+
         if (!cancelled) setRepoDays(map);
       } catch {
         /* emojis are optional */
@@ -200,7 +237,8 @@ const Github = () => {
     const cx = Number(x) + Number(width) / 2;
     const cy = Number(y) + Number(height) / 2;
 
-    const emoji = repoDays[activity.date];
+    const repoDay = repoDays[activity.date];
+    const emoji = repoDay?.emoji;
     const label = emoji ?? (activity.count > 0 ? String(activity.count) : "");
 
     const fontSize = emoji
@@ -215,12 +253,12 @@ const Github = () => {
       const box = wrapper.getBoundingClientRect();
 
       const rawLeft = target.left - box.left + target.width / 2;
-      const left = Math.max(80, Math.min(box.width - 80, rawLeft));
+      const left = Math.max(90, Math.min(box.width - 90, rawLeft));
 
       setTooltip({
-        text: `${formatDate(activity.date)}: ${activity.count} contribution${
-          activity.count === 1 ? "" : "s"
-        }${emoji ? " · New repo" : ""}`,
+        date: formatDate(activity.date),
+        count: activity.count,
+        repos: repoDay?.repos ?? [],
         left,
         top: target.top - box.top,
       });
@@ -280,6 +318,10 @@ const Github = () => {
 
   const themeColors =
     githubConfig.theme[resolvedTheme === "dark" ? "dark" : "light"];
+
+  const hiddenRepos = tooltip
+    ? Math.max(0, tooltip.repos.length - MAX_REPOS_IN_TIP)
+    : 0;
 
   return (
     <Container className="space-y-6">
@@ -349,10 +391,9 @@ const Github = () => {
 
       {!isLoading && !hasError && contributions.length > 0 && (
         <div className="mt-5 w-full">
-          {/* Tooltip is positioned against this wrapper, outside the scroller */}
+          {/* Tooltip is positioned against this wrapper */}
           <div ref={wrapperRef} className="relative w-full">
-            {/* Only scrolls on very narrow screens */}
-            <div className="overflow-none w-full py-1">
+            <div className="w-full py-1">
               <ActivityCalendar
                 data={contributions}
                 colorScheme={resolvedTheme === "dark" ? "dark" : "light"}
@@ -377,10 +418,41 @@ const Github = () => {
             {tooltip && (
               <div
                 role="tooltip"
-                className="pointer-events-none absolute z-20 -translate-x-1/2 -translate-y-full rounded-lg bg-white px-3 py-1.5 text-xs font-medium whitespace-nowrap text-neutral-900 shadow-lg"
+                className="pointer-events-none absolute z-20 -translate-x-1/2 -translate-y-full rounded-xl bg-white px-4 py-2 whitespace-nowrap text-neutral-900 shadow-lg"
                 style={{ left: tooltip.left, top: tooltip.top - 8 }}
               >
-                {tooltip.text}
+                {tooltip.repos.length > 0 ? (
+                  <div className="space-y-1">
+                    {tooltip.repos.slice(0, MAX_REPOS_IN_TIP).map((repo) => (
+                      <div
+                        key={repo.name}
+                        className="flex items-center gap-2 text-sm font-semibold"
+                      >
+                        <span>{repo.name}</span>
+                        <span className="inline-flex items-center gap-1 text-neutral-500">
+                          <Star className="size-4 fill-current" />
+                          {repo.stars}
+                        </span>
+                      </div>
+                    ))}
+
+                    {hiddenRepos > 0 && (
+                      <div className="text-xs text-neutral-500">
+                        +{hiddenRepos} more
+                      </div>
+                    )}
+
+                    <div className="text-[11px] font-normal text-neutral-500">
+                      {tooltip.date} · {tooltip.count} contribution
+                      {tooltip.count === 1 ? "" : "s"}
+                    </div>
+                  </div>
+                ) : (
+                  <div className="text-xs font-medium">
+                    {tooltip.date}: {tooltip.count} contribution
+                    {tooltip.count === 1 ? "" : "s"}
+                  </div>
+                )}
               </div>
             )}
 

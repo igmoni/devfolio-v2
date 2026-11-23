@@ -1,6 +1,11 @@
 import { NextResponse } from "next/server";
 
-type Repo = { name: string; created_at: string; fork: boolean };
+type Repo = {
+  name: string;
+  created_at: string;
+  fork: boolean;
+  stargazers_count: number;
+};
 
 export async function GET() {
   try {
@@ -23,7 +28,11 @@ export async function GET() {
     return NextResponse.json({
       repos: data
         .filter((r) => !r.fork)
-        .map((r) => ({ name: r.name, date: r.created_at.slice(0, 10) })),
+        .map((r) => ({
+          name: r.name,
+          date: r.created_at.slice(0, 10),
+          stars: r.stargazers_count ?? 0,
+        })),
     });
   } catch (error) {
     console.error("GitHub repos proxy error:", error);
