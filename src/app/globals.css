@@ -127,6 +127,18 @@
     @apply font-sans;
   }
 }
+/* Hide scrollbar but keep scrolling functional */
+::-webkit-scrollbar {
+  display: none;
+}
+
+html {
+  scrollbar-width: none; /* Firefox */
+}
+
+body {
+  -ms-overflow-style: none; /* IE and Edge */
+}
 
 /* Smooth colors only while switching themes */
 html.theme-transition *,
