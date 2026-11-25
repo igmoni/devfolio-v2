@@ -17,14 +17,29 @@ export const mySkills: Skill[] = [
   { name: "React", icon: ReactIcon },
   { name: "Next.js", icon: NextJs },
   { name: "Tailwind CSS", icon: TailwindCss },
-  { name: "Figma", icon: Figma },
+  // { name: "Figma", icon: Figma },
   { name: "TypeScript", icon: TypeScript },
   { name: "JavaScript", icon: JavaScript },
   { name: "Node.js", icon: NodeJs },
   { name: "Express.js", icon: ExpressJs },
   { name: "PostgreSQL", icon: PostgreSQL },
   { name: "Prisma", icon: Prisma },
-  { name: "Postman", icon: Postman },
+  // { name: "Postman", icon: Postman },
   { name: "Python", icon: Python },
   { name: "Java", icon: Java },
+];
+
+type ToolType = {
+  name: string;
+  imgSrc: string;
+};
+
+export const tools: ToolType[] = [
+  { name: "Cursor", imgSrc: "/assets/cursor.avif" },
+  { name: "Figma", imgSrc: "/assets/figma.avif" },
+  { name: "Motion", imgSrc: "/assets/motion.avif" },
+  { name: "Notion", imgSrc: "/assets/notion.avif" },
+  { name: "X", imgSrc: "/assets/x.avif" },
+  { name: "Tick Tick", imgSrc: "/assets/tick-tick.avif" },
+  { name: "Reddit", imgSrc: "/assets/reddit.avif" },
 ];

@@ -164,7 +164,7 @@ export const HeroAvatar = () => {
       {/* Hero GIF */}
       <Reveal>
         <div className="relative z-0 mx-auto my-5 h-42 w-full max-w-3xl overflow-hidden rounded-2xl shadow-xl sm:h-72 md:h-80">
-          <Image src={"/assets/sukuna1.gif"} sizes="100" alt="Sukuna" fill />
+          <Image src={"/assets/sukuna.gif"} sizes="100" alt="Sukuna" fill />
         </div>
       </Reveal>
 
