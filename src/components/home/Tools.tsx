@@ -58,6 +58,8 @@ const ToolItem = ({ mouseX, imgSrc, name }: ToolItemProps) => {
       <Image
         src={imgSrc}
         alt={name}
+        width={40}
+        height={40}
         className="size-10 rounded-xl object-contain"
       />
 

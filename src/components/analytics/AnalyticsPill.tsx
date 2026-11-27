@@ -106,7 +106,7 @@ export function AnalyticsPill() {
   return (
     <Container className="mx-auto">
       <div
-        className={`mx-auto mt-10 flex w-fit items-center justify-center gap-2 rounded-full border border-neutral-300/70 bg-white/70 px-4 py-2 shadow-sm backdrop-blur-md dark:border-neutral-700/70 dark:bg-neutral-900/70 ${instrumentSerif.className} text-xs whitespace-nowrap italic sm:text-sm scale-120`}
+        className={`mx-auto mt-10 flex w-fit items-center justify-center gap-2 rounded-full border border-neutral-300/70 bg-white/70 px-4 py-2 shadow-sm backdrop-blur-md dark:border-neutral-700/70 dark:bg-neutral-900/70 ${instrumentSerif.className} scale-120 text-xs whitespace-nowrap italic sm:text-sm`}
       >
         <SmileyStack />
 
