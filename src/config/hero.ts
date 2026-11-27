@@ -13,7 +13,7 @@ export const heroConfig = {
   professions: [
     "Ghostwriter",
     "UI/UX Designer",
-    "Product Designeer",
+    "Product Designer",
     "Design Engineer",
   ],
   socialLinks: [

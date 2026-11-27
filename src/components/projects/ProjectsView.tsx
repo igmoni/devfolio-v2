@@ -49,7 +49,7 @@ const ProjectsView = ({ projects }: ProjectsViewProps) => {
         </div>
 
         {view === "grid" ? (
-          <div className="mt-5 grid grid-cols-1 gap-5 md:grid-cols-2">
+          <div className="mt-5 grid grid-cols-1 gap-10 md:grid-cols-2">
             {projects.slice(0, 4).map((project, index) => (
               <Reveal delay={index * 0.2} key={project.slug}>
                 <ProjectCard project={project} />
@@ -58,7 +58,7 @@ const ProjectsView = ({ projects }: ProjectsViewProps) => {
           </div>
         ) : (
           <Reveal delay={0.1}>
-            <div className="mt-5 flex flex-col gap-3">
+            <div className="mt-5 flex flex-col gap-5">
               {projects.slice(0, 4).map((project, index) => (
                 <Reveal delay={index * 0.1} key={project.slug}>
                   <div className="group hover:bg-muted/30 flex flex-col rounded-xl transition-colors sm:flex-row sm:items-center sm:p-4 md:gap-4 md:p-3">

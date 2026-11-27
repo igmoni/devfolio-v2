@@ -35,7 +35,7 @@ export default async function Page() {
         <Separator className="my-5 mt-10" />
       </Reveal>
 
-      <div className="grid grid-cols-1 items-center gap-5 md:grid-cols-2">
+      <div className="grid grid-cols-1 items-center gap-10 md:grid-cols-2">
         {projects.map((project, id) => (
           <Reveal key={project.slug} delay={id * 0.1}>
             <ProjectCard project={project} />
