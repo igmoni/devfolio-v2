@@ -10,7 +10,12 @@ import { YouTubeIcon } from "@/svgs/socials/YouTube";
 export const heroConfig = {
   name: "Mohan S P",
   description: "Love building digital products, creating content & a polymath.",
-  professions: ["Ghostwriter","UI/UX Designer", "Product Designeer", "Design Engineer"],
+  professions: [
+    "Ghostwriter",
+    "UI/UX Designer",
+    "Product Designeer",
+    "Design Engineer",
+  ],
   socialLinks: [
     {
       id: 1,
@@ -40,7 +45,7 @@ export const heroConfig = {
       id: 5,
       name: "Instagram",
       icon: Instagram,
-      value: "https://www.instagram.com/actuallymoni",
+      value: "https://www.instagram.com/mohansp_",
     },
     {
       id: 6,

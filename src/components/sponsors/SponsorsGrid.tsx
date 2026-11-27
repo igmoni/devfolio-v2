@@ -3,6 +3,7 @@
 import { useState } from "react";
 
 import Image from "next/image";
+import Link from "next/link";
 
 import { cn } from "cn";
 import { Coffee, MessageCircle, Plus } from "lucide-react";
@@ -91,19 +92,21 @@ function AddButton({ index, onClick }: { index: number; onClick: () => void }) {
   );
 }
 
-export function SponsorsGrid({
-  sponsors,
-  intro = "The people backing what I build.",
-}: {
-  sponsors: Sponsor[];
-  intro?: string;
-}) {
+export function SponsorsGrid({ sponsors }: { sponsors: Sponsor[] }) {
   const [modalOpen, setModalOpen] = useState(false);
   const addSlots = Math.max(MIN_SLOTS - sponsors.length, 1);
 
   return (
     <div id="sponsors" className="space-y-6 py-8">
-      <p className="text-muted-foreground max-w-md text-sm">{intro}</p>
+      <p className="text-muted-foreground text-sm">
+        The people backing what I build. Already sponsored?{" "}
+        <Link
+          href={"/sponsor/claim"}
+          className="text-foreground underline-offset-2 hover:underline"
+        >
+          Claim here
+        </Link>
+      </p>
 
       <div className="flex flex-wrap items-center gap-4">
         {/* Existing sponsors */}

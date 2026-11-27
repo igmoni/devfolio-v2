@@ -6,7 +6,7 @@ import { Container } from "../common/Container";
 import { Heading } from "../common/Heading";
 import { SponsorsGrid } from "./SponsorsGrid";
 
-const SponsorsCard = async ({ intro }: { intro?: string }) => {
+const SponsorsCard = async () => {
   const sponsors = await getSponsors();
 
   return (
@@ -14,7 +14,7 @@ const SponsorsCard = async ({ intro }: { intro?: string }) => {
       <Heading as="h2" Icon={<MessageSquareQuote />}>
         Sponsors
       </Heading>
-      <SponsorsGrid sponsors={sponsors} intro={intro} />
+      <SponsorsGrid sponsors={sponsors} />
     </Container>
   );
 };
