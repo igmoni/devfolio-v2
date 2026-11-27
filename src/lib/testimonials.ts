@@ -94,4 +94,18 @@ export const testimonials: Testimonial[] = [
     text: "just checked your portfolio out bro it was soo cool and clean",
     link: "https://x.com/AayanShips/status/2124851564011745430?a=qM5M7vTE0OF2_d4eURs&s=20",
   },
+  {
+    id: 12,
+    name: "eldestchild",
+    role: "@eldestchildx on X",
+    text: "bruh it's more than just a portfolio, how did u vibe code this?",
+    link: "https://x.com/eldestchildx/status/2126311249206227101?a=YnMCZ8Z6M-9rpGBiYCw&s=20",
+  },
+  {
+    id: 13,
+    name: "francis",
+    role: "@coolbwunni on X",
+    text: "está bonito, me gusta",
+    link: "https://x.com/coolbwunni/status/2126337727083802675?a=ynX1fNrN35XD3vr5K2s&s=20"
+  }
 ];

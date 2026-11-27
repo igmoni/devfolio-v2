@@ -1,9 +1,7 @@
-
 import { unstable_cache } from "next/cache";
 import { connection, NextResponse } from "next/server";
 
-const BASE_URL =
-  "https://api.vercel.com/v1/query/web-analytics/visits";
+const BASE_URL = "https://api.vercel.com/v1/query/web-analytics/visits";
 
 const iso = (d: Date) => d.toISOString().slice(0, 10);
 
@@ -33,8 +31,7 @@ function normalizeTotals(t?: VercelTotals) {
 // This function is cached server-side for one hour.
 const getAnalytics = unstable_cache(
   async () => {
-    const token =
-      process.env.VERCEL_TOKEN ?? process.env.VERCEL_TOKEN_ID;
+    const token = process.env.VERCEL_TOKEN ?? process.env.VERCEL_TOKEN_ID;
 
     const projectId = process.env.VERCEL_PROJECT_ID;
     const teamId = process.env.VERCEL_TEAM_ID;
@@ -92,23 +89,18 @@ const getAnalytics = unstable_cache(
       currentRes.json(),
     ]);
 
-    const previousJson = previousRes.ok
-      ? await previousRes.json()
-      : null;
+    const previousJson = previousRes.ok ? await previousRes.json() : null;
 
     const dailyData = dailyJson.data ?? [];
     const current = normalizeTotals(currentJson.data);
-    const previous = previousJson
-      ? normalizeTotals(previousJson.data)
-      : null;
+    const previous = previousJson ? normalizeTotals(previousJson.data) : null;
 
     const chart = Array.from({ length: 7 }, (_, index) => {
       const date = addDays(start, index);
       const dateKey = iso(date);
 
       const existing = dailyData.find(
-        (item: { timestamp: string }) =>
-          item.timestamp.slice(0, 10) === dateKey
+        (item: { timestamp: string }) => item.timestamp.slice(0, 10) === dateKey
       );
 
       return {
