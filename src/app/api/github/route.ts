@@ -5,6 +5,7 @@ export async function GET() {
     const response = await fetch(
       "https://github-contributions-api.jogruber.de/v4/igmoni?y=last",
       {
+        cache: "force-cache",
         next: { revalidate: 3600 },
       }
     );
@@ -16,9 +17,11 @@ export async function GET() {
       );
     }
 
-    const data = await response.json();
-
-    return NextResponse.json(data);
+    return NextResponse.json(await response.json(), {
+      headers: {
+        "Cache-Control": "public, s-maxage=3600, stale-while-revalidate=86400",
+      },
+    });
   } catch (error) {
     console.error("GitHub contributions proxy error:", error);
 

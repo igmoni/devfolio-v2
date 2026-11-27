@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { usePathname, useSearchParams } from "next/navigation";
 import Script from "next/script";
@@ -16,38 +16,35 @@ declare global {
 export default function UmamiClient() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
+
+  const [scriptLoaded, setScriptLoaded] = useState(false);
   const lastTrackedUrl = useRef<string | null>(null);
 
-  const websiteId = process.env.UMAMI_ID;
-  const scriptUrl = process.env.UMAMI_SRC;
+  const websiteId = process.env.NEXT_PUBLIC_UMAMI_ID;
+  const scriptUrl = process.env.NEXT_PUBLIC_UMAMI_SRC;
 
   const queryString = searchParams.toString();
   const currentUrl = pathname + (queryString ? `?${queryString}` : "");
 
   useEffect(() => {
-    if (!websiteId || !scriptUrl || !window.umami) return;
+    if (!scriptLoaded || !window.umami) return;
 
-    // Avoid duplicate tracking for the same URL.
     if (lastTrackedUrl.current === currentUrl) return;
 
     lastTrackedUrl.current = currentUrl;
     window.umami.track(currentUrl);
-  }, [currentUrl, websiteId, scriptUrl]);
+  }, [currentUrl, scriptLoaded]);
 
   if (!websiteId || !scriptUrl) return null;
 
   return (
     <Script
+      id="umami-analytics"
       src={scriptUrl}
       data-website-id={websiteId}
       data-auto-track="false"
       strategy="afterInteractive"
-      onLoad={() => {
-        if (!window.umami || lastTrackedUrl.current === currentUrl) return;
-
-        lastTrackedUrl.current = currentUrl;
-        window.umami.track(currentUrl);
-      }}
+      onLoad={() => setScriptLoaded(true)}
     />
   );
 }

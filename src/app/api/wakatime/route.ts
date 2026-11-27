@@ -3,7 +3,7 @@ import { connection, NextResponse } from "next/server";
 import type { WakaTimeApiResponse } from "@/types/wakatime";
 
 const WAKATIME_API = "https://wakatime.com/api/v1";
-const CACHE_DURATION = 300;
+const CACHE_DURATION = 900;
 const RATE_LIMIT_COOLDOWN = 60_000;
 
 let cachedData: WakaTimeApiResponse | null = null;

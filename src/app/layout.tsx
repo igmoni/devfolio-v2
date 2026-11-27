@@ -2,6 +2,7 @@ import { Suspense } from "react";
 
 import type { Metadata } from "next";
 
+import { GoogleTagManager } from "@next/third-parties/google";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Toaster } from "sonner";
@@ -92,6 +93,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
             <OnekoCat />
             {children}
             <SwarmTrigger />
+            <GoogleTagManager gtmId="GTM-MZTQ98CF" />
             <AnalyticsPill />
             <Reveal delay={0.2}>
               <Quote />

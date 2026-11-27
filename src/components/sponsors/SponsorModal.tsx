@@ -113,7 +113,7 @@ export function SponsorModal({
               Take a seat
             </h3>
             <p className="text-muted-foreground text-xs">
-              {sponsorConfig.price} · monthly · no subscription
+              {sponsorConfig.price} · monthly{" "}
             </p>
           </div>
 

@@ -54,7 +54,7 @@ const steps: Item[] = [
   {
     icon: Armchair,
     title: "Take a seat",
-    body: `Checkout takes about a minute. ${sponsorConfig.price} once, nothing recurring.`,
+    body: `Checkout takes about a minute. ${sponsorConfig.price} once`,
   },
   {
     icon: Pencil,
@@ -64,7 +64,7 @@ const steps: Item[] = [
   {
     icon: PartyPopper,
     title: "Join the supporters",
-    body: "One deploy later, your name joins the supporters on the home page, permanently.",
+    body: "One deploy later, your name joins the supporters on the home page",
   },
 ];
 
