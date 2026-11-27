@@ -149,7 +149,7 @@ const SponsorPage = () => {
         </Reveal>
 
         <Reveal delay={0.1}>
-          <SponsorsCard intro="You just scrolled to the most important section of the site. This tiny project is sponsored by:" />
+          <SponsorsCard  />
         </Reveal>
 
         <Reveal delay={0.1}>

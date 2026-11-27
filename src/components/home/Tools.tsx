@@ -2,6 +2,8 @@
 
 import { useRef, useState } from "react";
 
+import Image from "next/image";
+
 import type { MotionValue } from "motion/react";
 import { motion, useMotionValue, useSpring, useTransform } from "motion/react";
 
@@ -53,7 +55,7 @@ const ToolItem = ({ mouseX, imgSrc, name }: ToolItemProps) => {
       onHoverEnd={() => setIsHovered(false)}
       className="relative flex size-10 shrink-0 items-center justify-center"
     >
-      <img
+      <Image
         src={imgSrc}
         alt={name}
         className="size-10 rounded-xl object-contain"
