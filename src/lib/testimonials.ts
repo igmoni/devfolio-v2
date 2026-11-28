@@ -107,5 +107,19 @@ export const testimonials: Testimonial[] = [
     role: "@coolbwunni on X",
     text: "está bonito, me gusta",
     link: "https://x.com/coolbwunni/status/2126337727083802675?a=ynX1fNrN35XD3vr5K2s&s=20"
-  }
+  },
+  {
+    id: 13,
+    name: "Karan",
+    role: "@itsmeekaran on X",
+    text: "bottom tab and github activity are crazyy 🔥 so clean man, loved it!",
+    link: "https://x.com/itsmeekaran/status/2126380674437554515?a=lmMRuSBgoWyqngWhrME&s=20"
+  },
+  {
+    id: 13,
+    name: "Vijay A",
+    role: "@vijay_designr on X",
+    text: "Really great idea 🔥",
+    link: "https://x.com/vijay_designr/status/2126476395501236350?a=co9rEsbC2joa0GbDQdo&s=20"
+  },
 ];
